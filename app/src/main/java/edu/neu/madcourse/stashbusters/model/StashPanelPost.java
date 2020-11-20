@@ -9,4 +9,12 @@ public class StashPanelPost extends Post {
     public StashPanelPost() {
         super();
     }
+
+    public StashPanelPost(String title, String description) {
+        super(title, description);
+    }
+
+    public StashPanelPost(String title, String description, String photoUrl) {
+        super(title, description, photoUrl);
+    }
 }

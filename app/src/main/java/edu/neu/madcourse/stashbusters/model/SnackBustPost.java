@@ -22,4 +22,11 @@ public class SnackBustPost {
         this.photoUrl = photoUrl;
         this.choiceList = choices;
     }
+
+    public SnackBustPost(String title, String photoUrl, String authorId, List<SnackBustChoice> choices) {
+        this.title = title;
+        this.photoUrl = photoUrl;
+        this.choiceList = choices;
+        this.authorId = authorId;
+    }
 }

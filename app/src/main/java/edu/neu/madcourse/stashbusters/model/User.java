@@ -4,8 +4,12 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.List;
 
+/**
+ * This class represents user.
+ */
 @IgnoreExtraProperties
 public class User {
+    private String id;
     private String username;
     private String photoUrl;
     private String bio;
