@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">StashBusters</string>
     <string name="stashbusters_headline">StashBusters</string>
+    <string name="login_screen_wallpaper">login screen wallpaper</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
