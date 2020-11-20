@@ -6,6 +6,10 @@
     <string name="stash_swap">Stash Swap</string>
     <string name="snack_busting">Snack Busting</string>
 
+    <string name="login_screen_wallpaper">login screen wallpaper</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+
     <!--    Strings for new post activities-->
     <string name="stash_panel_n">Stash\nPanel</string>
     <string name="stash_swap_n">Stash\nSwap</string>
@@ -40,4 +44,5 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
+
 </resources>
