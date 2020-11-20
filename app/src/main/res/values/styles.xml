@@ -9,43 +9,43 @@
 
     <style name="BigHeadline">
         <item name="android:fontFamily">@font/quicksand_bold</item>
-        <item name="android:textSize">40dp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:textColor">@color/colorText</item>/>
     </style>
 
     <style name="ActivityTitle">
         <item name="android:fontFamily">@font/quicksand</item>
-        <item name="android:textSize">24dp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/colorText</item>/>
     </style>
 
     <style name="PostHeadline">
         <item name="android:fontFamily">@font/quicksand_bold</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorText</item>/>
     </style>
 
     <style name="Body">
         <item name="android:fontFamily">@font/quicksand</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorText</item>/>
     </style>
 
     <style name="Detail">
         <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/colorTextLight</item>/>
     </style>
 
     <style name="ButtonText">
         <item name="android:fontFamily">@font/quicksand_medium</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorSurface</item>/>
     </style>
 
     <style name="MenuItem">
         <item name="android:fontFamily">@font/quicksand_medium</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorText</item>/>
     </style>
 
