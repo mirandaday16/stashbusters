@@ -8,52 +8,45 @@
     </style>
 
     <style name="BigHeadline">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">40pt</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">40dp</item>
         <item name="android:textColor">@color/colorText</item>/>
-        <item name="android:fontWeight">700</item>/>
     </style>
 
     <style name="ActivityTitle">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">24pt</item>
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">24dp</item>
         <item name="android:textColor">@color/colorText</item>/>
-        <item name="android:fontWeight">400</item>/>
     </style>
 
     <style name="PostHeadline">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">18pt</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@color/colorText</item>/>
-        <item name="android:fontWeight">700</item>/>
     </style>
 
     <style name="Body">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">12pt</item>
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/colorText</item>/>
-        <item name="android:fontWeight">400</item>/>
     </style>
 
     <style name="Detail">
         <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">10pt</item>
+        <item name="android:textSize">10dp</item>
         <item name="android:textColor">@color/colorTextLight</item>/>
-        <item name="android:fontWeight">300</item>/>
     </style>
 
     <style name="ButtonText">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">12pt</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/colorSurface</item>/>
-        <item name="android:fontWeight">600</item>/>
     </style>
 
     <style name="MenuItem">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textSize">12pt</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/colorText</item>/>
-        <item name="android:fontWeight">500</item>/>
     </style>
 
 </resources>

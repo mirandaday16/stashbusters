@@ -7,12 +7,12 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/BigHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="258dp"
-        android:layout_marginBottom="454dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginBottom="508dp"
         android:text="@string/stashbusters_headline"
-        android:theme="@style/BigHeadline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
