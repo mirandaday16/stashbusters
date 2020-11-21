@@ -6,9 +6,9 @@
     <string name="stash_swap">Stash Swap</string>
     <string name="snack_busting">Snack Busting</string>
 
-    <string name="stash_panel_n">Stash<br/>Panel</string>
-    <string name="stash_swap_n">Stash<br/>Swap</string>
-    <string name="snack_busting_n">Snack<br/>Busting</string>
+    <string name="stash_panel_n">Stash\nPanel</string>
+    <string name="stash_swap_n">Stash\nSwap</string>
+    <string name="snack_busting_n">Snack\nBusting</string>
 
     <string name="new_post">New Post</string>
 </resources>
