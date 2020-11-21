@@ -6,10 +6,21 @@
     <string name="stash_swap">Stash Swap</string>
     <string name="snack_busting">Snack Busting</string>
 
+    <!--    Strings for new post activities-->
     <string name="stash_panel_n">Stash\nPanel</string>
     <string name="stash_swap_n">Stash\nSwap</string>
     <string name="snack_busting_n">Snack\nBusting</string>
 
     <string name="new_post">New Post</string>
     <string name="new_panel_post">New Stash Panel Post</string>
+
+    <string name="post_title">Post Title</string>
+    <string name="title_hint">What advice do you need? (100 char. limit)</string>
+    <string name="material_photo">Photo of Material</string>
+    <string name="material_type">Material Type</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="swap_material">Willing to swap for:</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe the material, your interests, and anything else that
+        might help others give you good advice! (500 char. limit)</string>
 </resources>

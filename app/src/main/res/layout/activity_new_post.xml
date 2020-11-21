@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:background="@color/colorAccent"
+        android:onClick="onClick"
         android:orientation="horizontal"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
@@ -43,6 +44,7 @@
             android:autoSizeTextType="uniform"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:onClick="onClick"
             android:text="@string/stash_panel_n"
             android:textAppearance="@style/ButtonText"
             android:textColor="@color/colorText" />
