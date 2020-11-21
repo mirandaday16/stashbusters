@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewPostActivity"></activity>
+        <activity android:name=".NewPostActivity"
+            android:label="@string/new_post">
+        </activity>
+        <activity android:name=".NewPanelActivity"
+            android:label="@string/new_panel_post">
+
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
