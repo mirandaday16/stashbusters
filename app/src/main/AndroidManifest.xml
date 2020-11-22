@@ -10,14 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".NewSnackActivity"
+            android:label="@string/new_snack_post" />
+        <activity
             android:name=".NewPostActivity"
-            android:label="@string/new_post"></activity>
+            android:label="@string/new_post" />
         <activity
             android:name=".NewPanelActivity"
-            android:label="@string/new_panel_post"></activity>
+            android:label="@string/new_panel_post" />
         <activity
             android:name=".NewSwapActivity"
-            android:label="@string/new_swap_post"></activity>
+            android:label="@string/new_swap_post" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

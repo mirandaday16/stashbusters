@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/colorSurface"
-tools:context=".NewSwapActivity">
+tools:context=".NewSnackActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@ tools:context=".NewSwapActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/post_title"
+        android:text="@string/question"
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +49,8 @@ tools:context=".NewSwapActivity">
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
-        android:maxLength="100"
-        android:hint="@string/swap_title_hint"
+        android:maxLength="20"
+        android:hint="@string/twenty_char"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
@@ -60,7 +60,7 @@ tools:context=".NewSwapActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/description"
+        android:text="@string/choice_one"
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,13 +69,11 @@ tools:context=".NewSwapActivity">
     <EditText
         android:id="@+id/descriptionInput"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="0.20"
-        android:maxLength="500"
-        android:hint="@string/swap_description_hint"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:maxLength="20"
+        android:hint="@string/twenty_char"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
 
@@ -84,7 +82,7 @@ tools:context=".NewSwapActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/desired_swap"
+        android:text="@string/choice_two"
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,30 +93,11 @@ tools:context=".NewSwapActivity">
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
-        android:maxLength="100"
-        android:hint="@string/desired_swap_hint"
+        android:maxLength="20"
+        android:hint="@string/twenty_char"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swapText" />
-
-    <TextView
-        android:id="@+id/materialTypeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/material_type"
-        android:textAppearance="@style/Body"
-        android:textColor="@color/colorText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swapInput" />
-
-    <RadioGroup
-        android:id="@+id/materialGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTypeText">
-    </RadioGroup>
 
     <Button
         android:id="@+id/postButton"
@@ -129,7 +108,7 @@ tools:context=".NewSwapActivity">
         android:text="@string/post"
         android:textAppearance="@style/ButtonText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialGroup"
+        app:layout_constraintTop_toBottomOf="@+id/swapInput"
         app:layout_constraintWidth_percent="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

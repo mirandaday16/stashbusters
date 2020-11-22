@@ -14,6 +14,8 @@
     <string name="new_post">New Post</string>
     <string name="new_panel_post">New Stash Panel Post</string>
     <string name="new_swap_post">New Stash Swap Post</string>
+    <string name="new_snack_post">New Snack Busting Post</string>
+    <string name="post">POST!</string>
 
     <string name="post_title">Post Title</string>
     <string name="title_hint">What advice do you need? (100 char. limit)</string>
@@ -30,4 +32,9 @@
         helpful information! (500 char. limit)</string>
     <string name="desired_swap">Desired Swap Item</string>
     <string name="desired_swap_hint">What do you want to swap for? (50 char. limit)</string>
+
+    <string name="question">Your Question</string>
+    <string name="choice_one">Choice One</string>
+    <string name="choice_two">Choice Two</string>
+    <string name="twenty_char">20 char. limit</string>
 </resources>

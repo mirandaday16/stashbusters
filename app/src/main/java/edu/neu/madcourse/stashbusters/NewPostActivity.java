@@ -27,6 +27,12 @@ public class NewPostActivity extends AppCompatActivity {
                 intent = new Intent(this, NewSwapActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.new_snack:
+            case R.id.snack_button:
+                intent = new Intent(this, NewSnackActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
