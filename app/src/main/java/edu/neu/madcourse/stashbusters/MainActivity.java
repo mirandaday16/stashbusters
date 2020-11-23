@@ -16,9 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.new_post_button:
-                Intent intent = new Intent(this, NewPostActivity.class);
+                intent = new Intent(this, NewPostActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.snack_busting_button:
+                 intent = new Intent(this, SnackBustingActivity.class);
                 startActivity(intent);
                 break;
             default:
