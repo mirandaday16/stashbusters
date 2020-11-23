@@ -10,6 +10,12 @@
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
 
+    <string name="world_feed">World Feed</string>
+    <string name="my_feed">My Feed</string>
+    <string name="my_profile">My Profile</string>
+    <string name="snackbusters">SnackBusters</string>
+
+
     <!--    Strings for new post activities-->
     <string name="stash_panel_n">Stash\nPanel</string>
     <string name="stash_swap_n">Stash\nSwap</string>
