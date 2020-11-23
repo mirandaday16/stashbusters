@@ -4,4 +4,9 @@
     <string name="login_screen_wallpaper">login screen wallpaper</string>
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="new_post">New Post</string>
+    <string name="world_feed">World Feed</string>
+    <string name="my_feed">My Feed</string>
+    <string name="my_profile">My Profile</string>
+    <string name="snackbusters">SnackBusters</string>
 </resources>

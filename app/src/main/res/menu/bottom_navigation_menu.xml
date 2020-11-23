@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_palette"
+        android:icon="@drawable/palette_icon"
+        android:title="@string/my_feed"/>
+
+    <item
+        android:id="@+id/ic_world"
+        android:icon="@drawable/world_icon"
+        android:title="@string/world_feed"/>
+
+    <item
+        android:id="@+id/ic_pencil"
+        android:icon="@drawable/new_post_icon"
+        android:title="@string/new_post"/>
+
+    <item
+        android:id="@+id/ic_mouse"
+        android:icon="@drawable/mouse_icon"
+        android:title="@string/my_profile"/>
+
+    <item
+        android:id="@+id/ic_snack"
+        android:icon="@drawable/cookie_icon"
+        android:title="@string/snackbusters"/>
+
+</menu>
