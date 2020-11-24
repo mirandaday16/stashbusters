@@ -20,10 +20,10 @@ import java.util.List;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 
 public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackViewHolder> {
-    List<SnackBustPost> posts;
+    SnackBustPost post;
 
-    SnackRVAdapter(List<SnackBustPost> snacks){
-        posts = snacks;
+    SnackRVAdapter(SnackBustPost snack){
+        post = snack;
     }
 
     static class SnackViewHolder extends RecyclerView.ViewHolder {
@@ -42,6 +42,10 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         }
     }
 
+    public void nextSnack(SnackBustPost snack) {
+        post = snack;
+    }
+
     @NonNull
     @Override
     public SnackViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,16 +57,15 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
     @Override
     public void onBindViewHolder(@NonNull final SnackViewHolder holder, final int position) {
         // Fill layout with snack bust post data
-        SnackBustPost currPost = posts.get(position);
-        holder.questionText.setText(currPost.getTitle());
-        holder.choiceOne.setText(currPost.getChoiceList().get(0).getText());
-        holder.choiceTwo.setText(currPost.getChoiceList().get(1).getText());
+        holder.questionText.setText(post.getTitle());
+        holder.choiceOne.setText(post.getChoiceList().get(0).getText());
+        holder.choiceTwo.setText(post.getChoiceList().get(1).getText());
 
         // Load in the image in a separate thread
         new Thread(new Runnable() {
             @Override
             public void run() {
-                setImageView(holder, posts.get(position).getPhotoUrl());
+                setImageView(holder, post.getPhotoUrl());
             }
         }).start();
     }
@@ -90,7 +93,6 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
 
     @Override
     public int getItemCount() {
-        return posts.size();
-        //return 1;
+        return 1;
     }
 }
