@@ -29,4 +29,24 @@ public class SnackBustPost {
         this.choiceList = choices;
         this.authorId = authorId;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<SnackBustChoice> getChoiceList() {
+        return choiceList;
+    }
 }

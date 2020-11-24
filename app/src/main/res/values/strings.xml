@@ -1,4 +1,43 @@
 <resources>
     <string name="app_name">StashBusters</string>
     <string name="stashbusters_headline">StashBusters</string>
+
+    <string name="stash_panel">Stash Panel</string>
+    <string name="stash_swap">Stash Swap</string>
+    <string name="snack_busting">Snack Busting</string>
+
+    <!--    Strings for new post activities-->
+    <string name="stash_panel_n">Stash\nPanel</string>
+    <string name="stash_swap_n">Stash\nSwap</string>
+    <string name="snack_busting_n">Snack\nBusting</string>
+
+    <string name="new_post">New Post</string>
+    <string name="new_panel_post">New Stash Panel Post</string>
+    <string name="new_swap_post">New Stash Swap Post</string>
+    <string name="new_snack_post">New Snack Busting Post</string>
+    <string name="post">POST!</string>
+
+    <string name="post_title">Post Title</string>
+    <string name="title_hint">What advice do you need? (100 char. limit)</string>
+    <string name="material_photo">Photo of Material</string>
+    <string name="material_type">Material Type</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="swap_material">Willing to swap for:</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe the material, your interests, and anything else that
+        might help others give you good advice! (500 char. limit)</string>
+
+    <string name="swap_title_hint">An eye-catching headline! (100 char. limit)</string>
+    <string name="swap_description_hint">Describe the material and share any additional
+        helpful information! (500 char. limit)</string>
+    <string name="desired_swap">Desired Swap Item</string>
+    <string name="desired_swap_hint">What do you want to swap for? (50 char. limit)</string>
+
+    <string name="question">Your Question</string>
+    <string name="choice_one">Choice One</string>
+    <string name="choice_two">Choice Two</string>
+    <string name="twenty_char">20 char. limit</string>
+
+    <!-- Strings for snack busting activity -->
+    <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
 </resources>
