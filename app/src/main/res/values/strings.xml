@@ -13,6 +13,7 @@
     <string name="world_feed">World Feed</string>
     <string name="my_feed">My Feed</string>
     <string name="my_profile">My Profile</string>
+    <string name="snackbusters">SnackBusters</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_password">Change Password</string>
     <string name="log_out">Log Out</string>
@@ -54,4 +55,11 @@
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
 
+    <string name="my_profile_headline">My Profile</string>
+    <string name="username_filler">username</string>
+    <string name="default_profile_picture">default profile picture</string>
+    <string name="my_posts">My Posts</string>
+    <string name="liked_posts">Liked Posts</string>
+    <string name="follower_count_default"># Followers</string>
+    <string name="lorem_ipsum">Lorem ipsum</string>
 </resources>
