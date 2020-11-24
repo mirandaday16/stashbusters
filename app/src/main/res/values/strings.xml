@@ -19,4 +19,13 @@
     <string name="liked_posts">Liked Posts</string>
     <string name="follower_count_default"># Followers</string>
     <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="choose_a_username">Choose a username</string>
+    <string name="choose_a_password">Choose a password</string>
+    <string name="password_hint">Password should be 8–16 characters and may contain letters, numbers, and special characters.</string>
+    <string name="password_hint_short">Password should be 8–16 characters</string>
+    <string name="upload_a_profile_photo">Upload a profile photo</string>
+    <string name="add_a_bio">Add a bio</string>
+    <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
+    <string name="add_profile_picture_button">add profile picture button</string>
+    <string name="let_s_go">Save</string>
 </resources>
