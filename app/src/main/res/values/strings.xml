@@ -31,4 +31,7 @@
     <string name="choose_a_new_profile_picture">Choose a new profile picture</string>
     <string name="edit_your_bio">Edit your bio</string>
     <string name="follow_user">Follow User</string>
+    <string name="enter_your_username_and_password">Enter your username and password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
