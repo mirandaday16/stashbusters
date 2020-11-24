@@ -9,4 +9,7 @@
     <string name="my_feed">My Feed</string>
     <string name="my_profile">My Profile</string>
     <string name="snackbusters">SnackBusters</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Log Out</string>
 </resources>
