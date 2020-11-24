@@ -71,4 +71,6 @@
     <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
     <string name="add_profile_picture_button">add profile picture button</string>
     <string name="let_s_go">Save</string>
+    <string name="choose_a_new_profile_picture">Choose a new profile picture</string>
+    <string name="edit_your_bio">Edit your bio</string>
 </resources>

@@ -14,47 +14,11 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/usernamePrompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="32dp"
-            android:text="@string/choose_a_username"
-            android:textAppearance="@style/PostHeadline"
-            android:textColor="@color/colorText" />
-
-        <EditText
-            android:id="@+id/usernameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/choose_a_username"
-            android:inputType="textPersonName"
-            android:maxLength="16" />
-
-        <TextView
-            android:id="@+id/passwordPrompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="32dp"
-            android:text="@string/choose_a_password"
-            android:textAppearance="@style/PostHeadline"
-            android:textColor="@color/colorText" />
-
-        <EditText
-            android:id="@+id/passwordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password_hint_short"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:maxLength="16" />
-
-        <TextView
             android:id="@+id/photoPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="32dp"
-            android:text="@string/upload_a_profile_photo"
+            android:text="@string/choose_a_new_profile_picture"
             android:textAppearance="@style/PostHeadline"
             android:textColor="@color/colorText" />
 
@@ -63,15 +27,17 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="24dp"
+            android:scaleType="fitXY"
+            android:background="@color/colorSurface"
             android:contentDescription="@string/add_profile_picture_button"
-            app:srcCompat="@android:drawable/ic_menu_gallery" />
+            android:src="@drawable/mouse_icon" />
 
         <TextView
             android:id="@+id/bioPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="32dp"
-            android:text="@string/add_a_bio"
+            android:text="@string/edit_your_bio"
             android:textAppearance="@style/PostHeadline"
             android:textColor="@color/colorText" />
 
