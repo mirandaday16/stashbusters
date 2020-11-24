@@ -7,6 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,15 +37,18 @@
     <RelativeLayout
         android:id="@+id/bottomBarArea"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:app="http://schema.android.com/apk/res/res-auto"
             android:id="@+id/navigationBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorSecondaryLight"
             app:menu="@menu/bottom_navigation_menu"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             >
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>
