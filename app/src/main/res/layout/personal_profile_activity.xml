@@ -80,7 +80,7 @@
                 android:theme="@style/ButtonText"
                 app:layout_constraintEnd_toStartOf="@+id/liked_posts"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStairtOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_weight="1"
                 android:layout_marginStart="5dp"
