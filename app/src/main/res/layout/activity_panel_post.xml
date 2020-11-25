@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorSurface"
-    tools:context=".PanelPostActivity">
+    tools:context=".StashPanelActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
@@ -30,7 +30,6 @@
             app:layout_constraintHeight_max="wrap"
             app:layout_constraintHeight_percent="1"
             app:layout_constraintDimensionRatio="1:1"
-            app:srcCompat="@drawable/mouse_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="username"
             android:textAppearance="@style/Body"
             android:textColor="@color/colorTextLight"
             app:layout_constraintStart_toEndOf="@+id/profile_pic"
@@ -52,7 +50,6 @@
             app:layout_constraintHeight_max="wrap"
             app:layout_constraintHeight_percent="1"
             app:layout_constraintDimensionRatio="1:1"
-            app:srcCompat="@drawable/heart_icon_empty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,32 +69,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="title post heading woot"
             android:textAppearance="@style/PostHeadline"
             android:textSize="35sp" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:layout_marginTop="5dp"
-            app:srcCompat="@drawable/test_photo_plush" />
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="post descriptions blah blah blah blah"
             android:textAppearance="@style/Body"
             android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/time_stamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="right"
+            android:textAppearance="@style/Body"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/commentInput"
+        android:id="@+id/comment_input"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent="1"
@@ -118,7 +121,7 @@
         android:text="@string/submit"
         android:textAppearance="@style/ButtonText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentInput"
+        app:layout_constraintTop_toBottomOf="@+id/comment_input"
         android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

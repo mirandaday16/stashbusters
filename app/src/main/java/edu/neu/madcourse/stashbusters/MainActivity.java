@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.stash_panel_button:
-                intent = new Intent(this, PanelPostActivity.class);
+                intent = new Intent(this, StashPanelActivity.class);
                 startActivity(intent);
                 break;
             default:
