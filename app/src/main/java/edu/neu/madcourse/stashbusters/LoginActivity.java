@@ -78,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // TODO: Validate this data using Firebase
+                        // For now, opens My Profile for testing purposes
+                        Intent intent = new Intent(LoginActivity.this, PersonalProfileActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("Cancel", null)
