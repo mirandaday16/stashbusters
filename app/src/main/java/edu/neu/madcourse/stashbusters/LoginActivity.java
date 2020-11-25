@@ -12,11 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.LinkedList;
-
 import edu.neu.madcourse.stashbusters.databinding.LoginLandingScreenBinding;
 
 public class LoginActivity extends AppCompatActivity {

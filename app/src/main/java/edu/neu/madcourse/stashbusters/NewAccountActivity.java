@@ -14,5 +14,8 @@ public class NewAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.new_account_activity);
+
+
     }
 }
