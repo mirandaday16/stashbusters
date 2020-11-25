@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 
 import edu.neu.madcourse.stashbusters.databinding.EditAccountActivityBinding;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditAccountActivity extends AppCompatActivity {
 
     // Set up ViewBinding for the layout
     private EditAccountActivityBinding binding;

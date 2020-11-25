@@ -30,7 +30,8 @@ public class NewAccountActivity extends AppCompatActivity {
         final EditText bioField = binding.bioInput;
         final Button saveButton = binding.saveButton;
 
-        // Setting onClickListener for Profile Picture Button - opens camera (sensor) for user to choose a profile picture
+        // Setting onClickListener for Profile Picture Button - opens camera (sensor) for user to
+        // choose a profile picture
         profilePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,7 +39,8 @@ public class NewAccountActivity extends AppCompatActivity {
             }
         });
 
-        // Setting onClickListener for Save Button - gathers information entered in form and saves in Firebase
+        // Setting onClickListener for Save Button - gathers information entered in form and saves
+        // in Firebase
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
