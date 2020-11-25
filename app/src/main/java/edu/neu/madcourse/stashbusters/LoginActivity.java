@@ -33,17 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         final Button logInButton = binding.logInButton;
         final Button signUpButton = binding.signUpButton;
 
-        // Creating a Linear Layout containing EditText fields for entering username and password
-        LayoutInflater factory = LayoutInflater.from(this);
-        final View credentialsView = factory.inflate(R.layout.login_dialog, null);
-        final EditText usernameField = (EditText) credentialsView.findViewById(R.id.usernameEntry);
-        final EditText passwordField = (EditText) credentialsView.findViewById(R.id.passwordEntry);
-
         // Setting onClickListener for Log In Button - opens dialog box to enter username and password
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogBox(LoginActivity.this, credentialsView, R.style.AlertDialogCustom);
+                showDialogBox(LoginActivity.this, R.style.AlertDialogCustom);
             }
         });
 
@@ -70,11 +64,16 @@ public class LoginActivity extends AppCompatActivity {
 
     // Opens a dialog box for user to input username and password
 
-    private void showDialogBox(Context context, View view, int themeResId) {
-        final EditText usernameField = new EditText(context);
-        final EditText passwordField = new EditText(context);
+    private void showDialogBox(Context context, int themeResId) {
+        // Creating a Linear Layout containing EditText fields for entering username and password
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View credentialsView = factory.inflate(R.layout.login_dialog, null);
+        final EditText usernameField = (EditText) credentialsView.findViewById(R.id.usernameEntry);
+        final EditText passwordField = (EditText) credentialsView.findViewById(R.id.passwordEntry);
+
+        // Creating an Alert Dialog for the user to enter their username and password
         final AlertDialog credentialsBox = new AlertDialog.Builder(context, themeResId)
-                .setView(view)
+                .setView(credentialsView)
                 .setPositiveButton("Log In", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
