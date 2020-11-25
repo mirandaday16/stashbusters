@@ -53,26 +53,4 @@
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
 
-    <string name="my_profile_headline">My Profile</string>
-    <string name="username_filler">username</string>
-    <string name="default_profile_picture">default profile picture</string>
-    <string name="my_posts">My Posts</string>
-    <string name="liked_posts">Liked Posts</string>
-    <string name="follower_count_default"># Followers</string>
-    <string name="lorem_ipsum">Lorem ipsum</string>
-    <string name="choose_a_username">Choose a username</string>
-    <string name="choose_a_password">Choose a password</string>
-    <string name="password_hint">Password should be 8–16 characters and may contain letters, numbers, and special characters.</string>
-    <string name="password_hint_short">Password should be 8–16 characters</string>
-    <string name="upload_a_profile_photo">Upload a profile photo</string>
-    <string name="add_a_bio">Add a bio</string>
-    <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
-    <string name="add_profile_picture_button">add profile picture button</string>
-    <string name="let_s_go">Save</string>
-    <string name="choose_a_new_profile_picture">Choose a new profile picture</string>
-    <string name="edit_your_bio">Edit your bio</string>
-    <string name="follow_user">Follow User</string>
-    <string name="enter_your_username_and_password">Enter your username and password</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
 </resources>
