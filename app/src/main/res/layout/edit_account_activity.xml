@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSurface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSurface"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/photoPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:text="@string/choose_a_new_profile_picture"
+            android:textAppearance="@style/PostHeadline"
+            android:textColor="@color/colorText" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            android:scaleType="fitXY"
+            android:background="@color/colorSurface"
+            android:contentDescription="@string/add_profile_picture_button"
+            android:src="@drawable/mouse_icon" />
+
+        <TextView
+            android:id="@+id/bioPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:text="@string/edit_your_bio"
+            android:textAppearance="@style/PostHeadline"
+            android:textColor="@color/colorText" />
+
+        <EditText
+            android:id="@+id/bioInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/describe_yourself_hint"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:maxLength="150" />
+
+        <Button
+            android:id="@+id/saveButton"
+            style="@style/ButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="48dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/let_s_go" />
+
+
+    </LinearLayout>
+
+</ScrollView>

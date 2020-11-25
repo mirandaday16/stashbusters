@@ -6,6 +6,18 @@
     <string name="stash_swap">Stash Swap</string>
     <string name="snack_busting">Snack Busting</string>
 
+    <string name="login_screen_wallpaper">login screen wallpaper</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="world_feed">World Feed</string>
+    <string name="my_feed">My Feed</string>
+    <string name="my_profile">My Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Log Out</string>
+    <string name="snackbusters">SnackBusters</string>
+
+
     <!--    Strings for new post activities-->
     <string name="stash_panel_n">Stash\nPanel</string>
     <string name="stash_swap_n">Stash\nSwap</string>
@@ -40,4 +52,25 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
+    <string name="let_s_go">Save</string>
+    <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
+    <string name="edit_your_bio">Edit your bio</string>
+    <string name="add_profile_picture_button">add profile picture button</string>
+    <string name="choose_a_new_profile_picture">Choose a new profile picture</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="enter_your_username_and_password">Enter your username and password</string>
+    <string name="add_a_bio">Add a bio</string>
+    <string name="upload_a_profile_photo">Upload a profile photo</string>
+    <string name="password_hint_short">Password should be 8-16 characters</string>
+    <string name="choose_a_password">Choose a password</string>
+    <string name="choose_a_username">Choose a username</string>
+    <string name="follower_count_default"># Followers</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="liked_posts">Liked Posts</string>
+    <string name="my_posts">My Posts</string>
+    <string name="username_filler">username</string>
+    <string name="default_profile_picture">default profile picture</string>
+    <string name="follow_user">Follow User</string>
+
 </resources>
