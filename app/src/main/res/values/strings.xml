@@ -40,4 +40,8 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
+
+    <!-- Strings for stash panel post -->
+    <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>
+    <string name="submit">Submit!</string>
 </resources>
