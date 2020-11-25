@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, StashPanelActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.stash_swap_button:
+                intent = new Intent(this, StashSwapActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

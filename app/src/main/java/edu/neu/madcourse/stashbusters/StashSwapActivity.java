@@ -8,10 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -24,11 +22,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.Comment;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.model.User;
 
-public class StashPanelActivity extends AppCompatActivity {
+public class StashSwapActivity extends AppCompatActivity {
 
     // Attributes needed for displaying comments in recycler view.
     RecyclerView recyclerView;
@@ -47,10 +46,11 @@ public class StashPanelActivity extends AppCompatActivity {
     TextView details;
     EditText commentInput;
     TextView timeStamp;
-    LinearLayout swapSection;
+    TextView swapItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panel_swap_post);
 
@@ -63,31 +63,30 @@ public class StashPanelActivity extends AppCompatActivity {
         details = (TextView) findViewById(R.id.details);
         commentInput = (EditText) findViewById(R.id.comment_input);
         timeStamp = (TextView) findViewById(R.id.time_stamp);
-        swapSection = (LinearLayout) findViewById(R.id.swap_for);
+        swapItem = (TextView) findViewById(R.id.swap_item);
 
-        commentInput.setHint(R.string.advice_hint);
-        swapSection.setVisibility(View.GONE);
+        commentInput.setHint(R.string.offer_hint);
 
         ///////////////////////////   DUMMY DATA!  //////////////////////////////////////
         // Post user dummy data
         final User user = new User("Batman", "12345");
-        user.setPhotoUrl("https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg");
+        user.setPhotoUrl("https://images-na.ssl-images-amazon.com/images/I/51zLZbEVSTL._AC_SX466_.jpg");
 
         // Post dummy data
-        final StashPanelPost post = new StashPanelPost("Small, sturdy, wooden sticks?",
-                "Any suggestions on what to make with these? " +
-                        "I don't have any wood working tools. I usually work with fabric.",
-                "https://images-na.ssl-images-amazon.com/images/I/71DGSnPs2yL._AC_SL1200_.jpg");
+        final StashSwapPost post = new StashSwapPost("Funky wooden beads",
+                "Bought them because they were pretty to look at, but never ended up " +
+                        "making anything with them. About 100 beads.",
+                "https://montclairdispatch.com/wp-content/uploads/2015/04/Wooden_beads.jpg",
+                MaterialType.YARN);
 
         // Post liked dummy data
-        boolean like = true;
+        boolean like = false;
 
         // Comment dummy data
         List<Comment> comments = new ArrayList<Comment>();
-        Comment comment = new Comment("Good advice good advice good advice good advice good advice");
+        Comment comment = new Comment("Would you be willing to swap for jute twine?");
         comments.add(comment);
-        comment = new Comment("Cool comment Cool comment Cool comment Cool comment " +
-                "Cool comment Cool comment Cool comment Cool comment");
+        comment = new Comment("I've got two skeins of light blue yarn-- Red Heart brand.");
         comments.add(comment);
 
         // Comment users dummy data
@@ -118,6 +117,7 @@ public class StashPanelActivity extends AppCompatActivity {
         username.setText(user.getUsername());
         title.setText(post.getTitle());
         details.setText(post.getDescription());
+        swapItem.setText(post.getMaterial().toString());
 
         Timestamp time = new Timestamp(post.getCreatedDate());
         Date date = new Date(time.getTime());
@@ -149,7 +149,6 @@ public class StashPanelActivity extends AppCompatActivity {
         }).start();
 
         ////////////////////////////////////////////////////////////////////////////
-
     }
 
     // Function to load in an image from an image URL.

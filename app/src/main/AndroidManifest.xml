@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".StashSwapActivity"
+            android:label="@string/stash_swap" />
+        <activity
             android:name=".StashPanelActivity"
             android:label="@string/stash_panel" />
         <activity android:name=".SnackBustingActivity" />
