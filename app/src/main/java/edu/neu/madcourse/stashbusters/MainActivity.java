@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.FirebaseApp;
+
+import edu.neu.madcourse.stashbusters.views.ProfileActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseApp.initializeApp(this);
     }
 
 
@@ -23,7 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.snack_busting_button:
-                 intent = new Intent(this, SnackBustingActivity.class);
+                System.out.println("HERE SNACK BUSTING");
+                intent = new Intent(this, SnackBustingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_profile_btn:
+                System.out.println("HERE USER PROFILE");
+                intent = new Intent(this, ProfileActivity.class);
+                intent.putExtra("userId", "meeky"); // TODO: change this later
                 startActivity(intent);
                 break;
             default:

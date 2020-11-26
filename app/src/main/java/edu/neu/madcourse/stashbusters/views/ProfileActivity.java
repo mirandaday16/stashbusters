@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import edu.neu.madcourse.stashbusters.presenters.ProfilePresenter;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileSetup.View {
+    private static final String TAG = ProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout
     private ProfileActivityBinding binding;
@@ -35,12 +37,17 @@ public class ProfileActivity extends AppCompatActivity implements ProfileSetup.V
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("IN ProfileActivity");
+        Log.i(TAG, "OnCreate()");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
         // load userId in intent passed from Main Activity
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
+
+        Log.i(TAG, "Logged In as " + userId);
 
         // set up presenter + load data to view
         presenter = new ProfilePresenter(this, userId);
@@ -50,15 +57,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileSetup.V
         final Toolbar toolbar = binding.profilePageToolbar;
         View view = binding.getRoot();
 
-        initViews(binding);
-
-        setContentView(view);
-    }
-
-    /**
-     * Initialize the view and set up all UI elements.
-     */
-    private void initViews(ProfileActivityBinding binding) {
+//        initViews(binding);
         // Setting up UI elements
         username = binding.usernameDisplay;
         profilePic = binding.profilePicture;
@@ -86,7 +85,42 @@ public class ProfileActivity extends AppCompatActivity implements ProfileSetup.V
                 // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
+
+        setContentView(view);
     }
+
+    /**
+     * Initialize the view and set up all UI elements.
+     */
+//    private void initViews(ProfileActivityBinding binding) {
+//        // Setting up UI elements
+//        username = binding.usernameDisplay;
+//        profilePic = binding.profilePicture;
+//        followerCountView = binding.followerCount;
+//        bio = binding.bio;
+//        myPostsButton = binding.myPosts;
+//        likedPostsButton = binding.likedPosts;
+//        postsView = binding.postViewArea;
+//
+//        // TODO: Set onClickListener for toolbar menu
+//
+//        // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
+//        myPostsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // TODO: get user's posts from Firebase and display in RecyclerView
+//            }
+//        });
+//
+//        // Setting onClickListener for Liked Posts Button - switches RecyclerView to posts the user
+//        // has liked
+//        likedPostsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // TODO: get liked posts from Firebase and display in RecyclerView
+//            }
+//        });
+//    }
 
     @Override
     public void setViewData(String photoUrl, String inputUsername, String inputBio) {
