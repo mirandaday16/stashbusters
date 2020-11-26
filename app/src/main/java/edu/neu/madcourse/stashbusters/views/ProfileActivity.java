@@ -19,23 +19,26 @@ import edu.neu.madcourse.stashbusters.presenters.ProfilePresenter;
 
 import com.squareup.picasso.Picasso;
 
+/**
+ * Responsible for the UI of a user's profile page and sending data to {@link ProfilePresenter}
+ * when there are user interactions.
+ */
 public class ProfileActivity extends AppCompatActivity implements ProfileContract.MvpView {
     private static final String TAG = ProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout
     private ProfileActivityBinding binding;
-    private ProfilePresenter presenter;
+    private ProfilePresenter mPresenter;
     RecyclerView postsView;
 
     //user info
     private String userId;
     TextView username, followerCountView, bio;
     ImageView profilePic;
-    Button myPostsButton, likedPostsButton;
+    Button myPostsButton, likedPostsButton, editProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("IN ProfileActivity");
         Log.i(TAG, "OnCreate()");
 
         super.onCreate(savedInstanceState);
@@ -48,14 +51,24 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         Log.i(TAG, "Logged In as " + userId);
 
         // set up presenter + load data to view
-        presenter = new ProfilePresenter(this, userId);
-        presenter.loadDataToView();
+        mPresenter = new ProfilePresenter(this, userId);
+        mPresenter.loadDataToView();
 
         binding = ProfileActivityBinding.inflate(getLayoutInflater());
         final Toolbar toolbar = binding.profilePageToolbar;
         View view = binding.getRoot();
 
-//        initViews(binding);
+        initViews(binding);
+
+        setContentView(view);
+    }
+
+    /**
+     * Initialize the view and set up all UI elements.
+     */
+    private void initViews(ProfileActivityBinding binding) {
+        getSupportActionBar().hide();
+
         // Setting up UI elements
         username = binding.usernameDisplay;
         profilePic = binding.profilePicture;
@@ -64,8 +77,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
         postsView = binding.postViewArea;
+        editProfileButton = binding.editProfile;
 
-        // TODO: Set onClickListener for toolbar menu
+        // TODO: Set onClickListener for toolbar menu -- these should be moved to Presenter
 
         // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
         myPostsButton.setOnClickListener(new View.OnClickListener() {
@@ -83,47 +97,23 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
                 // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
-
-        setContentView(view);
     }
 
-    /**
-     * Initialize the view and set up all UI elements.
-     */
-//    private void initViews(ProfileActivityBinding binding) {
-//        // Setting up UI elements
-//        username = binding.usernameDisplay;
-//        profilePic = binding.profilePicture;
-//        followerCountView = binding.followerCount;
-//        bio = binding.bio;
-//        myPostsButton = binding.myPosts;
-//        likedPostsButton = binding.likedPosts;
-//        postsView = binding.postViewArea;
-//
-//        // TODO: Set onClickListener for toolbar menu
-//
-//        // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
-//        myPostsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // TODO: get user's posts from Firebase and display in RecyclerView
-//            }
-//        });
-//
-//        // Setting onClickListener for Liked Posts Button - switches RecyclerView to posts the user
-//        // has liked
-//        likedPostsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // TODO: get liked posts from Firebase and display in RecyclerView
-//            }
-//        });
-//    }
-
     @Override
-    public void setViewData(String photoUrl, String inputUsername, String inputBio) {
+    public void setViewData(String photoUrl, String inputUsername, String inputBio, String inputFollowerCount) {
         Picasso.get().load(photoUrl).into(profilePic);
         username.setText(inputUsername);
         bio.setText(inputBio);
+        followerCountView.setText(inputFollowerCount + " followers");
+    }
+
+    @Override
+    public void setEditProfileBtnVisibility(int type) {
+        editProfileButton.setVisibility(type);
+    }
+
+    @Override
+    public void setMyPostBtnVisibility(int type) {
+        myPostsButton.setVisibility(type);
     }
 }

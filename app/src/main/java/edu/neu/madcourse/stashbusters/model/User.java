@@ -24,6 +24,10 @@ public class User {
         this.registrationToken = registrationToken;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -54,6 +58,10 @@ public class User {
 
     public String getRegistrationToken() {
         return registrationToken;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {

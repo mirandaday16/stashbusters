@@ -36,8 +36,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 //        currentUserId = mAuth.getCurrentUser().getUid();
 
         // check if current user is owner of this profile, if yes, display edit btn
-//        if (currentUserId.equals(userId)) {
-//            // TODO: display edit profile btn
+//        if (!currentUserId.equals(userId)) {
+//            // TODO: hide display edit profile btn
+              // mView.setEditProfileBtnVisibility(View.INVISIBLE);
 //        }
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
@@ -53,8 +54,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     String photoUrl = snapshot.child("photoUrl").getValue().toString();
                     String username = snapshot.child("username").getValue().toString();
                     String bio = snapshot.child("bio").getValue().toString();
-
-                    mView.setViewData(photoUrl, username, bio);
+                    String followerCount = snapshot.child("followerCount").getValue().toString();
+                    mView.setViewData(photoUrl, username, bio, followerCount);
                 }
             }
 

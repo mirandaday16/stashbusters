@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.snack_busting_button:
-                System.out.println("HERE SNACK BUSTING");
                 intent = new Intent(this, SnackBustingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.user_profile_btn:
-                System.out.println("HERE USER PROFILE");
                 intent = new Intent(this, ProfileActivity.class);
                 intent.putExtra("userId", "meeky"); // TODO: change this later
                 startActivity(intent);
