@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -41,9 +43,13 @@ public class PersonalProfileActivity extends AppCompatActivity {
         final Button myPostsButton = binding.myPosts;
         final Button likedPostsButton = binding.likedPosts;
         final RecyclerView postsView = binding.postViewArea;
-        final BottomNavigationView navBar = binding.navigationBar;
 
-        setupBottomNavigationView(navBar);
+        // Navigation bar buttons:
+        final ImageButton myFeedButton = binding.myFeed;
+        final ImageButton worldFeedButton = binding.worldFeed;
+        final ImageButton newPostButton = binding.newPost;
+        final ImageButton myProfileButton = binding.myProfile;
+        final ImageButton snackBustingButton = binding.snackBusting;
 
         // TODO: Set onClickListener for toolbar menu
 
@@ -64,6 +70,42 @@ public class PersonalProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Setting onClickListener for navigation bar buttons
+        myFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: start My Feed Activity; for now, will do nothing
+            }
+        });
+
+        worldFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: start World Feed Activity; for now, will do nothing
+            }
+        });
+
+        newPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewPostActivity();
+            }
+        });
+
+        myProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMyProfileActivity();
+            }
+        });
+
+        snackBustingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSnackBustingActivity();
+            }
+        });
+
 
         setContentView(view);
     }
@@ -72,36 +114,15 @@ public class PersonalProfileActivity extends AppCompatActivity {
     // Helper functions:
     */
 
-    // Sets up Bottom Navigation Bar and its onClickListener
-    private void setupBottomNavigationView(BottomNavigationView view) {
-        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.palette_button:
-                        // Open MyFeed
-                        break;
-                    case R.id.world_button:
-                        // Open World Feed
-                        break;
-                    case R.id.pencil_button:
-                        startNewPostActivity();
-                        break;
-                    case R.id.mouse_button:
-                        // Nothing happens. The user is already here.
-                        break;
-                    case R.id.cookie_button:
-                        startSnackBustingActivity();
-                        break;
-                }
-                return true;
-            }
-        });
-    }
-
     // Starts New Post Activity
     private void startNewPostActivity() {
         Intent intent = new Intent(this, NewPostActivity.class);
+        startActivity(intent);
+    }
+
+    // Restarts My Profile Activity (current activity, will just reload page)
+    private void startMyProfileActivity() {
+        Intent intent = new Intent(this, PersonalProfileActivity.class);
         startActivity(intent);
     }
 

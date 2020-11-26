@@ -25,80 +25,80 @@
             android:layout_above="@+id/buttonPanel"
             android:layout_below="@+id/profile_page_toolbar"
             android:background="@color/colorSurface"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/username_display"
                 style="@style/PostHeadline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/username_filler"/>
+                android:text="@string/username_filler" />
 
             <ImageView
                 android:id="@+id/profile_picture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:contentDescription="@string/default_profile_picture"
-                android:src="@drawable/mouse_icon"/>
+                android:src="@drawable/mouse_icon" />
 
             <TextView
                 android:id="@+id/follower_count"
                 style="@style/Detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/follower_count_default"/>
+                android:text="@string/follower_count_default" />
 
             <TextView
                 android:id="@+id/bio"
                 style="@style/Body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lorem_ipsum"
-                android:layout_marginTop="32dp"/>
+                android:layout_marginTop="32dp"
+                android:text="@string/lorem_ipsum" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/buttonPanel"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonPanel"
             android:layout_above="@id/post_view_area"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarStyle"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
 
             <Button
                 android:id="@+id/my_posts"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/my_posts"
                 android:theme="@style/ButtonText"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/liked_posts"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/liked_posts"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/liked_posts"
                 android:theme="@style/ButtonText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/my_posts"
-                android:layout_weight="1"
-                android:layout_marginEnd="5dp"/>
+                app:layout_constraintStart_toEndOf="@+id/my_posts" />
 
         </LinearLayout>
 
@@ -108,19 +108,71 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/navigationBar"
-            android:background="@color/colorSurfaceDark"/>
+            android:background="@color/colorSurfaceDark" />
 
 
+        <LinearLayout
+            android:id="@+id/navigationBar"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorSecondaryLight"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                xmlns:app="http://schema.android.com/apk/res/res-auto"
-                android:id="@+id/navigationBar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom"
-                android:background="@color/colorSecondaryLight"
-                app:menu="@menu/bottom_navigation_menu"/>
+
+            <ImageButton
+                android:id="@+id/myFeed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/palette_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/worldFeed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/world_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/newPost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/new_post_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/myProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@color/colorSecondary"
+                android:src="@drawable/mouse_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/snackBusting"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/cookie_icon"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 
