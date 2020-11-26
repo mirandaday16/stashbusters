@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-import edu.neu.madcourse.stashbusters.ProfileSetup;
+import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.databinding.ProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.ProfilePresenter;
 
 import com.squareup.picasso.Picasso;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileSetup.View {
+public class ProfileActivity extends AppCompatActivity implements ProfileContract.MvpView {
     private static final String TAG = ProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout

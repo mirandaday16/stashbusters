@@ -11,15 +11,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.ProfileSetup;
+import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
 
 /**
- * Profile Presenter -- communicate between ProfileActivity (View) and User model.
+ * Responsible for handling actions from the View and updating the UI as required.
  */
-public class ProfilePresenter implements ProfileSetup.Presenter {
+public class ProfilePresenter implements ProfileContract.Presenter {
     private static final String TAG = ProfilePresenter.class.getSimpleName();
 
-    private ProfileSetup.View mView;
+    private ProfileContract.MvpView mView;
     private Context mContext;
     private String userId; // owner of the profile
     private String currentUserId;
@@ -28,17 +28,17 @@ public class ProfilePresenter implements ProfileSetup.Presenter {
     private DatabaseReference userProfileRef;
 
     public ProfilePresenter(Context context, String userId) {
-        this.mView = (ProfileSetup.View) context;
+        this.mView = (ProfileContract.MvpView) context;
         this.mContext = context;
         this.userId = userId;
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserId = mAuth.getCurrentUser().getUid();
+//        currentUserId = mAuth.getCurrentUser().getUid();
 
         // check if current user is owner of this profile, if yes, display edit btn
-        if (currentUserId.equals(userId)) {
-            // TODO: display edit profile btn
-        }
+//        if (currentUserId.equals(userId)) {
+//            // TODO: display edit profile btn
+//        }
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
     }
