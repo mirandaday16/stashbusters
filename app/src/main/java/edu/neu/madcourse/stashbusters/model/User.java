@@ -16,6 +16,7 @@ public class User {
     private List<Post> posts;
     private List<Post> likedPosts;
     private List<User> followers;
+    private Integer followerCount;
     private String registrationToken;
 
     public User(String username, String registrationToken) {
@@ -47,6 +48,10 @@ public class User {
         return followers;
     }
 
+    public Integer getFollowerCount() {
+        return followerCount;
+    }
+
     public String getRegistrationToken() {
         return registrationToken;
     }
@@ -73,6 +78,10 @@ public class User {
 
     public void setFollowers(List<User> followers) {
         this.followers = followers;
+    }
+
+    public void setFollowerCount(Integer followerCount) {
+        this.followerCount = followerCount;
     }
 
     public void setRegistrationToken(String registrationToken) {
