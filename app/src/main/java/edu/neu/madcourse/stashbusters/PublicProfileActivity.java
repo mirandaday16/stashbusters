@@ -24,6 +24,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         // Setting up binding instance and view instances
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
         final TextView usernameView = binding.usernameDisplay;
         final ImageView profilePic = binding.profilePicture;
         final TextView followerCountView = binding.followerCount;
