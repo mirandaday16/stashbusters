@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "438356747520",
+    "firebase_url": "https://stashbuster-mczf.firebaseio.com",
+    "project_id": "stashbuster-mczf",
+    "storage_bucket": "stashbuster-mczf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438356747520:android:84b69f4e2f2e64216d3fe5",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.stashbusters"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438356747520-tcp0veqpqjcqnhi83bre0u681rpg4r44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSMzqB0bP8S6uDDjnaXsNq3du4xtwYt_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438356747520-tcp0veqpqjcqnhi83bre0u681rpg4r44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
