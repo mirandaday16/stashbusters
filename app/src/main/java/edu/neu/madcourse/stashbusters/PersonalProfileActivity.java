@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
@@ -48,9 +50,18 @@ public class PersonalProfileActivity extends AppCompatActivity {
         final ImageButton myProfileButton = binding.myProfile;
         final ImageButton snackBustingButton = binding.snackBusting;
 
-        // Set Toolbar as App bar for this activity (includes user actions menu)
-        setSupportActionBar(toolbar);
-
+        // Set onClickListener for Toolbar menu items - Edit Profile, Change Password, and Log Out
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.edit_profile_menu_item) {
+                    startEditProfileActivity();
+                } else if (item.getItemId() == R.id.log_out_menu_item) {
+                    FirebaseAuth.getInstance().signOut();
+                }
+                return false;
+            }
+        });
 
         // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
         myPostsButton.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +139,12 @@ public class PersonalProfileActivity extends AppCompatActivity {
     // Starts Snack Busting Activity
     private void startSnackBustingActivity() {
         Intent intent = new Intent(this, SnackBustingActivity.class);
+        startActivity(intent);
+    }
+
+    // Starts Edit Profile Activity
+    private void startEditProfileActivity() {
+        Intent intent = new Intent(this, EditAccountActivity.class);
         startActivity(intent);
     }
 }
