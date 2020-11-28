@@ -37,9 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_landing_screen);
 
-        // Hide Action Bar - for aesthetic purposes only
-        getSupportActionBar().hide();
-
         // Setting up binding instance and view instances
         binding = LoginLandingScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();

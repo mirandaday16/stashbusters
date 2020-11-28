@@ -38,6 +38,7 @@ public class NewAccountActivity extends AppCompatActivity {
         // Setting up binding instance and view instances
         binding = NewAccountActivityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        final EditText emailField = binding.emailInput;
         final EditText usernameField = binding.usernameInput;
         final EditText passwordField = binding.passwordInput;
         final ImageButton profilePicButton = binding.imageButton;
@@ -61,14 +62,14 @@ public class NewAccountActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = usernameField.getText().toString();
+                String emailAddress = emailField.getText().toString();
                 String password = passwordField.getText().toString();
                 if (password.length() > 16 || password.length() < 8) {
                     Toast.makeText(NewAccountActivity.this,
                             "Please choose a password between 8-16 characters.",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    mAuth.createUserWithEmailAndPassword(username, password)
+                    mAuth.createUserWithEmailAndPassword(emailAddress, password)
                             .addOnCompleteListener(NewAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {

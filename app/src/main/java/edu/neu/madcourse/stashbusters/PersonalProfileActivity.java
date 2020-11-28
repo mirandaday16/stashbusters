@@ -2,6 +2,7 @@ package edu.neu.madcourse.stashbusters;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,9 +28,6 @@ public class PersonalProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_profile_activity);
-
-        // Hide Action Bar - this page uses a toolbar instead with a menu
-        getSupportActionBar().hide();
 
         // Setting up binding instance and view instances
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
@@ -51,7 +48,9 @@ public class PersonalProfileActivity extends AppCompatActivity {
         final ImageButton myProfileButton = binding.myProfile;
         final ImageButton snackBustingButton = binding.snackBusting;
 
-        // TODO: Set onClickListener for toolbar menu
+        // Set Toolbar as App bar for this activity (includes user actions menu)
+        setSupportActionBar(toolbar);
+
 
         // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
         myPostsButton.setOnClickListener(new View.OnClickListener() {
