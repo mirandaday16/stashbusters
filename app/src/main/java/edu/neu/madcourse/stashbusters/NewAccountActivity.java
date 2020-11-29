@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -54,7 +55,6 @@ public class NewAccountActivity extends AppCompatActivity {
     // Set up ViewBinding for the layout
     private NewAccountActivityBinding binding;
     private Bitmap profilePicFile;
-    private Bitmap photoBitmap;
     private Uri photoUri;
     private String profilePicUrl = ""; // TODO: might want to set default url here
 
@@ -142,35 +142,14 @@ public class NewAccountActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, create user object and node in Firebase DB
-                                        Log.d(TAG, "createUserWithEmail:success");
+
                                         User user = new User(username, deviceToken);
                                         user.setEmailAddress(emailAddress);
                                         user.setProfilePicture(profilePicUrl);
-                                        System.out.println("in creating user " + user.getProfilePic());
                                         user.setBio(bio);
 
-                                        usersRef.child(username).setValue(user)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d(TAG, "User saved to DB successfully.");
+                                        onAuthSuccess(task.getResult().getUser(), user);
 
-                                                        // save prefs
-                                                        SharedPreferences.Editor preferencesEditor = prefs.edit();
-                                                        preferencesEditor.putString("username", username);
-                                                        preferencesEditor.apply();
-
-                                                        // go to World Feed Activity
-                                                        startWorldFeedActivity(username);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w(TAG, "Data could not be saved: " + e);
-                                                    }
-                                                });
-//                                        onSaveNewAccount(user, username, profilePicFile, bio);
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -185,6 +164,32 @@ public class NewAccountActivity extends AppCompatActivity {
 
         setContentView(view);
 
+    }
+
+    private void onAuthSuccess(FirebaseUser fireBaseUser, User userData) {
+        final String username = userData.getUsername();
+        final String userId = fireBaseUser.getUid();
+        usersRef.child(userId).setValue(userData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "createUserWithEmail:success");
+
+                        // save prefs
+                        SharedPreferences.Editor preferencesEditor = prefs.edit();
+                        preferencesEditor.putString("username", username);
+                        preferencesEditor.apply();
+
+                        // go to World Feed Activity
+                        startWorldFeedActivity(userId);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Data could not be saved: " + e);
+                    }
+                });
     }
 
      /*
@@ -206,14 +211,13 @@ public class NewAccountActivity extends AppCompatActivity {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        photoBitmap = selectedImage;
+                        Bitmap photoBitmap = selectedImage;
                     }
 
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri selectedImage = data.getData();
-                        System.out.println("Selected image URL " + selectedImage);
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         if (selectedImage != null) {
                             Cursor cursor = getContentResolver().query(selectedImage,
@@ -225,9 +229,7 @@ public class NewAccountActivity extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
                                 System.out.println("Photo path " + picturePath);
 
-//                                photoUri = fileToUri(picturePath);
                                 photoUri = selectedImage;
-                                System.out.println("Photo path toString" + photoUri.toString());
 
                                 // TODO: What a mess -- upload to DB
                                 final StorageReference ref = storageRef.child("images/" + photoUri.getLastPathSegment());
@@ -271,8 +273,6 @@ public class NewAccountActivity extends AppCompatActivity {
                                         });
                                     }
                                 });
-
-                                photoBitmap = BitmapFactory.decodeFile(picturePath);
                                 cursor.close();
                             }
                         }
@@ -283,21 +283,11 @@ public class NewAccountActivity extends AppCompatActivity {
         }
     }
 
-
-    // Stores profile picture, email, and bio in Firebase under user's node
-    private void onSaveNewAccount(User user, final String username, final String profilePic, final String bio) {
-        if (user != null) {
-            user.setUsername(username);
-            user.setProfilePicture(profilePic);
-            user.setBio(bio);
-        }
-    }
-
     // Starts World Feed Activity
-    private void startWorldFeedActivity(String username) {
+    private void startWorldFeedActivity(String userId) {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(this, PersonalProfileActivity.class);
-        intent.putExtra("userId", username);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 

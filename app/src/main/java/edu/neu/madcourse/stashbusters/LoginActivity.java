@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 // Sign in success, send user to World Feed
                                                 Log.d(TAG, "signInWithEmail:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
-                                                startWorldFeedActivity(); // TODO: "user" needs to be passed to this somehow
+                                                startWorldFeedActivity(user.getUid()); // TODO: "user" needs to be passed to this somehow
                                             } else {
                                                 // If sign in fails, display a toast message to the user
                                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -133,9 +133,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Starts World Feed Activity
-    private void startWorldFeedActivity() {
+    private void startWorldFeedActivity(String userId) {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(this, PersonalProfileActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
