@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SnackBustingActivity"></activity>
         <activity
             android:name=".NewSnackActivity"
             android:label="@string/new_snack_post" />
