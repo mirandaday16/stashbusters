@@ -73,5 +73,7 @@
     <string name="default_profile_picture">default profile picture</string>
     <string name="follow_user">Follow User</string>
     <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_email_address_and_password">Enter your email address and password</string>
+    <string name="email_address">Email Address</string>
 
 </resources>
