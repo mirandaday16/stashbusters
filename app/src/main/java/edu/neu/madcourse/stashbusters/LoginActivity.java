@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import edu.neu.madcourse.stashbusters.databinding.LoginLandingScreenBinding;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = NewAccountActivity.class.getSimpleName();

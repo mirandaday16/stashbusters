@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.google.firebase.FirebaseApp;
 
-import edu.neu.madcourse.stashbusters.views.ProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.user_profile_btn:
-                intent = new Intent(this, ProfileActivity.class);
+                intent = new Intent(this, PersonalProfileActivity.class);
                 intent.putExtra("userId", "vGI4NaY1YBVl2CZ0WSJxehTCew33"); // TODO: change this later
                 startActivity(intent);
                 break;

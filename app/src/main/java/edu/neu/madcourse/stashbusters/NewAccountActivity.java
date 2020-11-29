@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import edu.neu.madcourse.stashbusters.databinding.NewAccountActivityBinding;
 import edu.neu.madcourse.stashbusters.model.User;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 
 public class NewAccountActivity extends AppCompatActivity {

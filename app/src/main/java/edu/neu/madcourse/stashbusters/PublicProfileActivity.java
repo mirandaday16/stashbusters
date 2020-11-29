@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class PublicProfileActivity extends AppCompatActivity {
 

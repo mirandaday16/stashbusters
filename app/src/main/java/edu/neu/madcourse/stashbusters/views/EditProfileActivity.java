@@ -15,7 +15,7 @@ import edu.neu.madcourse.stashbusters.databinding.EditAccountActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.EditProfilePresenter;
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileContract.MvpView {
-    private static final String TAG = ProfileActivity.class.getSimpleName();
+    private static final String TAG = PersonalProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout
     private EditAccountActivityBinding binding;

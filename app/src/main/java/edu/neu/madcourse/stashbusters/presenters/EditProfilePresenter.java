@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import edu.neu.madcourse.stashbusters.contracts.EditProfileContract;
 
 public class EditProfilePresenter implements EditProfileContract.Presenter {
-    private static final String TAG = ProfilePresenter.class.getSimpleName();
+    private static final String TAG = PersonalProfilePresenter.class.getSimpleName();
 
     private EditProfileContract.MvpView mView;
     private Context mContext;
