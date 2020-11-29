@@ -53,10 +53,16 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
                 // only execute if user exists
                 if (snapshot.exists()) {
 //                    String photoUrl = snapshot.child("profilePic").getValue().toString();
-                    String photoUrl = snapshot.child("profilePic").getValue().toString();
+                    // TODO: review
+                    String photoUrl = "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg";
+                    Object photo = snapshot.child("profilePic").getValue();
+                    if (photo != null) {
+                        photoUrl = snapshot.child("profilePic").getValue().toString();
+                    }
                     String username = snapshot.child("username").getValue().toString();
                     String bio = snapshot.child("bio").getValue().toString();
-                    String followerCount = snapshot.child("followerCount").getValue().toString();
+//                    String followerCount = snapshot.child("followerCount").getValue().toString();
+                    String followerCount = "10";
                     mView.setViewData(photoUrl, username, bio, followerCount);
                 }
             }

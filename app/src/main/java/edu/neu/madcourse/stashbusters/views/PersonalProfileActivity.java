@@ -56,7 +56,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         setContentView(binding.getRoot());
 
         initListeners();
-        System.out.println(editProfileButton==null);
         // set up presenter + load data to view
         mPresenter = new PersonalProfilePresenter(this, userId);
 

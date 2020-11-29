@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +29,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -38,6 +46,7 @@ public class NewAccountActivity extends AppCompatActivity {
     private String deviceToken;
 
     private DatabaseReference mDatabase;
+    private StorageReference storageRef;
     private DatabaseReference usersRef;
     private SharedPreferences prefs;
     private String sharedUsername = "username";
@@ -45,6 +54,9 @@ public class NewAccountActivity extends AppCompatActivity {
     // Set up ViewBinding for the layout
     private NewAccountActivityBinding binding;
     private Bitmap profilePicFile;
+    private Bitmap photoBitmap;
+    private Uri photoUri;
+    private String profilePicUrl = ""; // TODO: might want to set default url here
 
     // Set up a FirebaseAuth object to save the new account
     private FirebaseAuth mAuth;
@@ -64,6 +76,8 @@ public class NewAccountActivity extends AppCompatActivity {
         final EditText bioField = binding.bioInput;
         final Button saveButton = binding.saveButton;
 
+        storageRef = FirebaseStorage.getInstance().getReference();
+
         // Initializing auth object for Firebase account creation
         mAuth = FirebaseAuth.getInstance();
 
@@ -79,12 +93,14 @@ public class NewAccountActivity extends AppCompatActivity {
 
         // Setting onClickListener for Profile Picture Button - opens gallery for user to
         // choose a profile picture
+        // TODO: this should be separated to its presenter
         profilePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 GalleryImagePicker profilePicPicker = new GalleryImagePicker(1);
                 selectImage();
                 profilePicFile = profilePicPicker.getBitmap();
+
                 profilePicButton.setImageBitmap(profilePicFile);
             }
 
@@ -129,8 +145,10 @@ public class NewAccountActivity extends AppCompatActivity {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         User user = new User(username, deviceToken);
                                         user.setEmailAddress(emailAddress);
-                                        user.setProfilePicture(profilePicFile);
+                                        user.setProfilePicture(profilePicUrl);
+                                        System.out.println("in creating user " + user.getProfilePic());
                                         user.setBio(bio);
+
                                         usersRef.child(username).setValue(user)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
@@ -143,7 +161,7 @@ public class NewAccountActivity extends AppCompatActivity {
                                                         preferencesEditor.apply();
 
                                                         // go to World Feed Activity
-                                                        startWorldFeedActivity();
+                                                        startWorldFeedActivity(username);
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
@@ -179,9 +197,95 @@ public class NewAccountActivity extends AppCompatActivity {
         startActivityForResult(pickPhoto, REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        photoBitmap = selectedImage;
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        System.out.println("Selected image URL " + selectedImage);
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                System.out.println("Photo path " + picturePath);
+
+//                                photoUri = fileToUri(picturePath);
+                                photoUri = selectedImage;
+                                System.out.println("Photo path toString" + photoUri.toString());
+
+                                // TODO: What a mess -- upload to DB
+                                final StorageReference ref = storageRef.child("images/" + photoUri.getLastPathSegment());
+                                final UploadTask uploadTask = ref.putFile(photoUri);
+
+                                // Register observers to listen for when the download is done or if it fails
+                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle unsuccessful uploads
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        System.out.println("SUCCESSFULY UPLOAD PHOTO TO DB");
+
+                                        // download and save to url
+                                        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                            @Override
+                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                if (!task.isSuccessful()) {
+                                                    throw task.getException();
+                                                }
+
+                                                // Continue with the task to get the download URL
+                                                return ref.getDownloadUrl();
+                                            }
+                                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Uri> task) {
+                                                if (task.isSuccessful()) {
+                                                    Uri userPhotoUri = task.getResult();
+                                                    profilePicUrl = userPhotoUri.toString();
+
+                                                    System.out.println("profilePicUrl Updated " + profilePicUrl);
+                                                } else {
+                                                    // Handle failures
+                                                    // ...
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+
+                                photoBitmap = BitmapFactory.decodeFile(picturePath);
+                                cursor.close();
+                            }
+                        }
+
+                    }
+                    break;
+            }
+        }
+    }
+
 
     // Stores profile picture, email, and bio in Firebase under user's node
-    private void onSaveNewAccount(User user, final String username, final Bitmap profilePic, final String bio) {
+    private void onSaveNewAccount(User user, final String username, final String profilePic, final String bio) {
         if (user != null) {
             user.setUsername(username);
             user.setProfilePicture(profilePic);
@@ -190,9 +294,10 @@ public class NewAccountActivity extends AppCompatActivity {
     }
 
     // Starts World Feed Activity
-    private void startWorldFeedActivity() {
+    private void startWorldFeedActivity(String username) {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(this, PersonalProfileActivity.class);
+        intent.putExtra("userId", username);
         startActivity(intent);
     }
 

@@ -1,7 +1,5 @@
 package edu.neu.madcourse.stashbusters.model;
 
-import android.graphics.Bitmap;
-
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.List;
@@ -18,7 +16,7 @@ public class User {
     private List<Post> likedPosts;
     private List<User> followers;
     private String registrationToken; // user's device token
-    private Bitmap profilePic;
+    private String profilePic;
     private String emailAddress;
 
     public User(String username, String registrationToken) {
@@ -50,6 +48,10 @@ public class User {
         return registrationToken;
     }
 
+    public String getProfilePic() {
+        return profilePic;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -74,7 +76,7 @@ public class User {
         this.registrationToken = registrationToken;
     }
 
-    public void setProfilePicture(Bitmap profilePic) { this.profilePic = profilePic;
+    public void setProfilePicture(String profilePic) { this.profilePic = profilePic;
     }
 
     public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress;}

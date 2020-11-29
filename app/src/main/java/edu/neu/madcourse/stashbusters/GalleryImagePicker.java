@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,10 +9,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import java.io.File;
+
 
 public class GalleryImagePicker extends Activity {
     private Bitmap photoBitmap;
     private int REQUEST_CODE;
+    private Uri photoUri;
 
     public GalleryImagePicker(int REQUEST_CODE) {
         this.REQUEST_CODE = REQUEST_CODE;
@@ -27,6 +31,8 @@ public class GalleryImagePicker extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
@@ -39,6 +45,7 @@ public class GalleryImagePicker extends Activity {
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri selectedImage = data.getData();
+                        System.out.println("Selected image URL" + selectedImage);
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         if (selectedImage != null) {
                             Cursor cursor = getContentResolver().query(selectedImage,
@@ -48,6 +55,12 @@ public class GalleryImagePicker extends Activity {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
+                                System.out.println("Photo path" + picturePath);
+
+//                                photoUri = fileToUri(picturePath);
+                                photoUri = selectedImage;
+                                System.out.println("Photo path" + photoUri.toString());
+
                                 photoBitmap = BitmapFactory.decodeFile(picturePath);
                                 cursor.close();
                             }
@@ -57,6 +70,15 @@ public class GalleryImagePicker extends Activity {
                     break;
             }
         }
+    }
+
+    private Uri fileToUri(String path) {
+        Uri file = Uri.fromFile(new File(path));
+        return file;
+    }
+
+    public Uri getPhotoUri() {
+        return photoUri;
     }
 
 }
