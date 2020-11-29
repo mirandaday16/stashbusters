@@ -55,6 +55,7 @@ public class PersonalProfileActivity extends AppCompatActivity {
                     startEditProfileActivity();
                 } else if (item.getItemId() == R.id.log_out_menu_item) {
                     FirebaseAuth.getInstance().signOut();
+                    startLoginActivity();
                 }
                 return false;
             }
@@ -142,6 +143,12 @@ public class PersonalProfileActivity extends AppCompatActivity {
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {
         Intent intent = new Intent(this, EditAccountActivity.class);
+        startActivity(intent);
+    }
+
+    // Starts Login Activity
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

@@ -71,7 +71,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in; if so, go to World Feed activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // TODO: send user to World Feed if signed in
+        if (currentUser != null) {
+            startWorldFeedActivity();
+        }
     }
 
     /*
