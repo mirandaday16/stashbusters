@@ -37,7 +37,7 @@ import edu.neu.madcourse.stashbusters.model.User;
 
 
 public class NewAccountActivity extends AppCompatActivity {
-    private static final String TAG = NewAccountActivity.class.getSimpleName();
+    public static final String TAG = NewAccountActivity.class.getSimpleName();
     private static int REQUEST_CODE = 1;
     private String deviceToken;
 
@@ -236,11 +236,11 @@ public class NewAccountActivity extends AppCompatActivity {
                                             return Transaction.success(currentData);
                                         }
                                         // Add email address to user node
-                                        u.emailAddress = emailAddress;
+                                        u.setEmailAddress(emailAddress);
                                         // Add profilePic to user node
-                                        u.profilePic = profilePic;
+                                        u.setProfilePicture(profilePic);
                                         // Add user bio to user node
-                                        u.bio = bio;
+                                        u.setBio(bio);
 
                                         currentData.setValue(u);
                                         return Transaction.success(currentData);

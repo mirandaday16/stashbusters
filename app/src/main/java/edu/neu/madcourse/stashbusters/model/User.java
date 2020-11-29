@@ -12,15 +12,15 @@ import java.util.List;
  */
 @IgnoreExtraProperties
 public class User {
-    public String emailAddress;
-    public String id;
-    public String username;
-    public String bio;
-    public List<Post> posts;
-    public List<Post> likedPosts;
-    public List<User> followers;
-    public String registrationToken; // user's device token
-    public Bitmap profilePic;
+    private String emailAddress;
+    private String id;
+    private String username;
+    private String bio;
+    private List<Post> posts;
+    private List<Post> likedPosts;
+    private List<User> followers;
+    private String registrationToken; // user's device token
+    private Bitmap profilePic;
 
     public User(String username, String registrationToken) {
         this.username = username;
