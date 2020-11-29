@@ -26,7 +26,6 @@ public class PersonalProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personal_profile_activity);
 
         // Setting up binding instance and view instances
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());

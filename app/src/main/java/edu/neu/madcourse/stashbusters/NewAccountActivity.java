@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -21,8 +22,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
@@ -51,7 +56,6 @@ public class NewAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_account_activity);
 
         // Setting up binding instance and view instances
         binding = NewAccountActivityBinding.inflate(getLayoutInflater());
@@ -126,7 +130,7 @@ public class NewAccountActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Sign in success, create user object and node in Firebase DB
                                         Log.d(TAG, "createUserWithEmail:success");
-                                        User user = new User(username, deviceToken);
+                                        final User user = new User(username, deviceToken);
                                         user.setEmailAddress(emailAddress);
                                         user.setProfilePicture(profilePicFile);
                                         user.setBio(bio);
@@ -139,7 +143,12 @@ public class NewAccountActivity extends AppCompatActivity {
                                                         // save prefs
                                                         SharedPreferences.Editor preferencesEditor = prefs.edit();
                                                         preferencesEditor.putString("username", username);
+                                                        preferencesEditor.putString("email", emailAddress);
+                                                        preferencesEditor.putString("bio", bio);
                                                         preferencesEditor.apply();
+
+                                                        // Save to Firebase database
+                                                        setProfileData(mDatabase, username, emailAddress, profilePicFile, bio);
 
                                                         // go to World Feed Activity
                                                         startWorldFeedActivity();
@@ -212,4 +221,39 @@ public class NewAccountActivity extends AppCompatActivity {
                 });
     }
 
+    // Sets user's profile info -- email address, bio, profile picture -- in Firebase
+    private void setProfileData(DatabaseReference postRef, final String username, final String emailAddress, final Bitmap profilePic, final String bio) {
+        postRef
+                .child("users")
+                .child(username)
+                .runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                                        User u = currentData.getValue(User.class);
+                                        // Check that username exists in database; else, return
+                                        if (u == null) {
+                                            return Transaction.success(currentData);
+                                        }
+                                        // Add email address to user node
+                                        u.emailAddress = emailAddress;
+                                        // Add profilePic to user node
+                                        u.profilePic = profilePic;
+                                        // Add user bio to user node
+                                        u.bio = bio;
+
+                                        currentData.setValue(u);
+                                        return Transaction.success(currentData);
+                                    }
+
+
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                                        // Transaction completed
+                                        Log.d(TAG, "sentTransaction:onComplete:" + error);
+                                    }
+                                }
+                );
+
+    }
 }

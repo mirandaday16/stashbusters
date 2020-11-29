@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_landing_screen);
 
         // Setting up binding instance and view instances
         binding = LoginLandingScreenBinding.inflate(getLayoutInflater());

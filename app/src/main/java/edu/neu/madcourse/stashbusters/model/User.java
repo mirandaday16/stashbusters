@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.AbstractList;
 import java.util.List;
 
 /**
@@ -11,15 +12,15 @@ import java.util.List;
  */
 @IgnoreExtraProperties
 public class User {
-    private String id;
-    private String username;
-    private String bio;
-    private List<Post> posts;
-    private List<Post> likedPosts;
-    private List<User> followers;
-    private String registrationToken; // user's device token
-    private Bitmap profilePic;
-    private String emailAddress;
+    public String emailAddress;
+    public String id;
+    public String username;
+    public String bio;
+    public List<Post> posts;
+    public List<Post> likedPosts;
+    public List<User> followers;
+    public String registrationToken; // user's device token
+    public Bitmap profilePic;
 
     public User(String username, String registrationToken) {
         this.username = username;

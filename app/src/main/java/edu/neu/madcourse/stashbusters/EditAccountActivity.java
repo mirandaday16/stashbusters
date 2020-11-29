@@ -18,7 +18,6 @@ public class EditAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_account_activity);
 
         // Setting up binding instance and view instances
         binding = EditAccountActivityBinding.inflate(getLayoutInflater());
