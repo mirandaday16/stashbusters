@@ -1,38 +1,44 @@
 package edu.neu.madcourse.stashbusters;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class PublicProfileActivity extends AppCompatActivity {
+import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
+
+public class PersonalProfileActivity extends AppCompatActivity {
 
     // Set up ViewBinding for the layout
-    private PublicProfileActivityBinding binding;
+    private PersonalProfileActivityBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.public_profile_activity);
+        setContentView(R.layout.personal_profile_activity);
 
         // Setting up binding instance and view instances
-        binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
+        binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
-        final TextView usernameView = binding.usernameDisplay;
+        final Toolbar toolbar = binding.profilePageToolbar;
+        final TextView username = binding.usernameDisplay;
         final ImageView profilePic = binding.profilePicture;
         final TextView followerCountView = binding.followerCount;
         final TextView bio = binding.bio;
-        final Button followButton = binding.followButton;
-        final RecyclerView userPostsFeed = binding.postViewArea;
+        final Button myPostsButton = binding.myPosts;
+        final Button likedPostsButton = binding.likedPosts;
+        final RecyclerView postsView = binding.postViewArea;
 
         // Navigation bar buttons:
         final ImageButton myFeedButton = binding.myFeed;
@@ -41,14 +47,33 @@ public class PublicProfileActivity extends AppCompatActivity {
         final ImageButton myProfileButton = binding.myProfile;
         final ImageButton snackBustingButton = binding.snackBusting;
 
-        // Setting up onClickListener for Follow Button - should switch to "Followed" and a darker
-        // color if the user is following this profile
-        followButton.setOnClickListener(new View.OnClickListener() {
+        // Set onClickListener for Toolbar menu items - Edit Profile, Change Password, and Log Out
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.edit_profile_menu_item) {
+                    startEditProfileActivity();
+                } else if (item.getItemId() == R.id.log_out_menu_item) {
+                    FirebaseAuth.getInstance().signOut();
+                }
+                return false;
+            }
+        });
+
+        // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
+        myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Change color/text depending on following status (get from Firebase)
-                // TODO: When clicked, edit following status in Firebase (either add or remove user
-                //  from following list)
+                // TODO: get user's posts from Firebase and display in RecyclerView
+            }
+        });
+
+        // Setting onClickListener for Liked Posts Button - switches RecyclerView to posts the user
+        // has liked
+        likedPostsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
 
@@ -88,10 +113,11 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
+
         setContentView(view);
     }
 
-     /*
+    /*
     // Helper functions:
     */
 
@@ -110,6 +136,12 @@ public class PublicProfileActivity extends AppCompatActivity {
     // Starts Snack Busting Activity
     private void startSnackBustingActivity() {
         Intent intent = new Intent(this, SnackBustingActivity.class);
+        startActivity(intent);
+    }
+
+    // Starts Edit Profile Activity
+    private void startEditProfileActivity() {
+        Intent intent = new Intent(this, EditAccountActivity.class);
         startActivity(intent);
     }
 }

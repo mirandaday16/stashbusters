@@ -3,21 +3,21 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profile_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/profile_page_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:menu="@menu/options_menu" />
 
         <LinearLayout
@@ -56,30 +56,9 @@
                 style="@style/Body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginRight="32dp"
                 android:text="@string/lorem_ipsum" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_info_area">
-
-                <Button
-                    android:id="@+id/edit_profile"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-
-                    android:background="@color/colorPrimary"
-                    android:text="@string/edit_profile"
-                    android:theme="@style/ButtonText" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -134,14 +113,68 @@
             android:background="@color/colorSurfaceDark" />
 
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:app="http://schema.android.com/apk/res/res-auto"
+        <LinearLayout
             android:id="@+id/navigationBar"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
             android:background="@color/colorSecondaryLight"
-            app:menu="@menu/bottom_navigation_menu" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+
+            <ImageButton
+                android:id="@+id/myFeed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/palette_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/worldFeed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/world_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/newPost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/new_post_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/myProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@color/colorSecondary"
+                android:src="@drawable/mouse_icon"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/snackBusting"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                style="?android:attr/buttonBarButtonStyle"
+                android:src="@drawable/cookie_icon"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 

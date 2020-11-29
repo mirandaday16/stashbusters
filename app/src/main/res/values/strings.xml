@@ -72,5 +72,6 @@
     <string name="username_filler">username</string>
     <string name="default_profile_picture">default profile picture</string>
     <string name="follow_user">Follow User</string>
+    <string name="enter_your_email_address">Enter your email address</string>
 
 </resources>
