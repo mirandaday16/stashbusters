@@ -36,13 +36,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
     TextView username, followerCountView, bio;
     ImageView profilePic;
     Button myPostsButton, likedPostsButton, editProfileButton;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "OnCreate()");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_activity);
 
         // load userId in intent passed from Main Activity
         Intent intent = getIntent();
@@ -50,17 +50,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
 
         Log.i(TAG, "Logged In as " + userId);
 
+        binding = ProfileActivityBinding.inflate(getLayoutInflater());
+        initViews(binding);
+        setContentView(binding.getRoot());
+
+        initListeners();
+
         // set up presenter + load data to view
         mPresenter = new ProfilePresenter(this, userId);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mPresenter.loadDataToView();
-
-        binding = ProfileActivityBinding.inflate(getLayoutInflater());
-        final Toolbar toolbar = binding.profilePageToolbar;
-        View view = binding.getRoot();
-
-        initViews(binding);
-
-        setContentView(view);
     }
 
     /**
@@ -68,6 +72,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
      */
     private void initViews(ProfileActivityBinding binding) {
         getSupportActionBar().hide();
+
+        toolbar = binding.profilePageToolbar;
 
         // Setting up UI elements
         username = binding.usernameDisplay;
@@ -78,13 +84,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         likedPostsButton = binding.likedPosts;
         postsView = binding.postViewArea;
         editProfileButton = binding.editProfile;
+    }
 
+    private void initListeners() {
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.onEditProfileButtonClick(userId);
+            }
+        });
         // TODO: Set onClickListener for toolbar menu -- these should be moved to Presenter
 
         // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
         myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // send to presenter
                 // TODO: get user's posts from Firebase and display in RecyclerView
             }
         });
@@ -105,15 +120,5 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         username.setText(inputUsername);
         bio.setText(inputBio);
         followerCountView.setText(inputFollowerCount + " followers");
-    }
-
-    @Override
-    public void setEditProfileBtnVisibility(int type) {
-        editProfileButton.setVisibility(type);
-    }
-
-    @Override
-    public void setMyPostBtnVisibility(int type) {
-        myPostsButton.setVisibility(type);
     }
 }

@@ -1,6 +1,8 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
+import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.
@@ -22,24 +25,17 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     private ProfileContract.MvpView mView;
     private Context mContext;
     private String userId; // owner of the profile
-    private String currentUserId;
 
     private FirebaseAuth mAuth;
     private DatabaseReference userProfileRef;
 
     public ProfilePresenter(Context context, String userId) {
+        // TODO: When user gets here, must be private profile
         this.mView = (ProfileContract.MvpView) context;
         this.mContext = context;
         this.userId = userId;
 
         mAuth = FirebaseAuth.getInstance();
-//        currentUserId = mAuth.getCurrentUser().getUid();
-
-        // check if current user is owner of this profile, if yes, display edit btn
-//        if (!currentUserId.equals(userId)) {
-//            // TODO: hide display edit profile btn
-              // mView.setEditProfileBtnVisibility(View.INVISIBLE);
-//        }
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
     }
@@ -64,5 +60,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
             }
         });
+    }
+
+    @Override
+    public void onEditProfileButtonClick(String userId) {
+        // TODO: display edit profile page
+
     }
 }

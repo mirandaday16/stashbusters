@@ -2,7 +2,10 @@ package edu.neu.madcourse.stashbusters.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class represents user.
@@ -11,6 +14,7 @@ import java.util.List;
 public class User {
     private String id;
     private String username;
+    private String email;
     private String photoUrl;
     private String bio;
     private List<Post> posts;
@@ -24,12 +28,31 @@ public class User {
         this.registrationToken = registrationToken;
     }
 
+    public User(String username, String email, String photoUrl, String bio) {
+        this.username = username;
+        this.email = email;
+        this.photoUrl = photoUrl;
+        this.bio = bio;
+    }
+
+    public User(String username, String email, String photoUrl, String bio, String registrationToken) {
+        this.username = username;
+        this.email = email;
+        this.photoUrl = photoUrl;
+        this.bio = bio;
+        this.registrationToken = registrationToken;
+    }
+
     public String getId() {
         return id;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPhotoUrl() {
@@ -64,6 +87,10 @@ public class User {
         this.id = id;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -94,5 +121,16 @@ public class User {
 
     public void setRegistrationToken(String registrationToken) {
         this.registrationToken = registrationToken;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("username", username);
+        result.put("bio", bio);
+        result.put("email", email);
+        result.put("photoUrl", photoUrl);
+
+        return result;
     }
 }

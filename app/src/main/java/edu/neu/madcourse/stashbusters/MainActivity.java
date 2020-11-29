@@ -34,7 +34,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.user_profile_btn:
                 intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("userId", "meeky"); // TODO: change this later
+                intent.putExtra("userId", "vGI4NaY1YBVl2CZ0WSJxehTCew33"); // TODO: change this later
+                startActivity(intent);
+                break;
+            case R.id.register_btn:
+                System.out.println("register btn clicked");
+                intent = new Intent(this, NewAccountActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.login_btn:
+                System.out.println("login btn clicked");
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
             default:
