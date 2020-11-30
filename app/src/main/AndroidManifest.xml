@@ -14,24 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".StashSwapActivity"
-            android:label="@string/stash_swap" />
-        <activity
-            android:name=".StashPanelActivity"
-            android:label="@string/stash_panel" />
-        <activity android:name=".SnackBustingActivity" />
-        <activity android:name=".PersonalProfileActivity"></activity>
+        <activity android:name=".views.PersonalProfileActivity"></activity>
+        <activity android:name=".views.EditProfileActivity"></activity>
         <activity android:name=".PublicProfileActivity" />
         <activity android:name=".EditAccountActivity" />
-        <activity android:name=".NewAccountActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".views.NewAccountActivity" />
+        <activity android:name=".views.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SnackBustingActivity"></activity>
         <activity
             android:name=".NewSnackActivity"
             android:label="@string/new_snack_post" />
@@ -45,6 +40,11 @@
             android:name=".NewSwapActivity"
             android:label="@string/new_swap_post" />
         <activity android:name=".MainActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <provider
@@ -57,6 +57,7 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

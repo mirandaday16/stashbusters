@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class PublicProfileActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         // Setting up binding instance and view instances
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
         final TextView usernameView = binding.usernameDisplay;
         final ImageView profilePic = binding.profilePicture;
         final TextView followerCountView = binding.followerCount;

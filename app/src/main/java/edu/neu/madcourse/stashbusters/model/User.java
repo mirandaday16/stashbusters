@@ -1,7 +1,5 @@
 package edu.neu.madcourse.stashbusters.model;
 
-import android.graphics.Bitmap;
-
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.AbstractList;
@@ -16,15 +14,30 @@ public class User {
     private String id;
     private String username;
     private String bio;
+    private String photoUrl;
     private List<Post> posts;
     private List<Post> likedPosts;
     private List<User> followers;
-    private String registrationToken; // user's device token
-    private Bitmap profilePic;
+    private Integer followerCount;
+    private String deviceToken; // user's device token
 
-    public User(String username, String registrationToken) {
+    public User(String username, String deviceToken) {
         this.username = username;
-        this.registrationToken = registrationToken;
+        this.deviceToken = deviceToken;
+        this.followerCount = 0;
+    }
+
+    public User(String emailAddress,
+                String username,
+                String bio,
+                String photoUrl,
+                String deviceToken) {
+        this.emailAddress = emailAddress;
+        this.username = username;
+        this.bio = bio;
+        this.photoUrl = photoUrl;
+        this.deviceToken = deviceToken;
+        this.followerCount = 0;
     }
 
     public String getUsername() {
@@ -47,8 +60,20 @@ public class User {
         return followers;
     }
 
-    public String getRegistrationToken() {
-        return registrationToken;
+    public Integer getFollowerCount() {
+        return followerCount;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     public void setUsername(String username) {
@@ -71,11 +96,15 @@ public class User {
         this.followers = followers;
     }
 
-    public void setRegistrationToken(String registrationToken) {
-        this.registrationToken = registrationToken;
+    public void setFollowerCount(Integer followerCount) {
+        this.followerCount = followerCount;
     }
 
-    public void setProfilePicture(Bitmap profilePic) { this.profilePic = profilePic;
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl;
     }
 
     public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress;}
