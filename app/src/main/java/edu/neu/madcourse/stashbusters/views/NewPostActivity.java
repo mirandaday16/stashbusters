@@ -1,10 +1,13 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import edu.neu.madcourse.stashbusters.NewPanelActivity;
+import edu.neu.madcourse.stashbusters.R;
 
 public class NewPostActivity extends AppCompatActivity {
 
