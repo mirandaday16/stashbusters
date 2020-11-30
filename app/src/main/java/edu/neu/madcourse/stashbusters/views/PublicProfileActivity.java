@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,36 +11,64 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
-public class PublicProfileActivity extends AppCompatActivity {
+import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
+import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.presenters.PublicProfilePresenter;
+
+public class PublicProfileActivity extends AppCompatActivity implements PublicProfileContract.MvpView {
+    private static final String TAG = PublicProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout
     private PublicProfileActivityBinding binding;
+    private ImageView profilePic;
+    private TextView usernameView, followerCountView, bio;
+    private Button followButton;
+    private RecyclerView userPostsFeed;
+    //nav
+    private ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
+
+    private PublicProfilePresenter mPresenter;
+    private String targetUserId; //this profile's owner
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        targetUserId = intent.getStringExtra("targetUserId");
+
+        mPresenter = new PublicProfilePresenter(this, targetUserId);
+        mPresenter.loadDataToView();
+
         // Setting up binding instance and view instances
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
 
-        final TextView usernameView = binding.usernameDisplay;
-        final ImageView profilePic = binding.profilePicture;
-        final TextView followerCountView = binding.followerCount;
-        final TextView bio = binding.bio;
-        final Button followButton = binding.followButton;
-        final RecyclerView userPostsFeed = binding.postViewArea;
+        initViews();
+        initListeners();
+
+        setContentView(binding.getRoot());
+    }
+
+    private void initViews() {
+        usernameView = binding.usernameDisplay;
+        profilePic = binding.profilePicture;
+        followerCountView = binding.followerCount;
+        bio = binding.bio;
+        followButton = binding.followButton;
+        userPostsFeed = binding.postViewArea;
 
         // Navigation bar buttons:
-        final ImageButton myFeedButton = binding.myFeed;
-        final ImageButton worldFeedButton = binding.worldFeed;
-        final ImageButton newPostButton = binding.newPost;
-        final ImageButton myProfileButton = binding.myProfile;
-        final ImageButton snackBustingButton = binding.snackBusting;
+        myFeedButton = binding.myFeed;
+        worldFeedButton = binding.worldFeed;
+        newPostButton = binding.newPost;
+        myProfileButton = binding.myProfile;
+        snackBustingButton = binding.snackBusting;
+    }
 
+    private void initListeners() {
         // Setting up onClickListener for Follow Button - should switch to "Followed" and a darker
         // color if the user is following this profile
         followButton.setOnClickListener(new View.OnClickListener() {
@@ -70,46 +98,30 @@ public class PublicProfileActivity extends AppCompatActivity {
         newPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startNewPostActivity();
+                mPresenter.onNewPostButtonClick();
             }
         });
 
         myProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startMyProfileActivity();
+                mPresenter.onMyProfileButtonClick();
             }
         });
 
         snackBustingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startSnackBustingActivity();
+                mPresenter.onSnackBustingButtonClick();
             }
         });
-
-        setContentView(view);
     }
 
-     /*
-    // Helper functions:
-    */
-
-    // Starts New Post Activity
-    private void startNewPostActivity() {
-        Intent intent = new Intent(this, NewPostActivity.class);
-        startActivity(intent);
-    }
-
-    // Restarts My Profile Activity (current activity, will just reload page)
-    private void startMyProfileActivity() {
-        Intent intent = new Intent(this, PersonalProfileActivity.class);
-        startActivity(intent);
-    }
-
-    // Starts Snack Busting Activity
-    private void startSnackBustingActivity() {
-        Intent intent = new Intent(this, SnackBustingActivity.class);
-        startActivity(intent);
+    @Override
+    public void setViewData(String photoUrl, String inputUsername, String inputBio, String inputFollowerCount) {
+        Picasso.get().load(photoUrl).into(profilePic);
+        usernameView.setText(inputUsername);
+        bio.setText(inputBio);
+        followerCountView.setText(inputFollowerCount + " followers");
     }
 }
