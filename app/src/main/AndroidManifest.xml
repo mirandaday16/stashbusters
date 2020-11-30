@@ -34,7 +34,7 @@
             android:name=".views.NewPostActivity"
             android:label="@string/new_post" />
         <activity
-            android:name=".NewPanelActivity"
+            android:name=".views.NewPanelActivity"
             android:label="@string/new_panel_post" />
         <activity
             android:name=".views.NewSwapActivity"
