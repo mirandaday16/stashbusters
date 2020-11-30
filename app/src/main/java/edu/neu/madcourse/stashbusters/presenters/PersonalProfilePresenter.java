@@ -19,6 +19,7 @@ import edu.neu.madcourse.stashbusters.NewPostActivity;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
+import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
@@ -53,7 +54,6 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // only execute if user exists
                 if (snapshot.exists()) {
-//                    String photoUrl = snapshot.child("profilePic").getValue().toString();
                     // TODO: review
                     String photoUrl = "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg";
                     Object photo = snapshot.child("photoUrl").getValue();
@@ -77,8 +77,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     @Override
     public void onEditProfileButtonClick(String userId) {
-        // TODO: display edit profile page
-
+        Intent intent = new Intent(mContext, EditProfileActivity.class);
+        intent.putExtra("userId", userId);
+        mContext.startActivity(intent);
     }
 
     @Override

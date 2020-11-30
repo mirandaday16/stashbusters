@@ -49,30 +49,26 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
 
-        Log.i(TAG, "Logged In as " + userId);
-
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
         initViews(binding);
-        setContentView(binding.getRoot());
-
         initListeners();
+
         // set up presenter + load data to view
         mPresenter = new PersonalProfilePresenter(this, userId);
+        mPresenter.loadDataToView();
 
+        setContentView(binding.getRoot());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.loadDataToView();
     }
 
     /**
      * Initialize the view and set up all UI elements.
      */
     private void initViews(PersonalProfileActivityBinding binding) {
-//        getSupportActionBar().hide();
-        System.out.println(editProfileButton==null);
         toolbar = binding.profilePageToolbar;
 
         // Setting up UI elements

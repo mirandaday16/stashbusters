@@ -13,7 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import edu.neu.madcourse.stashbusters.NewAccountActivity;
+import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -28,7 +27,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 
 import edu.neu.madcourse.stashbusters.GalleryImagePicker;
-import edu.neu.madcourse.stashbusters.NewAccountActivity;
+import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewAccountContract;
 import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.utils.Utils;
@@ -70,11 +69,6 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
     public void onProfilePictureButtonClick() {
         GalleryImagePicker profilePicPicker = new GalleryImagePicker(1);
         mView.selectImage();
-    }
-
-    @Override
-    public void onSaveButtonClick() {
-
     }
 
     @Override

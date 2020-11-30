@@ -2,10 +2,10 @@ package edu.neu.madcourse.stashbusters.contracts;
 
 import android.net.Uri;
 
-import com.google.firebase.auth.FirebaseAuth;
+import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 
 /**
- * Defines the contract between the View {@link edu.neu.madcourse.stashbusters.NewAccountActivity}
+ * Defines the contract between the View {@link NewAccountActivity}
  * and the Presenter {@link edu.neu.madcourse.stashbusters.presenters.LoginPresenter}.
  * This is for a user's private profile.
  */
@@ -34,7 +34,6 @@ public interface NewAccountContract {
         void uploadUserProfilePhotoToStorage(Uri photoUri);
 
         void onProfilePictureButtonClick();
-        void onSaveButtonClick();
         boolean validateUsername(String username);
         boolean validatePassword(String password);
         void registerUser(final String emailAddress,
