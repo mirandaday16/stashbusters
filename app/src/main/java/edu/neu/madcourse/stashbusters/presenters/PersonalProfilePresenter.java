@@ -19,6 +19,7 @@ import edu.neu.madcourse.stashbusters.NewPostActivity;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
+import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 /**
@@ -55,9 +56,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 //                    String photoUrl = snapshot.child("profilePic").getValue().toString();
                     // TODO: review
                     String photoUrl = "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg";
-                    Object photo = snapshot.child("profilePic").getValue();
+                    Object photo = snapshot.child("photoUrl").getValue();
                     if (photo != null) {
-                        photoUrl = snapshot.child("profilePic").getValue().toString();
+                        photoUrl = snapshot.child("photoUrl").getValue().toString();
                     }
                     String username = snapshot.child("username").getValue().toString();
                     String bio = snapshot.child("bio").getValue().toString();
@@ -86,6 +87,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
             startEditProfileActivity();
         } else if (item.getItemId() == R.id.log_out_menu_item) {
             FirebaseAuth.getInstance().signOut();
+            startLoginActivity();
         }
         return false;
     }
@@ -126,6 +128,12 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     // Starts Snack Busting Activity
     private void startSnackBustingActivity() {
         Intent intent = new Intent(this.mContext, SnackBustingActivity.class);
+        mContext.startActivity(intent);
+    }
+
+    // Starts Login Activity
+    private void startLoginActivity() {
+        Intent intent = new Intent(this.mContext, LoginActivity.class);
         mContext.startActivity(intent);
     }
 }

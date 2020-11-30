@@ -52,6 +52,12 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
+
+    <!-- Strings for stash panel and swap posts -->
+    <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>
+    <string name="offer_hint">Make an offer! (100 char. limit)</string>
+    <string name="submit">Submit!</string>
+
     <string name="let_s_go">Save</string>
     <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
     <string name="edit_your_bio">Edit your bio</string>
@@ -73,5 +79,7 @@
     <string name="default_profile_picture">default profile picture</string>
     <string name="follow_user">Follow User</string>
     <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_email_address_and_password">Enter your email address and password</string>
+    <string name="email_address">Email Address</string>
 
 </resources>

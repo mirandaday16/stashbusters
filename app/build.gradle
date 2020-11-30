@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
 android {
     compileSdkVersion 29
@@ -44,7 +44,6 @@ dependencies {
 
     // Layouts + Views
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "androidx.cardview:cardview:1.0.0"

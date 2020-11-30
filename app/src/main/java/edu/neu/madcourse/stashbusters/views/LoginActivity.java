@@ -1,12 +1,10 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +58,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
         super.onStart();
         // Check if user is signed in; if so, go to World Feed activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // TODO: send user to World Feed if signed in
+        if (currentUser != null) {
+            mPresenter.startWorldFeedActivity(currentUser.getUid());
+        }
     }
 
     @Override

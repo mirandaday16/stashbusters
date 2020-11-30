@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.login_btn:
                 System.out.println("login btn clicked");
                 intent = new Intent(this, LoginActivity.class);
+            case R.id.stash_panel_button:
+                intent = new Intent(this, StashPanelActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.stash_swap_button:
+                intent = new Intent(this, StashSwapActivity.class);
                 startActivity(intent);
                 break;
             default:

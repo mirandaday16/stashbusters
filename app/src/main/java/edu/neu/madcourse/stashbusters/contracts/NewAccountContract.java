@@ -1,5 +1,7 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -9,9 +11,37 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public interface NewAccountContract {
     interface MvpView {
-
+        /**
+         * User can select an image from their device gallery to use a a profile picture
+         */
+        void selectImage();
+        void setDeviceToken(String deviceToken);
+        void setProfilePicUrl(String url);
     }
 
     interface Presenter {
+        /**
+         * Updates user's device token.
+         */
+        void updateDeviceToken();
+
+        /**
+         * Uploads the given photo uri to Firebase storage.
+         * TODO: Currently, for the purpose of the project, bucket is open for all access.
+         * This should be updated to be more secure.
+         * @param photoUri
+         */
+        void uploadUserProfilePhotoToStorage(Uri photoUri);
+
+        void onProfilePictureButtonClick();
+        void onSaveButtonClick();
+        boolean validateUsername(String username);
+        boolean validatePassword(String password);
+        void registerUser(final String emailAddress,
+                          final String username,
+                          String password,
+                          final String profilePicUrl,
+                          final String bio,
+                          final String deviceToken);
     }
 }
