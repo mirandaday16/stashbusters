@@ -18,7 +18,7 @@
         <activity android:name=".PublicProfileActivity" />
         <activity android:name=".EditAccountActivity" />
         <activity android:name=".NewAccountActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".views.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

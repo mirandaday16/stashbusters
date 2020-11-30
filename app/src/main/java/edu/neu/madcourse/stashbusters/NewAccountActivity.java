@@ -36,12 +36,14 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
+import edu.neu.madcourse.stashbusters.contracts.NewAccountContract;
 import edu.neu.madcourse.stashbusters.databinding.NewAccountActivityBinding;
 import edu.neu.madcourse.stashbusters.model.User;
+import edu.neu.madcourse.stashbusters.presenters.NewAccountPresenter;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 
-public class NewAccountActivity extends AppCompatActivity {
+public class NewAccountActivity extends AppCompatActivity implements NewAccountContract.MvpView{
     private static final String TAG = NewAccountActivity.class.getSimpleName();
     private static int REQUEST_CODE = 1;
     private String deviceToken;
@@ -60,6 +62,8 @@ public class NewAccountActivity extends AppCompatActivity {
 
     // Set up a FirebaseAuth object to save the new account
     private FirebaseAuth mAuth;
+
+    private NewAccountPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +107,6 @@ public class NewAccountActivity extends AppCompatActivity {
 
                 profilePicButton.setImageBitmap(profilePicFile);
             }
-
-
         });
 
         // Setting onClickListener for Save Button - gathers information entered in form and saves

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -16,8 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import edu.neu.madcourse.stashbusters.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
-import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
-import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class LoginPresenter implements LoginContract.Presenter {
