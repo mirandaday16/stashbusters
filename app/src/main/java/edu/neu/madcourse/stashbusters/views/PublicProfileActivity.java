@@ -1,9 +1,12 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.PublicProfilePresenter;
@@ -31,7 +40,9 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
     private ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
 
     private PublicProfilePresenter mPresenter;
-    private String targetUserId; //this profile's owner
+    private FirebaseAuth mAuth;
+    private DatabaseReference followRef;
+    private String targetUserId, currentUserId; //this profile's owner
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +51,20 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         Intent intent = getIntent();
         targetUserId = intent.getStringExtra("targetUserId");
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
+
         mPresenter = new PublicProfilePresenter(this, targetUserId);
         mPresenter.loadDataToView();
+
+        followRef = FirebaseDatabase.getInstance().getReference().child("follows");
 
         // Setting up binding instance and view instances
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
 
         initViews();
         initListeners();
+        checkFollowingState();
 
         setContentView(binding.getRoot());
     }
@@ -74,9 +91,8 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Change color/text depending on following status (get from Firebase)
-                // TODO: When clicked, edit following status in Firebase (either add or remove user
-                //  from following list)
+                String buttonText = followButton.getText().toString();
+                mPresenter.onFollowButtonClick(buttonText);
             }
         });
 
@@ -122,6 +138,47 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         Picasso.get().load(photoUrl).into(profilePic);
         usernameView.setText(inputUsername);
         bio.setText(inputBio);
-        followerCountView.setText(inputFollowerCount + " followers");
+        followerCountView.setText(getString(R.string.follower_count, inputFollowerCount));
+    }
+
+    /**
+     * Check whether current user is following target user. If so, update button text accordingly.
+     */
+    private void checkFollowingState() {
+        DatabaseReference currentUserFollowingRef = followRef
+                .child(currentUserId)
+                .child("following");
+
+        currentUserFollowingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(targetUserId)) {
+                    // already following, change button text
+                    updateFollowButton("following");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void updateFollowButton(String text) {
+        String following = this.getResources().getString(R.string.following_text);
+        String follow = this.getResources().getString(R.string.follow_text);
+        if (text.equals(follow)) {
+            // update button to reflect unfollowing a user
+            followButton.setText(follow);
+            followButton.setBackgroundColor(ContextCompat.getColor(this,
+                    R.color.colorPrimary));
+        } else {
+            // update button to reflect following a user
+            followButton.setText(following);
+            followButton.setBackgroundColor(Color.GRAY);
+        }
+
     }
 }

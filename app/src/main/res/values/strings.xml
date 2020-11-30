@@ -72,12 +72,14 @@
     <string name="choose_a_password">Choose a password</string>
     <string name="choose_a_username">Choose a username</string>
     <string name="follower_count_default"># Followers</string>
+    <string name="follower_count">%1$s Followers</string>
+    <string name="following_text">Following</string>
+    <string name="follow_text">Follow</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="liked_posts">Liked Posts</string>
     <string name="my_posts">My Posts</string>
     <string name="username_filler">username</string>
     <string name="default_profile_picture">default profile picture</string>
-    <string name="follow_user">Follow User</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_email_address_and_password">Enter your email address and password</string>
     <string name="email_address">Email Address</string>
