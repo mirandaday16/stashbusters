@@ -21,6 +21,7 @@ public class User {
     private List<User> followers;
     private String registrationToken; // user's device token
     private Bitmap profilePic;
+    private String photoUrl;
 
     public User(String username, String registrationToken) {
         this.username = username;
@@ -46,6 +47,8 @@ public class User {
     public List<User> getFollowers() {
         return followers;
     }
+
+    public String getPhotoUrl() { return photoUrl; }
 
     public String getRegistrationToken() {
         return registrationToken;
@@ -73,6 +76,11 @@ public class User {
 
     public void setRegistrationToken(String registrationToken) {
         this.registrationToken = registrationToken;
+    }
+
+
+    public void setPhotoUrl(String url) {
+        this.photoUrl = url;
     }
 
     public void setProfilePicture(Bitmap profilePic) { this.profilePic = profilePic;
