@@ -14,11 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.EditProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.EditAccountActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.EditProfilePresenter;
-import edu.neu.madcourse.stashbusters.utils.ImageUtil;
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileContract.MvpView {
     private static final String TAG = PersonalProfileActivity.class.getSimpleName();
@@ -64,7 +62,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             @Override
             public void onClick(View view) {
                 String newBio = bioEditText.getText().toString();
-
                 mPresenter.updateProfile(newPhotoUrl, newBio);
             }
         });

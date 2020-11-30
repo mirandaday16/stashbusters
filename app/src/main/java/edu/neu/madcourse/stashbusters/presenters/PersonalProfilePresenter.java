@@ -2,6 +2,7 @@ package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,6 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     private DatabaseReference userProfileRef;
 
     public PersonalProfilePresenter(Context context, String userId) {
-        // TODO: When user gets here, must be private profile
         this.mView = (PersonalProfileContract.MvpView) context;
         this.mContext = context;
         this.userId = userId;
@@ -52,25 +52,21 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         userProfileRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // only execute if user exists
                 if (snapshot.exists()) {
-                    // TODO: review
-                    String photoUrl = "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg";
-                    Object photo = snapshot.child("photoUrl").getValue();
-                    if (photo != null) {
-                        photoUrl = snapshot.child("photoUrl").getValue().toString();
-                    }
+                    // default photo is mouse icon
+                    String photoUrl = snapshot.child("photoUrl").getValue().toString();
                     String username = snapshot.child("username").getValue().toString();
                     String bio = snapshot.child("bio").getValue().toString();
-//                    String followerCount = snapshot.child("followerCount").getValue().toString();
-                    String followerCount = "10";
+                    String followerCount = snapshot.child("followerCount").getValue().toString();
                     mView.setViewData(photoUrl, username, bio, followerCount);
+
+                    Log.i(TAG, "loadDataToView:success");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
     }
@@ -78,7 +74,6 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     @Override
     public void onEditProfileButtonClick(String userId) {
         Intent intent = new Intent(mContext, EditProfileActivity.class);
-        intent.putExtra("userId", userId);
         mContext.startActivity(intent);
     }
 

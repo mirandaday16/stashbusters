@@ -25,13 +25,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
 
     // Set up ViewBinding for the layout
     private LoginLandingScreenBinding binding;
-
-    // Set up a FirebaseAuth object for login
-    private FirebaseAuth mAuth;
-
-    private LoginPresenter mPresenter;
-
     private Button logInButton, signUpButton;
+
+    private FirebaseAuth mAuth;
+    private LoginPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
 
         // Initializing auth object for Firebase login
         mAuth = FirebaseAuth.getInstance();
-
         mPresenter = new LoginPresenter(this);
 
         // Setting up binding instance and view instances
@@ -57,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
         // Check if user is signed in; if so, go to World Feed activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            mPresenter.startWorldFeedActivity(currentUser.getUid());
+            mPresenter.startWorldFeedActivity();
         }
     }
 

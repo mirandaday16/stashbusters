@@ -108,9 +108,16 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String tmpPhotoUrl = profilePicUrl;
                             // Sign in success, create user object and node in Firebase DB
+                            if (tmpPhotoUrl.equals("")) {
+                                // user doesn't select a photo -- set default
+                                tmpPhotoUrl = "https://firebasestorage.googleapis.com/v0/b/" +
+                                        "stashbuster-mczf.appspot.com/o/Mouse_Icon.png?alt=media&" +
+                                        "token=45f43257-057c-4876-a24f-d89e8f09acba";
+                            }
                             User user = new User(emailAddress, username, bio
-                            , profilePicUrl, deviceToken);
+                            , tmpPhotoUrl, deviceToken);
 
                             onAuthSuccess(task.getResult().getUser(), user);
                         } else {
@@ -196,9 +203,10 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri userPhotoUri = task.getResult();
+                            String userPhotoUrl = task.getResult().toString();
                             // Pass this info back to the View
-                            mView.setProfilePicUrl(userPhotoUri.toString());
+                            mView.setProfilePhoto(userPhotoUrl);
+                            mView.setProfilePicUrl(userPhotoUrl);
                         } else {
                             // Handle failures
                             // ...

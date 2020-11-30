@@ -37,11 +37,10 @@ public class LoginPresenter implements LoginContract.Presenter {
         mContext.startActivity(intent);
     }
 
-    // Starts World Feed Activity
-    public void startWorldFeedActivity(String userId) {
+    @Override
+    public void startWorldFeedActivity() {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(mContext, PersonalProfileActivity.class);
-        intent.putExtra("userId", userId);
         mContext.startActivity(intent);
     }
 
@@ -58,8 +57,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                             if (task.isSuccessful()) {
                                 // Sign in success, send user to World Feed
                                 Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                startWorldFeedActivity(user.getUid()); // TODO: "user" needs to be passed to this somehow
+                                startWorldFeedActivity();
                             } else {
                                 // If sign in fails, display a toast message to the user
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());

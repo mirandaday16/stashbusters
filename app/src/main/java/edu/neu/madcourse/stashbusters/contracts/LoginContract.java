@@ -21,5 +21,6 @@ public interface LoginContract {
     interface Presenter {
         void createNewAccount();
         void validateNewUser(String username, String password);
+        void startWorldFeedActivity();
     }
 }

@@ -17,6 +17,7 @@ public interface NewAccountContract {
         void selectImage();
         void setDeviceToken(String deviceToken);
         void setProfilePicUrl(String url);
+        void setProfilePhoto(String url);
     }
 
     interface Presenter {

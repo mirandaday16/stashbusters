@@ -19,6 +19,8 @@ import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -32,22 +34,21 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     private PersonalProfileActivityBinding binding;
     private PersonalProfilePresenter mPresenter;
     RecyclerView postsView;
-
-    //user info
-    private String userId;
     TextView username, followerCountView, bio;
     ImageView profilePic;
     ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
     Button myPostsButton, likedPostsButton, editProfileButton;
     Toolbar toolbar;
 
+    private FirebaseAuth mAuth;
+    private String userId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // load userId in intent passed from Main Activity
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
+        initAuthentication();
 
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
         initViews(binding);
@@ -60,9 +61,16 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         setContentView(binding.getRoot());
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void initAuthentication() {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user == null) {
+            // raise error
+            Log.e(TAG, "initAuthentication:FAILED - User not authenticated");
+        } else {
+            userId = user.getUid();
+        }
     }
 
     /**

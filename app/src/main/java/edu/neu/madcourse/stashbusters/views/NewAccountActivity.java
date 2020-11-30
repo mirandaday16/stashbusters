@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.squareup.picasso.Picasso;
+
 import edu.neu.madcourse.stashbusters.contracts.NewAccountContract;
 import edu.neu.madcourse.stashbusters.databinding.NewAccountActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.NewAccountPresenter;
@@ -32,8 +34,7 @@ public class NewAccountActivity extends AppCompatActivity implements NewAccountC
     private EditText emailField, usernameField, passwordField, bioField;
     private ImageButton profilePicButton;
     private Button saveButton;
-    private Uri photoUri;
-    private String profilePicUrl = ""; // TODO: might want to set default url here
+    private String profilePicUrl = "";
 
     private NewAccountPresenter mPresenter;
 
@@ -144,5 +145,10 @@ public class NewAccountActivity extends AppCompatActivity implements NewAccountC
     @Override
     public void setProfilePicUrl(String url) {
         this.profilePicUrl = url;
+    }
+
+    @Override
+    public void setProfilePhoto(String url) {
+        Picasso.get().load(url).into(profilePicButton);
     }
 }
