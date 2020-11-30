@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/enter_your_username_and_password"
+        android:text="@string/enter_your_email_address_and_password"
         android:textColor="@color/colorText"
         android:textSize="15sp"
         android:layout_margin="32dp"/>
@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:autofillHints=""
-        android:hint="@string/username"
-        android:inputType="textPersonName" />
+        android:hint="@string/email_address"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordEntry"

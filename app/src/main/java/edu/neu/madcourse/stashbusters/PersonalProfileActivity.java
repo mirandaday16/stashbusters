@@ -2,6 +2,7 @@ package edu.neu.madcourse.stashbusters;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -11,11 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 
@@ -27,10 +26,6 @@ public class PersonalProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personal_profile_activity);
-
-        // Hide Action Bar - this page uses a toolbar instead with a menu
-        getSupportActionBar().hide();
 
         // Setting up binding instance and view instances
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
@@ -51,7 +46,19 @@ public class PersonalProfileActivity extends AppCompatActivity {
         final ImageButton myProfileButton = binding.myProfile;
         final ImageButton snackBustingButton = binding.snackBusting;
 
-        // TODO: Set onClickListener for toolbar menu
+        // Set onClickListener for Toolbar menu items - Edit Profile, Change Password, and Log Out
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.edit_profile_menu_item) {
+                    startEditProfileActivity();
+                } else if (item.getItemId() == R.id.log_out_menu_item) {
+                    FirebaseAuth.getInstance().signOut();
+                    startLoginActivity();
+                }
+                return false;
+            }
+        });
 
         // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
         myPostsButton.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +136,18 @@ public class PersonalProfileActivity extends AppCompatActivity {
     // Starts Snack Busting Activity
     private void startSnackBustingActivity() {
         Intent intent = new Intent(this, SnackBustingActivity.class);
+        startActivity(intent);
+    }
+
+    // Starts Edit Profile Activity
+    private void startEditProfileActivity() {
+        Intent intent = new Intent(this, EditAccountActivity.class);
+        startActivity(intent);
+    }
+
+    // Starts Login Activity
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

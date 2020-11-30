@@ -28,7 +28,6 @@ public class SnackBustingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getSupportActionBar().hide();
         setContentView(R.layout.activity_snack_busting);
 
         snackImage = (ImageView) findViewById(R.id.snack_image);

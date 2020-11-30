@@ -14,6 +14,23 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/emailPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:text="@string/enter_your_email_address"
+            android:textAppearance="@style/PostHeadline"
+            android:textColor="@color/colorText" />
+
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/enter_your_email_address"
+            android:inputType="textEmailAddress"/>
+
+        <TextView
             android:id="@+id/usernamePrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -21,7 +21,6 @@ public class PublicProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.public_profile_activity);
 
         // Setting up binding instance and view instances
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
