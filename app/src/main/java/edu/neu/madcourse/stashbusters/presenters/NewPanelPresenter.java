@@ -1,18 +1,11 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,25 +13,18 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import edu.neu.madcourse.stashbusters.StashPanelActivity;
-import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
-import static android.app.Activity.RESULT_OK;
+import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
 
 /**
  * This class is responsible for handling actions from the View and updating the UI as required.
@@ -77,7 +63,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
                 && validateUri(uri)) {
             uploadPhotoToStorage(title, description, material, uri);
         } else {
-            mView.showToastMessage("Please fill all fields.");
+            showToast(mContext, "Please fill all fields.");
         }
     }
 

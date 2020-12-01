@@ -21,9 +21,10 @@ import com.google.firebase.storage.UploadTask;
 
 import edu.neu.madcourse.stashbusters.StashSwapActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSwapContract;
-import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.NewSwapActivity;
+
+import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
 
 /**
  * This class is responsible for handling actions from the View and updating the UI as required.
@@ -63,7 +64,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
                 && validateText(desiredMaterial)) {
             uploadPhotoToStorage(title, description, material, uri, desiredMaterial);
         } else {
-            mView.showToastMessage("Please fill all fields.");
+            showToast(mContext, "Please fill all fields.");
         }
     }
 

@@ -91,12 +91,6 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
         });
     }
 
-    @Override
-    public void showToastMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-
     /**
      * Function to dictate what to do upon a click.
      */

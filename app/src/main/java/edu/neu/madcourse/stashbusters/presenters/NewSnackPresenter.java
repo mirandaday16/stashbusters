@@ -28,6 +28,8 @@ import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.views.NewSnackActivity;
 
+import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
+
 /**
  * This class is responsible for handling actions from the View and updating the UI as required.
  */
@@ -65,7 +67,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
                 && validateUri(uri)) {
             uploadPhotoToStorage(question, choice_one, choice_two, uri);
         } else {
-            mView.showToastMessage("Please fill all fields.");
+            showToast(mContext, "Please fill all fields.");
         }
     }
 

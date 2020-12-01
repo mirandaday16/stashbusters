@@ -57,11 +57,6 @@ public class NewSnackActivity extends AppCompatActivity implements NewSnackContr
         choice_two = (EditText) findViewById(R.id.choiceTwo);
     }
 
-    @Override
-    public void showToastMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
     /**
      * Function to dictate what to do upon a click.
      */

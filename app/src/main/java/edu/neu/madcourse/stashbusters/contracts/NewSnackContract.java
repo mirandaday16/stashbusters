@@ -9,7 +9,6 @@ import android.net.Uri;
  */
 public interface NewSnackContract {
     interface MvpView {
-        void showToastMessage(String msg);
         void takePhoto();
         void finishActivity();
     }
