@@ -12,7 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
@@ -57,11 +59,16 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
         // Swap Section
         TextView swapMaterial = binding.swapItem;
-        swapMaterial.setText(material);
+        if (isAvailable) {
+            swapMaterial.setText(material);
+        }
+        else {
+            swapMaterial.setText(this.getString(R.string.swapped));
+        }
 
         // Format time stamp
         Date date = new Date(createdDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
         String dateText = dateFormat.format(date);
         timeStamp.setText(dateText);
 

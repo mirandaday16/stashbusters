@@ -57,6 +57,7 @@
     <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>
     <string name="offer_hint">Make an offer! (100 char. limit)</string>
     <string name="submit">Submit!</string>
+    <string name="swapped">SWAPPED! This swap is no longer available.</string>
 
     <string name="let_s_go">Save</string>
     <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
