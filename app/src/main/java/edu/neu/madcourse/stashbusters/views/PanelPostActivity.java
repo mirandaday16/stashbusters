@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
@@ -28,6 +32,17 @@ public class PanelPostActivity extends AppCompatActivity implements PostContract
 
     // Set up ViewBinding for the layout
     private ActivityPanelSwapPostBinding binding;
+
+    // Views
+    private ImageView userPic;
+    private TextView usernameView;
+    private ImageView likedIcon;
+    private TextView titleView;
+    private ImageView postPhoto;
+    private TextView details;
+    private EditText commentInput;
+    private TextView timeStamp;
+    private LinearLayout swapSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +76,15 @@ public class PanelPostActivity extends AppCompatActivity implements PostContract
     }
 
     private void initViews() {
-        ImageView userPic = binding.profilePic;
-        TextView username = binding.username;
-        ImageView likedIcon = binding.liked;
-        TextView title = binding.title;
-        ImageView postPhoto = binding.photo;
-        TextView details = binding.details;
-        EditText commentInput = binding.commentInput;
-        TextView timeStamp = binding.timeStamp;
-        LinearLayout swapSection = binding.swapFor;
+        userPic = binding.profilePic;
+        usernameView = binding.username;
+        likedIcon = binding.liked;
+        titleView = binding.title;
+        postPhoto = binding.photo;
+        details = binding.details;
+        commentInput = binding.commentInput;
+        timeStamp = binding.timeStamp;
+        swapSection = binding.swapFor;
     }
 
     private void initListeners() {
@@ -78,11 +93,21 @@ public class PanelPostActivity extends AppCompatActivity implements PostContract
 
     @Override
     public void setAuthorViewData(String username, String profilePicUrl) {
-
+        usernameView.setText(username);
+        Picasso.get().load(profilePicUrl).into(userPic);
     }
 
     @Override
-    public void setPostViewData(String title, String postPicUrl, String description, long createdDate) {
+    public void setPostViewData(String title, String postPicUrl, String description,
+                                long createdDate) {
+        titleView.setText(title);
+        Picasso.get().load(postPicUrl).into(postPhoto);
+        details.setText(description);
 
+        // Format time stamp
+        Date date = new Date(createdDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        String dateText = dateFormat.format(date);
+        timeStamp.setText(dateText);
     }
 }
