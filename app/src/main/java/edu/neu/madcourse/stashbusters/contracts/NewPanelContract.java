@@ -15,6 +15,7 @@ public interface NewPanelContract {
     interface MvpView {
         void showToastMessage(String msg);
         void takePhoto();
+        void finishActivity();
     }
 
     interface Presenter {

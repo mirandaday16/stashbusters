@@ -147,6 +147,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         // TODO: Should eventually display the post that was just created.
         Intent intent = new Intent(mContext, SnackBustingActivity.class);
         mContext.startActivity(intent);
+        mView.finishActivity();
     }
 
     /**

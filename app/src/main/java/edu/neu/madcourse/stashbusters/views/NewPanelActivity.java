@@ -235,4 +235,9 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
             imageButton.setImageBitmap(imageBitmap);
         }
     }
+
+    @Override
+    public void finishActivity(){
+        finish();
+    }
 }

@@ -199,4 +199,9 @@ public class NewSnackActivity extends AppCompatActivity implements NewSnackContr
             imageButton.setImageBitmap(imageBitmap);
         }
     }
+
+    @Override
+    public void finishActivity(){
+        finish();
+    }
 }

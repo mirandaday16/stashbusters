@@ -11,6 +11,7 @@ public interface NewSwapContract {
     interface MvpView {
         void showToastMessage(String msg);
         void takePhoto();
+        void finishActivity();
     }
 
     interface Presenter {

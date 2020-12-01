@@ -138,6 +138,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
         // TODO: Should eventually display the post that was just created.
         Intent intent = new Intent(mContext, StashSwapActivity.class);
         mContext.startActivity(intent);
+        mView.finishActivity();
     }
 
     /**

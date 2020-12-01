@@ -233,4 +233,9 @@ public class NewSwapActivity extends AppCompatActivity implements NewSwapContrac
             imageButton.setImageBitmap(imageBitmap);
         }
     }
+
+    @Override
+    public void finishActivity(){
+        finish();
+    }
 }

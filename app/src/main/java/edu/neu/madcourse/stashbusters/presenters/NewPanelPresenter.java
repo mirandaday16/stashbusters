@@ -152,6 +152,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         // TODO: Should eventually display the post that was just created.
         Intent intent = new Intent(mContext, StashPanelActivity.class);
         mContext.startActivity(intent);
+        mView.finishActivity();
     }
 
     /**
