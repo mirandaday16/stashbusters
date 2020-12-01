@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.EditAccountActivity;
-import edu.neu.madcourse.stashbusters.NewPostActivity;
+import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.SnackBustingActivity;

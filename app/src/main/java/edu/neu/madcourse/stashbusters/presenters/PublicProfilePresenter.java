@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.NewPostActivity;
+import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;

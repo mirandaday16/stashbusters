@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseApp;
 
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
+import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
