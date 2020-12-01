@@ -156,20 +156,14 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
      * Helper function to check text is not empty.
      */
     private boolean validateText(String text) {
-        if (text == "" || text == null) {
-            return false;
-        }
-        return true;
+        return !text.equals("") && text != null;
     }
 
     /**
      * Helper function to check Uri is not empty.
      */
     private boolean validateUri(Uri uri) {
-        if (uri == null) {
-            return false;
-        }
-        return true;
+        return uri != null;
     }
 
 }

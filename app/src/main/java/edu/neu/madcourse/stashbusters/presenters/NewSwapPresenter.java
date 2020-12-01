@@ -146,7 +146,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      * Helper function to check text is not empty.
      */
     private boolean validateText(String text) {
-        if (text == "" || text == null) {
+        if (text.equals("") || text == null) {
             return false;
         }
         return true;
@@ -156,20 +156,14 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      * Helper function to check Uri is not empty.
      */
     private boolean validateUri(Uri uri) {
-        if (uri == null) {
-            return false;
-        }
-        return true;
+        return uri != null;
     }
 
     /**
      * Helper function to check int is not -1.
      */
     private boolean validateRadio(int number) {
-        if (number == -1) {
-            return false;
-        }
-        return true;
+        return number != -1;
     }
 
 }
