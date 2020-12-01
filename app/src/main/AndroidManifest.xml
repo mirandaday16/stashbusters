@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SnackBustingActivity"></activity>
+        <activity android:name=".SnackBustingActivity"/>
         <activity
             android:name=".NewSnackActivity"
             android:label="@string/new_snack_post" />
@@ -62,7 +62,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths"/>
         </provider>
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
