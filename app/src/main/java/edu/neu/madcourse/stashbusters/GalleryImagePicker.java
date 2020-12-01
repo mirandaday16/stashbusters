@@ -45,7 +45,7 @@ public class GalleryImagePicker extends Activity {
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri selectedImage = data.getData();
-                        System.out.println("Selected image URL" + selectedImage);
+
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         if (selectedImage != null) {
                             Cursor cursor = getContentResolver().query(selectedImage,
@@ -55,11 +55,8 @@ public class GalleryImagePicker extends Activity {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
-                                System.out.println("Photo path" + picturePath);
 
-//                                photoUri = fileToUri(picturePath);
                                 photoUri = selectedImage;
-                                System.out.println("Photo path" + photoUri.toString());
 
                                 photoBitmap = BitmapFactory.decodeFile(picturePath);
                                 cursor.close();
