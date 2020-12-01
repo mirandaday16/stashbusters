@@ -2,6 +2,7 @@ package edu.neu.madcourse.stashbusters.contracts;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -12,16 +13,13 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public interface NewPanelContract {
     interface MvpView {
-        FirebaseAuth getmAuth();
-//        void setImage(Bitmap imageBitmap);
-//        void showToastMessage(String msg);
+        void showToastMessage(String msg);
+        void takePhoto();
     }
 
     interface Presenter {
-//        void takePhoto();
-//        void onPhotoActivityResult(int requestCode, int resultCode, Intent data);
-//        void createNewAccount();
-//        void validateNewUser(String username, String password);
+        void postButton(String title, String description, int material, Uri uri);
+        void imageButton();
 //        void startWorldFeedActivity();
     }
 }

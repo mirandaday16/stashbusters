@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,14 +37,17 @@ import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.presenters.NewPanelPresenter;
 
-
+/**
+ * This class is responsible for the View of adding a new stash panel post.
+ */
 public class NewPanelActivity extends AppCompatActivity implements NewPanelContract.MvpView {
     private RadioGroup materialGroup;
 
-    private FirebaseAuth mAuth;
     private NewPanelPresenter mPresenter;
+
     private int clickedMaterial;
     private ImageButton imageButton;
+    private EditText title, description;
 
     private static final int RECORD_REQUEST_CODE = 101;
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -59,15 +63,14 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
         materialGroup = findViewById(R.id.materialGroup);
         setUpMaterialGroup();
 
-        // Setting up Firebase
-        mAuth = FirebaseAuth.getInstance();
-
         // Setting up presenter
         mPresenter = new NewPanelPresenter(this);
 
         // Getting layout views
         imageButton = (ImageButton) findViewById(R.id.imageButton);
-
+        title = (EditText) findViewById(R.id.titleInput);
+        description = (EditText) findViewById(R.id.descriptionInput);
+        clickedMaterial = -1;
     }
 
     /**
@@ -93,17 +96,23 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     }
 
     @Override
-    public FirebaseAuth getmAuth() {
-        return mAuth;
+    public void showToastMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 
+    /**
+     * Function to dictate what to do upon a click.
+     */
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                takePhoto();
+                mPresenter.imageButton();
                 break;
             case R.id.postButton:
+                mPresenter.postButton(title.getText().toString(),
+                        description.getText().toString(),
+                        clickedMaterial, currentPhotoUri);
                 break;
             default:
                 break;
@@ -115,7 +124,8 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
      * Function to open the camera app and set up the URI in which to save the photo.
      * Camera code based on: https://developer.android.com/training/camera/photobasics
      */
-    private void takePhoto() {
+    @Override
+    public void takePhoto() {
 
         // Check for permissions.
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
