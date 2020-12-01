@@ -88,10 +88,6 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     }
 
 
-    private void setImage(Bitmap imageBitmap) {
-        imageButton.setImageBitmap(imageBitmap);
-    }
-
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
@@ -172,11 +168,17 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
         }
     }
 
-    private void onPhotoActivityResult(int requestCode, int resultCode, Intent data) {
+    /**
+     * Function to handle response to end of camera activity.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            setImage(imageBitmap);
+            imageButton.setImageBitmap(imageBitmap);
         }
     }
 }

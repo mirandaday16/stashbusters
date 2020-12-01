@@ -28,11 +28,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onClick"
+        android:src="@android:drawable/ic_menu_camera"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoText"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:layout_constraintTop_toBottomOf="@+id/photoText" />
 
     <TextView
         android:id="@+id/titleText"
