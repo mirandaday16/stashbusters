@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -12,7 +13,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +25,11 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
@@ -36,9 +44,11 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     private NewPanelPresenter mPresenter;
     private int clickedMaterial;
     private ImageButton imageButton;
-    private static final int RECORD_REQUEST_CODE = 101;
 
+    private static final int RECORD_REQUEST_CODE = 101;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String currentPhotoPath;
+    private Uri currentPhotoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +112,8 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     }
 
     /**
-     * Function to open the camera app.
+     * Function to open the camera app and set up the URI in which to save the photo.
+     * Camera code based on: https://developer.android.com/training/camera/photobasics
      */
     private void takePhoto() {
 
@@ -112,16 +123,48 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
         // If permission is granted, then open the camera app.
         if (permission == PackageManager.PERMISSION_GRANTED) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            try {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            } catch (ActivityNotFoundException e) {
-                // display error state to the user
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "edu.neu.madcourse.stashbusters.fileprovider",
+                            photoFile);
+                    currentPhotoUri = photoURI;
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
             }
         }
         // If permission is not granted, then request permission.
         else {
             makePermissionRequest();
         }
+    }
+
+    /**
+     * Creates a unique file path for the image to be saved to.
+     */
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     /**
@@ -170,14 +213,19 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
 
     /**
      * Function to handle response to end of camera activity.
+     * Sets the photo taken as the thumbnail in the imageButton.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap imageBitmap = null;
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), currentPhotoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             imageButton.setImageBitmap(imageBitmap);
         }
     }
