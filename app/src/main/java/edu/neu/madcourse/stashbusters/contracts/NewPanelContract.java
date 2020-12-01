@@ -18,7 +18,7 @@ public interface NewPanelContract {
     }
 
     interface Presenter {
-        void postButton(String title, String description, int material, Uri uri);
-        void imageButton();
+        void onPostButtonClick(String title, String description, int material, Uri uri);
+        void onImageButtonClick();
     }
 }

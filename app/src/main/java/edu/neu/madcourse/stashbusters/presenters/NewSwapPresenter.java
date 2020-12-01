@@ -56,7 +56,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      * Function that attempts to upload the post when the postButton is clicked.
      */
     @Override
-    public void postButton(String title, String description, int material, Uri uri, String desiredMaterial) {
+    public void onPostButtonClick(String title, String description, int material, Uri uri, String desiredMaterial) {
         if (validateText(title)
                 && validateText(description)
                 && validateRadio(material)
@@ -72,7 +72,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      * Function that tells the View what to do when the imageButton is clicked.
      */
     @Override
-    public void imageButton() {
+    public void onImageButtonClick() {
         mView.takePhoto();
     }
 

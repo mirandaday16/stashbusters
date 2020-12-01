@@ -14,7 +14,7 @@ public interface NewSwapContract {
     }
 
     interface Presenter {
-        void postButton(String title, String description, int material, Uri uri, String desiredMaterial);
-        void imageButton();
+        void onPostButtonClick(String title, String description, int material, Uri uri, String desiredMaterial);
+        void onImageButtonClick();
     }
 }

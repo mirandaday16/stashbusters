@@ -14,7 +14,7 @@ public interface NewSnackContract {
     }
 
     interface Presenter {
-        void postButton(String question, String choice_one, String choice_two, Uri uri);
-        void imageButton();
+        void onPostButtonClick(String question, String choice_one, String choice_two, Uri uri);
+        void onImageButtonClick();
     }
 }

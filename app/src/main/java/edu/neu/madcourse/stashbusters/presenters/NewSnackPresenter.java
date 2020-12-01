@@ -60,7 +60,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
      * Function that attempts to upload the post when the postButton is clicked.
      */
     @Override
-    public void postButton(String question, String choice_one, String choice_two, Uri uri) {
+    public void onPostButtonClick(String question, String choice_one, String choice_two, Uri uri) {
         if (validateText(question)
                 && validateText(choice_one)
                 && validateText(choice_two)
@@ -75,7 +75,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
      * Function that tells the View what to do when the imageButton is clicked.
      */
     @Override
-    public void imageButton() {
+    public void onImageButtonClick() {
         mView.takePhoto();
     }
 

@@ -97,10 +97,10 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                mPresenter.imageButton();
+                mPresenter.onImageButtonClick();
                 break;
             case R.id.postButton:
-                mPresenter.postButton(title.getText().toString(),
+                mPresenter.onPostButtonClick(title.getText().toString(),
                         description.getText().toString(),
                         clickedMaterial, currentPhotoUri);
                 break;

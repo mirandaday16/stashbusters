@@ -63,10 +63,10 @@ public class NewSnackActivity extends AppCompatActivity implements NewSnackContr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                mPresenter.imageButton();
+                mPresenter.onImageButtonClick();
                 break;
             case R.id.postButton:
-                mPresenter.postButton(title.getText().toString(),
+                mPresenter.onPostButtonClick(title.getText().toString(),
                         choice_one.getText().toString(), choice_two.getText().toString(),
                         currentPhotoUri);
                 break;

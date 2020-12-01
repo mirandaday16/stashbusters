@@ -56,7 +56,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
      * Function that attempts to upload the post when the postButton is clicked.
      */
     @Override
-    public void postButton(String title, String description, int material, Uri uri) {
+    public void onPostButtonClick(String title, String description, int material, Uri uri) {
         if (validateText(title)
                 && validateText(description)
                 && validateRadio(material)
@@ -71,7 +71,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
      * Function that tells the View what to do when the imageButton is clicked.
      */
     @Override
-    public void imageButton() {
+    public void onImageButtonClick() {
         mView.takePhoto();
     }
 
