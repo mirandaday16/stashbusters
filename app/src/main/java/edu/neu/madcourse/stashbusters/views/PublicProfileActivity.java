@@ -48,9 +48,6 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        targetUserId = intent.getStringExtra("targetUserId");
-
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
