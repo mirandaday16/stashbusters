@@ -17,7 +17,6 @@ public class User {
     private String photoUrl;
     private List<Post> posts;
     private List<Post> likedPosts;
-    private List<User> followers;
     private Integer followerCount;
     private String deviceToken; // user's device token
 
@@ -56,9 +55,6 @@ public class User {
         return likedPosts;
     }
 
-    public List<User> getFollowers() {
-        return followers;
-    }
 
     public Integer getFollowerCount() {
         return followerCount;
@@ -92,9 +88,6 @@ public class User {
         this.likedPosts = likedPosts;
     }
 
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
-    }
 
     public void setFollowerCount(Integer followerCount) {
         this.followerCount = followerCount;

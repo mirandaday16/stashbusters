@@ -39,39 +39,6 @@
         app:layout_constraintTop_toBottomOf="@id/new_post_button" />
 
     <Button
-        android:id="@+id/user_profile_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="USER PROFILE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/snack_busting_button" />
-
-    <Button
-        android:id="@+id/register_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:onClick="onClick"
-        android:text="REGISTER"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/snack_busting_button" />
-
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:onClick="onClick"
-        android:text="@string/log_in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/snack_busting_button" />
-    <Button
         android:id="@+id/stash_panel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,6 +57,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/stash_panel_button" />
+
+    <Button
+        android:id="@+id/user_profile_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:onClick="onClick"
+        android:text="USER PROFILE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/snack_busting_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
