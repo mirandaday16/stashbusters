@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,15 +23,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.StashPanelActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.presenters.NewPanelPresenter;
@@ -69,8 +64,8 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
 
         // Getting layout views
         imageButton = (ImageButton) findViewById(R.id.imageButton);
-        title = (EditText) findViewById(R.id.titleInput);
-        description = (EditText) findViewById(R.id.descriptionInput);
+        title = (EditText) findViewById(R.id.questionInput);
+        description = (EditText) findViewById(R.id.choiceOne);
         clickedMaterial = -1;
     }
 

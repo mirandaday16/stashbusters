@@ -46,7 +46,7 @@ tools:context=".views.NewSwapActivity">
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <EditText
-        android:id="@+id/titleInput"
+        android:id="@+id/questionInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -65,10 +65,10 @@ tools:context=".views.NewSwapActivity">
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput" />
+        app:layout_constraintTop_toBottomOf="@+id/questionInput" />
 
     <EditText
-        android:id="@+id/descriptionInput"
+        android:id="@+id/choiceOne"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent="1"
@@ -89,10 +89,10 @@ tools:context=".views.NewSwapActivity">
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+        app:layout_constraintTop_toBottomOf="@+id/choiceOne" />
 
     <EditText
-        android:id="@+id/swapInput"
+        android:id="@+id/choiceTwo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -111,7 +111,7 @@ tools:context=".views.NewSwapActivity">
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swapInput" />
+        app:layout_constraintTop_toBottomOf="@+id/choiceTwo" />
 
     <RadioGroup
         android:id="@+id/materialGroup"

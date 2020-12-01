@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <EditText
-        android:id="@+id/titleInput"
+        android:id="@+id/questionInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -68,10 +68,10 @@
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput" />
+        app:layout_constraintTop_toBottomOf="@+id/questionInput" />
 
     <EditText
-        android:id="@+id/descriptionInput"
+        android:id="@+id/choiceOne"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent="1"
@@ -92,7 +92,7 @@
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+        app:layout_constraintTop_toBottomOf="@+id/choiceOne" />
 
     <RadioGroup
         android:id="@+id/materialGroup"

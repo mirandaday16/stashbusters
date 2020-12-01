@@ -27,11 +27,12 @@ tools:context=".views.NewSnackActivity">
         android:id="@+id/imageButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.15"
+        android:onClick="onClick"
         app:layout_constraintDimensionRatio="1:1"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
+        app:layout_constraintHeight_percent="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoText" />
+        app:layout_constraintTop_toBottomOf="@+id/photoText"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <TextView
         android:id="@+id/titleText"
@@ -45,7 +46,7 @@ tools:context=".views.NewSnackActivity">
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <EditText
-        android:id="@+id/titleInput"
+        android:id="@+id/questionInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -64,10 +65,10 @@ tools:context=".views.NewSnackActivity">
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput" />
+        app:layout_constraintTop_toBottomOf="@+id/questionInput" />
 
     <EditText
-        android:id="@+id/descriptionInput"
+        android:id="@+id/choiceOne"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -86,10 +87,10 @@ tools:context=".views.NewSnackActivity">
         android:textAppearance="@style/Body"
         android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+        app:layout_constraintTop_toBottomOf="@+id/choiceOne" />
 
     <EditText
-        android:id="@+id/swapInput"
+        android:id="@+id/choiceTwo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="1"
@@ -105,10 +106,11 @@ tools:context=".views.NewSnackActivity">
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
+        android:onClick="onClick"
         android:text="@string/post"
         android:textAppearance="@style/ButtonText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swapInput"
+        app:layout_constraintTop_toBottomOf="@+id/choiceTwo"
         app:layout_constraintWidth_percent="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

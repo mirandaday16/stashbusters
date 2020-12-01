@@ -61,9 +61,9 @@ public class NewSwapActivity extends AppCompatActivity implements NewSwapContrac
 
         // Getting layout views
         imageButton = (ImageButton) findViewById(R.id.imageButton);
-        title = (EditText) findViewById(R.id.titleInput);
-        description = (EditText) findViewById(R.id.descriptionInput);
-        desiredMaterial = (EditText) findViewById(R.id.swapInput);
+        title = (EditText) findViewById(R.id.questionInput);
+        description = (EditText) findViewById(R.id.choiceOne);
+        desiredMaterial = (EditText) findViewById(R.id.choiceTwo);
         clickedMaterial = -1;
     }
 
