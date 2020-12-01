@@ -1,18 +1,11 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,32 +13,24 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashPanelActivity;
-import edu.neu.madcourse.stashbusters.contracts.LoginContract;
-import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
-import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
-
-import static android.app.Activity.RESULT_OK;
+import edu.neu.madcourse.stashbusters.StashSwapActivity;
+import edu.neu.madcourse.stashbusters.contracts.NewSwapContract;
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.views.NewSwapActivity;
 
 /**
  * This class is responsible for handling actions from the View and updating the UI as required.
  */
-public class NewPanelPresenter implements NewPanelContract.Presenter{
-    private static final String TAG = NewPanelActivity.class.getSimpleName();
-    private NewPanelContract.MvpView mView;
+public class NewSwapPresenter implements NewSwapContract.Presenter{
+    private static final String TAG = NewSwapActivity.class.getSimpleName();
+    private NewSwapContract.MvpView mView;
     private Context mContext;
 
     private DatabaseReference mDatabase;
@@ -55,27 +40,28 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
 
     private String userId; // owner of the profile
 
-    public NewPanelPresenter(Context context) {
+    public NewSwapPresenter(Context context) {
         this.mContext = context;
-        this.mView = (NewPanelContract.MvpView) context;
+        this.mView = (NewSwapContract.MvpView) context;
 
         storageRef = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = mAuth.getCurrentUser().getUid();
-        userPostsRef = mDatabase.child("panelPosts").child(userId);
+        userPostsRef = mDatabase.child("swapPosts").child(userId);
     }
 
     /**
      * Function that attempts to upload the post when the postButton is clicked.
      */
     @Override
-    public void postButton(String title, String description, int material, Uri uri) {
+    public void postButton(String title, String description, int material, Uri uri, String desiredMaterial) {
         if (validateText(title)
                 && validateText(description)
                 && validateRadio(material)
-                && validateUri(uri)) {
-            uploadPhotoToStorage(title, description, material, uri);
+                && validateUri(uri)
+                && validateText(desiredMaterial)) {
+            uploadPhotoToStorage(title, description, material, uri, desiredMaterial);
         } else {
             mView.showToastMessage("Please fill all fields.");
         }
@@ -92,7 +78,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
     /**
      * Function to upload post photo Firebase storage and get the url.
      */
-    private void uploadPhotoToStorage(final String title, final String description, final int material, Uri photoUri) {
+    private void uploadPhotoToStorage(final String title, final String description, final int material, Uri photoUri, final String desiredMaterial) {
         final StorageReference ref = storageRef.child("images/" + photoUri.getLastPathSegment());
         final UploadTask uploadTask = ref.putFile(photoUri);
 
@@ -124,7 +110,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
                         if (task.isSuccessful()) {
                             String userPhotoUrl = task.getResult().toString();
 
-                            uploadPost(title, description, material, userPhotoUrl);
+                            uploadPost(title, description, material, userPhotoUrl, desiredMaterial);
                         } else {
                             // Handle failures
                             // ...
@@ -138,19 +124,19 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
     /**
      * Function to save post to Firebase.
      */
-    private void uploadPost(final String title, final String description, int material, final String photoUrl) {
+    private void uploadPost(final String title, final String description, int material, final String photoUrl, final String desiredMaterial) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        newUserPostRef.setValue(new StashPanelPost(title, description, photoUrl));
+        newUserPostRef.setValue(new StashSwapPost(title, description, photoUrl, desiredMaterial));
 
-        startStashPanelActivity();
+        startStashSwapActivity();
     }
 
     /**
-     * Function that switches to StashPanelActivity.
+     * Function that switches to StashSwapActivity.
      */
-    public void startStashPanelActivity() {
+    public void startStashSwapActivity() {
         // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, StashPanelActivity.class);
+        Intent intent = new Intent(mContext, StashSwapActivity.class);
         mContext.startActivity(intent);
     }
 

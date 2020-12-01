@@ -27,11 +27,12 @@ tools:context=".views.NewSwapActivity">
         android:id="@+id/imageButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.15"
+        android:onClick="onClick"
         app:layout_constraintDimensionRatio="1:1"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
+        app:layout_constraintHeight_percent="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoText" />
+        app:layout_constraintTop_toBottomOf="@+id/photoText"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <TextView
         android:id="@+id/titleText"
@@ -126,6 +127,7 @@ tools:context=".views.NewSwapActivity">
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
+        android:onClick="onClick"
         android:text="@string/post"
         android:textAppearance="@style/ButtonText"
         app:layout_constraintStart_toStartOf="parent"
