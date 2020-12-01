@@ -30,11 +30,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import edu.neu.madcourse.stashbusters.StashPanelActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,7 +50,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
 
     private DatabaseReference mDatabase;
     private StorageReference storageRef;
-    private DatabaseReference userRef;
+    private DatabaseReference userPostsRef;
     private FirebaseAuth mAuth;
 
     private String userId; // owner of the profile
@@ -61,9 +63,12 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = mAuth.getCurrentUser().getUid();
-        userRef = mDatabase.child("users").child(userId);
+        userPostsRef = mDatabase.child("posts").child(userId);
     }
 
+    /**
+     * Function that attempts to upload the post when the postButton is clicked.
+     */
     @Override
     public void postButton(String title, String description, int material, Uri uri) {
         if (validateText(title)
@@ -76,11 +81,17 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         }
     }
 
+    /**
+     * Function that tells the View what to do when the imageButton is clicked.
+     */
     @Override
     public void imageButton() {
         mView.takePhoto();
     }
 
+    /**
+     * Function to upload post photo Firebase storage and get the url.
+     */
     private void uploadPhotoToStorage(final String title, final String description, final int material, Uri photoUri) {
         final StorageReference ref = storageRef.child("images/" + photoUri.getLastPathSegment());
         final UploadTask uploadTask = ref.putFile(photoUri);
@@ -114,8 +125,6 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
                             String userPhotoUrl = task.getResult().toString();
 
                             uploadPost(title, description, material, userPhotoUrl);
-
-
                         } else {
                             // Handle failures
                             // ...
@@ -126,24 +135,23 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         });
     }
 
+    /**
+     * Function to save post to Firebase.
+     */
     private void uploadPost(final String title, final String description, int material, final String photoUrl) {
+        DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
+        newUserPostRef.setValue(new StashPanelPost(title, description, photoUrl));
 
-        userRef.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+        startStashPanelActivity();
+    }
 
-                StashPanelPost post = new StashPanelPost(title, description, photoUrl);
-
-
-                return null;
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
-            }
-        });
+    /**
+     * Function that switches to StashPanelActivity.
+     */
+    public void startStashPanelActivity() {
+        // TODO: Should eventually display the post that was just created.
+        Intent intent = new Intent(mContext, StashPanelActivity.class);
+        mContext.startActivity(intent);
     }
 
     /**
