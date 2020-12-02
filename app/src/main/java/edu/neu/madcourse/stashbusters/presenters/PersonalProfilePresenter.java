@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.EditAccountActivity;
 import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 
 import edu.neu.madcourse.stashbusters.R;
@@ -117,7 +116,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {
-        Intent intent = new Intent(this.mContext, EditAccountActivity.class);
+        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
         mContext.startActivity(intent);
     }
 
