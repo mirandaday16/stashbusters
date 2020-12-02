@@ -9,7 +9,6 @@ import android.view.View;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.databinding.ActivityNewPostBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
-import edu.neu.madcourse.stashbusters.model.NavigationBar;
 
 public class NewPostActivity extends AppCompatActivity {
 
@@ -25,7 +24,6 @@ public class NewPostActivity extends AppCompatActivity {
         // Navigation bar setup:
         NavigationBarView navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.NEWPOST);
-        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
 
         setContentView(binding.getRoot());
     }

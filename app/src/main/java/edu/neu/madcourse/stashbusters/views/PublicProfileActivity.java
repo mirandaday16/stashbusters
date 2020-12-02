@@ -25,7 +25,6 @@ import com.squareup.picasso.Picasso;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
-import edu.neu.madcourse.stashbusters.model.NavigationBar;
 import edu.neu.madcourse.stashbusters.presenters.PublicProfilePresenter;
 
 public class PublicProfileActivity extends AppCompatActivity implements PublicProfileContract.MvpView {
@@ -76,7 +75,6 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
-        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
     }
 
     private void initListeners() {

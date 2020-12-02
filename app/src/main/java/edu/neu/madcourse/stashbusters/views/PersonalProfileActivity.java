@@ -18,7 +18,6 @@ import androidx.appcompat.widget.Toolbar;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
-import edu.neu.madcourse.stashbusters.model.NavigationBar;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,7 +94,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
 
-        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
     }
 
     private void initListeners() {
