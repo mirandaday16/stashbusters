@@ -17,9 +17,9 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
     @Override
     public void setRefs() {
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child("authorId");
+                .child(authorId);
         postRef = FirebaseDatabase.getInstance().getReference().child("swapPosts")
-                .child("authorId").child("postId");
+                .child(authorId).child(postId);
 
     }
 
