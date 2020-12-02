@@ -112,16 +112,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
                 // TODO: get user's posts from Firebase and display in RecyclerView
             }
         });
-        // TODO: Set onClickListener for toolbar menu -- these should be moved to Presenter
-
-        // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
-        myPostsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // send to presenter
-                // TODO: get user's posts from Firebase and display in RecyclerView
-            }
-        });
 
         // Setting onClickListener for Liked Posts Button - switches RecyclerView to posts the user
         // has liked
@@ -131,6 +121,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
                 // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
+
 
         // Setting onClickListener for navigation bar buttons
         myFeedButton.setOnClickListener(new View.OnClickListener() {

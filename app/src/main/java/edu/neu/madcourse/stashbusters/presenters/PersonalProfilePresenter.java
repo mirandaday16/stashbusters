@@ -102,6 +102,12 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         startSnackBustingActivity();
     }
 
+    private void getPostsData() {
+        // query this user's posts data in DB
+        // possible order newest->older
+        // call View to display the data
+    }
+
     // Starts New Post Activity
     private void startNewPostActivity() {
         Intent intent = new Intent(this.mContext, NewPostActivity.class);
