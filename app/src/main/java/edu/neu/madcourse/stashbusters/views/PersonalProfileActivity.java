@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
+import edu.neu.madcourse.stashbusters.model.NavigationBar;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +38,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     RecyclerView postsView;
     TextView username, followerCountView, bio;
     ImageView profilePic;
-    ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
+    private NavigationBarView navigationBarView;
     Button myPostsButton, likedPostsButton, editProfileButton;
     Toolbar toolbar;
 
@@ -89,13 +91,11 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         postsView = binding.postViewArea;
         editProfileButton = binding.editProfile;
 
-        // TODO: might want to separate toolbar out to be reused
-        // Navigation bar buttons
-        myFeedButton = binding.myFeed;
-        worldFeedButton = binding.worldFeed;
-        newPostButton = binding.newPost;
-        myProfileButton = binding.myProfile;
-        snackBustingButton = binding.snackBusting;
+        // Navigation bar setup:
+        navigationBarView = binding.navigationBar;
+        navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
+
+        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
     }
 
     private void initListeners() {
@@ -137,42 +137,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
             @Override
             public void onClick(View view) {
                 // TODO: get liked posts from Firebase and display in RecyclerView
-            }
-        });
-
-        // Setting onClickListener for navigation bar buttons
-        myFeedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: start My Feed Activity; for now, will do nothing
-            }
-        });
-
-        worldFeedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: start World Feed Activity; for now, will do nothing
-            }
-        });
-
-        newPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onNewPostButtonClick();
-            }
-        });
-
-        myProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onMyProfileButtonClick();
-            }
-        });
-
-        snackBustingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onSnackBustingButtonClick();
             }
         });
     }

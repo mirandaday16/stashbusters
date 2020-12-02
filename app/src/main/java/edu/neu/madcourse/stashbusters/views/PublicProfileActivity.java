@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.model.NavigationBar;
 import edu.neu.madcourse.stashbusters.presenters.PublicProfilePresenter;
 
 public class PublicProfileActivity extends AppCompatActivity implements PublicProfileContract.MvpView {
@@ -36,8 +37,7 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
     private TextView usernameView, followerCountView, bio;
     private Button followButton;
     private RecyclerView userPostsFeed;
-    //nav
-    private ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
+    private NavigationBarView navigationBarView;
 
     private PublicProfilePresenter mPresenter;
     private FirebaseAuth mAuth;
@@ -74,12 +74,9 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         followButton = binding.followButton;
         userPostsFeed = binding.postViewArea;
 
-        // Navigation bar buttons:
-        myFeedButton = binding.myFeed;
-        worldFeedButton = binding.worldFeed;
-        newPostButton = binding.newPost;
-        myProfileButton = binding.myProfile;
-        snackBustingButton = binding.snackBusting;
+        // Navigation bar setup:
+        navigationBarView = binding.navigationBar;
+        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
     }
 
     private void initListeners() {
@@ -90,42 +87,6 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
             public void onClick(View view) {
                 String buttonText = followButton.getText().toString();
                 mPresenter.onFollowButtonClick(buttonText);
-            }
-        });
-
-        // Setting onClickListener for navigation bar buttons
-        myFeedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: start My Feed Activity; for now, will do nothing
-            }
-        });
-
-        worldFeedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: start World Feed Activity; for now, will do nothing
-            }
-        });
-
-        newPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onNewPostButtonClick();
-            }
-        });
-
-        myProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onMyProfileButtonClick();
-            }
-        });
-
-        snackBustingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onSnackBustingButtonClick();
             }
         });
     }

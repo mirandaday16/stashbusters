@@ -7,14 +7,26 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import edu.neu.madcourse.stashbusters.SnackBustingActivity;
+import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class NavigationBar {
 
-    public NavigationBar (final Context context, ImageButton myFeedButton,
-                          ImageButton worldFeedButton, ImageButton newPostButton,
-                          ImageButton myProfileButton, ImageButton snackBustButton) {
+    private ImageButton myFeedButton;
+    private ImageButton worldFeedButton;
+    private ImageButton newPostButton;
+    private ImageButton myProfileButton;
+    private ImageButton snackBustButton;
+
+    public NavigationBar (final Context context, NavigationBarView navBarView) {
+
+        this.myFeedButton = navBarView.getMyFeedButton();
+        this.worldFeedButton = navBarView.getWorldFeedButton();
+        this.newPostButton = navBarView.getNewPostButton();
+        this.myProfileButton = navBarView.getMyProfileButton();
+        this.snackBustButton = navBarView.getSnackBustButton();
+
 
         // Set onClickListeners for all 5 buttons
         myFeedButton.setOnClickListener(new View.OnClickListener() {

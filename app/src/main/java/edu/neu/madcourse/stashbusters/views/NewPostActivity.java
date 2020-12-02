@@ -7,13 +7,27 @@ import android.os.Bundle;
 import android.view.View;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.databinding.ActivityNewPostBinding;
+import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
+import edu.neu.madcourse.stashbusters.model.NavigationBar;
 
 public class NewPostActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_post);
+
+        // Set up ViewBinding for the layout
+        edu.neu.madcourse.stashbusters.databinding.ActivityNewPostBinding binding =
+                ActivityNewPostBinding.inflate(getLayoutInflater());
+
+        // Navigation bar setup:
+        NavigationBarView navigationBarView = binding.navigationBar;
+        navigationBarView.setSelected(NavigationBarButtons.NEWPOST);
+        NavigationBar navBarObject = new NavigationBar(this, navigationBarView);
+
+        setContentView(binding.getRoot());
     }
 
     public void onClick(View view) {

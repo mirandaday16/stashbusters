@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorSecondaryLight"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+
+        <ImageButton
+            android:id="@+id/myFeedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/palette_icon"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/worldFeedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/world_icon"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/newPostButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/new_post_icon"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/myProfileButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/mouse_icon"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/snackBustingButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/cookie_icon"
+            android:layout_weight="1"
+            />
+</LinearLayout>
