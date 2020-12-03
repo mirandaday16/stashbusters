@@ -63,26 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_info_area">
-
-                <Button
-                    android:id="@+id/edit_profile"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-
-                    android:background="@color/colorPrimary"
-                    android:text="@string/edit_profile"
-                    android:theme="@style/ButtonText" />
-
-                <TextView
-                    android:id="@+id/test_target_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="test_target_user"/>
             </LinearLayout>
         </LinearLayout>
 

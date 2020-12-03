@@ -38,7 +38,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     TextView username, followerCountView, bio;
     ImageView profilePic;
     private NavigationBarView navigationBarView;
-    Button myPostsButton, likedPostsButton, editProfileButton;
+    Button myPostsButton, likedPostsButton;
     Toolbar toolbar;
 
     private FirebaseAuth mAuth;
@@ -88,7 +88,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
         postsView = binding.postViewArea;
-        editProfileButton = binding.editProfile;
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
@@ -109,13 +108,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
             @Override
             public void onClick(View view) {
                 // TODO: get user's posts from Firebase and display in RecyclerView
-            }
-        });
-
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.onEditProfileButtonClick(userId);
             }
         });
         // TODO: Set onClickListener for toolbar menu -- these should be moved to Presenter

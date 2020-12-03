@@ -26,9 +26,6 @@
         <activity
             android:name=".views.PublicProfileActivity"
             android:label="Public Profile"/>
-        <activity
-            android:name=".EditAccountActivity"
-            android:label="Edit Account"/>
         <activity android:name=".views.NewAccountActivity" />
         <activity android:name=".views.LoginActivity">
             <intent-filter>
