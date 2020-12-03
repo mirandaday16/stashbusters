@@ -137,6 +137,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         SnackBustPost post = new SnackBustPost(question, photoUrl, choices);
 
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
+        post.setId(newUserPostRef.getKey());
         newUserPostRef.setValue(post);
 
         String postId = newUserPostRef.getKey();

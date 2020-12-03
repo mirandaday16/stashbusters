@@ -132,6 +132,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
         StashSwapPost newPost = new StashSwapPost(title, description, photoUrl, desiredMaterial);
         MaterialType mat = MaterialType.getByInt(material);
         newPost.setMaterialType(mat);
+        newPost.setId(newUserPostRef.getKey());
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();

@@ -49,4 +49,8 @@ public class SnackBustPost {
     public List<SnackBustChoice> getChoiceList() {
         return choiceList;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

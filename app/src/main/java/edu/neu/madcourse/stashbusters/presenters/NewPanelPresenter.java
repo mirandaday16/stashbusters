@@ -130,6 +130,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         StashPanelPost newPost = new StashPanelPost(title, description, photoUrl);
         MaterialType mat = MaterialType.getByInt(material);
         newPost.setMaterialType(mat);
+        newPost.setId(newUserPostRef.getKey());
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();
