@@ -9,7 +9,8 @@ public enum MaterialType {
     YARN("Yarn", Category.TEXTILE),
     INK_PAD("Ink pad", Category.PRINTING),
     FEATHERS("Feathers", Category.OTHER),
-    FABRIC("Fabric", Category.TEXTILE);
+    FABRIC("Fabric", Category.TEXTILE),
+    MISC("Misc", Category.OTHER);
 
     private final String dbCode;
     private final Category category;
