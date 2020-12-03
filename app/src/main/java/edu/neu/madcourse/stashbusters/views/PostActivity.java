@@ -86,21 +86,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void setPresenter();
 
-    public void initViews() {
-        userPic = binding.profilePic;
-        usernameView = binding.username;
-        likedIcon = binding.liked;
-        titleView = binding.title;
-        postPhoto = binding.photo;
-        details = binding.details;
-        timeStamp = binding.timeStamp;
-        swapSection = binding.swapFor;
-        commentInput = binding.commentInput;
-        submitButton = binding.postButton;
-
-        commentInput.setHint(R.string.advice_hint);
-        swapSection.setVisibility(View.GONE);
-    }
+    public abstract void initViews();
 
     public void initListeners() {
         // TODO: Implement onClickListener for submit button

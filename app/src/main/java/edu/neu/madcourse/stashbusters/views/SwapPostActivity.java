@@ -1,5 +1,6 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,6 +15,22 @@ import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
+
+    @Override
+    public void initViews() {
+        userPic = binding.profilePic;
+        usernameView = binding.username;
+        likedIcon = binding.liked;
+        titleView = binding.title;
+        postPhoto = binding.photo;
+        details = binding.details;
+        timeStamp = binding.timeStamp;
+        swapSection = binding.swapFor;
+        commentInput = binding.commentInput;
+        submitButton = binding.postButton;
+
+        commentInput.setHint(R.string.advice_hint);
+    }
 
     @Override
     public void setRefs() {
