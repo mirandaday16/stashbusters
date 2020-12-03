@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 
 // A navigation bar that navigates between the 5 major activities of the app
@@ -67,7 +66,7 @@ public class NavigationBarView extends FrameLayout {
         snackBustButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SnackBustingActivity.class);
+                Intent intent = new Intent(context, SnackPostActivity.class);
                 context.startActivity(intent);
             }
         });

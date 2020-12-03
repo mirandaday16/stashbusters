@@ -1,5 +1,6 @@
 package edu.neu.madcourse.stashbusters.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,16 +12,21 @@ public class SnackBustPost {
     private String photoUrl;
     private String authorId;
     private List<SnackBustChoice> choiceList;
+    protected long createdDate;
+
+    public SnackBustPost(){}
 
     public SnackBustPost(String title, String photoUrl) {
         this.title = title;
         this.photoUrl = photoUrl;
+        this.createdDate = new Date().getTime();
     }
 
     public SnackBustPost(String title, String photoUrl, List<SnackBustChoice> choices) {
         this.title = title;
         this.photoUrl = photoUrl;
         this.choiceList = choices;
+        this.createdDate = new Date().getTime();
     }
 
     public SnackBustPost(String title, String photoUrl, String authorId, List<SnackBustChoice> choices) {
@@ -28,6 +34,7 @@ public class SnackBustPost {
         this.photoUrl = photoUrl;
         this.choiceList = choices;
         this.authorId = authorId;
+        this.createdDate = new Date().getTime();
     }
 
     public String getTitle() {

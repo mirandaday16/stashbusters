@@ -22,7 +22,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSnackContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
@@ -137,10 +137,8 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         SnackBustPost post = new SnackBustPost(question, photoUrl, choices);
 
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        post.setId(newUserPostRef.getKey());
-        newUserPostRef.setValue(post);
-
         String postId = newUserPostRef.getKey();
+        newUserPostRef.setValue(post);
 
         startStashBustingActivity(postId);
     }
@@ -149,7 +147,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
      * Function that switches to SnackBustingActivity.
      */
     public void startStashBustingActivity(String postId) {
-        Intent intent = new Intent(mContext, SnackBustingActivity.class);
+        Intent intent = new Intent(mContext, SnackPostActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("postId", postId);
         mContext.startActivity(intent);

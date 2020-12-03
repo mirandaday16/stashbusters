@@ -8,11 +8,9 @@ import android.view.View;
 
 import com.google.firebase.FirebaseApp;
 
-import edu.neu.madcourse.stashbusters.views.LoginActivity;
-import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.snack_busting_button:
-                intent = new Intent(this, SnackBustingActivity.class);
+                intent = new Intent(this, SnackPostActivity.class);
                 startActivity(intent);
                 break;
             case R.id.stash_panel_button:
