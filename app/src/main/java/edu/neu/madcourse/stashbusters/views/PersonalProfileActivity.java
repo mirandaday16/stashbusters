@@ -102,7 +102,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
-        postList.setHasFixedSize(true);
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
