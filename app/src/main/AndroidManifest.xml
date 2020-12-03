@@ -16,8 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".StashPanelActivity" android:label="@string/stash_panel"/>
-        <activity android:name=".StashSwapActivity" android:label="@string/stash_swap"/>
         <activity android:name=".SnackBustingActivity" android:label="@string/snack_busting"/>
         <activity
             android:name=".views.PersonalProfileActivity"
@@ -48,6 +46,12 @@
         <activity
             android:name=".views.NewSwapActivity"
             android:label="@string/new_swap_post" />
+        <activity
+            android:name=".views.PanelPostActivity"
+            android:label="Panel Post Display" />
+        <activity
+            android:name=".views.SwapPostActivity"
+            android:label="Swap Post Display" />
         <activity android:name=".MainActivity">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->

@@ -99,37 +99,4 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
         followRef.child(currentUserId).child("following").child(targetUserId).removeValue();
         followRef.child(targetUserId).child("followers").child(currentUserId).removeValue();
     }
-
-    @Override
-    public void onSnackBustingButtonClick() {
-        startSnackBustingActivity();
-    }
-
-    @Override
-    public void onMyProfileButtonClick() {
-        startMyProfileActivity();
-    }
-
-    @Override
-    public void onNewPostButtonClick() {
-        startNewPostActivity();
-    }
-
-    // Starts New Post Activity
-    private void startNewPostActivity() {
-        Intent intent = new Intent(this.mContext, NewPostActivity.class);
-        mContext.startActivity(intent);
-    }
-
-    // Restarts My Profile Activity (current activity, will just reload page)
-    private void startMyProfileActivity() {
-        Intent intent = new Intent(this.mContext, PersonalProfileActivity.class);
-        mContext.startActivity(intent);
-    }
-
-    // Starts Snack Busting Activity
-    private void startSnackBustingActivity() {
-        Intent intent = new Intent(this.mContext, SnackBustingActivity.class);
-        mContext.startActivity(intent);
-    }
 }
