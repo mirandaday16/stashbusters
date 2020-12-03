@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,15 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
+import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
-import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,19 +35,20 @@ import com.squareup.picasso.Picasso;
 public class PersonalProfileActivity extends AppCompatActivity implements PersonalProfileContract.MvpView {
     private static final String TAG = PersonalProfileActivity.class.getSimpleName();
 
-    // Set up ViewBinding for the layout
+    // Set up UI elements
     private PersonalProfileActivityBinding binding;
-    private PersonalProfilePresenter mPresenter;
-    RecyclerView postList;
     TextView username, followerCountView, bio;
     ImageView profilePic;
     private NavigationBarView navigationBarView;
     Button myPostsButton, likedPostsButton;
     Toolbar toolbar;
+    RecyclerView postList;
 
+    private FirebaseRecyclerAdapter adapter;
+    private PersonalProfilePresenter mPresenter;
     private FirebaseAuth mAuth;
     private String userId;
-    private FirebaseRecyclerAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +93,10 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         bio = binding.bio;
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
-        postList = binding.postViewRecycler;
+
+        // recycler view for posts
+        postList = binding.postRecyclerView;
+        postList.setNestedScrollingEnabled(false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
@@ -127,6 +133,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
                 // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
+
     }
 
     @Override
