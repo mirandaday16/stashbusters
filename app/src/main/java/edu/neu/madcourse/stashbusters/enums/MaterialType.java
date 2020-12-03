@@ -4,11 +4,12 @@ package edu.neu.madcourse.stashbusters.enums;
  * This enum represents material type.
  */
 public enum MaterialType {
-    CRAYONS("crayons", Category.STATIONARY),
-    WATERCOLORS("watercolors", Category.PAINT),
-    YARN("yarn", Category.TEXTILE),
-    INK_PAD("ink_pad", Category.PRINTING),
-    FEATHERS("feathers", Category.OTHER);
+    CRAYONS("Crayons", Category.STATIONARY),
+    WATERCOLORS("Watercolors", Category.PAINT),
+    YARN("Yarn", Category.TEXTILE),
+    INK_PAD("Ink pad", Category.PRINTING),
+    FEATHERS("Feathers", Category.OTHER),
+    FABRIC("Fabric", Category.TEXTILE);
 
     private final String dbCode;
     private final Category category;
