@@ -51,6 +51,12 @@
         <activity
             android:name=".views.NewSwapActivity"
             android:label="@string/new_swap_post" />
+        <activity
+            android:name=".views.PanelPostActivity"
+            android:label="Panel Post Display" />
+        <activity
+            android:name=".views.SwapPostActivity"
+            android:label="Swap Post Display" />
         <activity android:name=".MainActivity">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->

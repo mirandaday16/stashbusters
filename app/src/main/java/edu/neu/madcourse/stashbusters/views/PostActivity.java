@@ -2,13 +2,16 @@ package edu.neu.madcourse.stashbusters.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +20,10 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
@@ -42,6 +48,15 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected EditText commentInput;
     protected TextView timeStamp;
     protected LinearLayout swapSection;
+    protected Button submitButton;
+
+    // Attributes needed for displaying comments in recycler view.
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    CommentRVAdapter adapter;
+
+    // For updating ImageView in a separate thread.
+    private Handler imageHandler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +80,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         // Setting up binding instance and view instances
         binding = ActivityPanelSwapPostBinding.inflate(getLayoutInflater());
         View rootView = binding.getRoot();
-        swapSection.setVisibility(View.GONE);
 
         initViews();
         initListeners();
@@ -82,13 +96,17 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         titleView = binding.title;
         postPhoto = binding.photo;
         details = binding.details;
-        commentInput = binding.commentInput;
         timeStamp = binding.timeStamp;
         swapSection = binding.swapFor;
+        commentInput = binding.commentInput;
+        submitButton = binding.postButton;
+
+        commentInput.setHint(R.string.advice_hint);
+        swapSection.setVisibility(View.GONE);
     }
 
     public void initListeners() {
-        // TODO: Implement all onClicks
+        // TODO: Implement onClickListener for submit button
     }
 
     @Override
@@ -106,7 +124,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         // Format time stamp
         Date date = new Date(createdDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
         String dateText = dateFormat.format(date);
         timeStamp.setText(dateText);
     }
