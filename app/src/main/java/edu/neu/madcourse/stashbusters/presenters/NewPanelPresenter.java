@@ -21,6 +21,7 @@ import com.google.firebase.storage.UploadTask;
 
 import edu.neu.madcourse.stashbusters.StashPanelActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
 
@@ -126,7 +127,10 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
      */
     private void uploadPost(final String title, final String description, int material, final String photoUrl) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        newUserPostRef.setValue(new StashPanelPost(title, description, photoUrl));
+        StashPanelPost newPost = new StashPanelPost(title, description, photoUrl);
+        MaterialType mat = MaterialType.getByInt(material);
+        newPost.setMaterialType(mat);
+        newUserPostRef.setValue(newPost);
 
         startStashPanelActivity();
     }

@@ -21,6 +21,8 @@ import com.google.firebase.storage.UploadTask;
 
 import edu.neu.madcourse.stashbusters.StashSwapActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSwapContract;
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.NewSwapActivity;
 
@@ -127,7 +129,10 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      */
     private void uploadPost(final String title, final String description, int material, final String photoUrl, final String desiredMaterial) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        newUserPostRef.setValue(new StashSwapPost(title, description, photoUrl, desiredMaterial));
+        StashSwapPost newPost = new StashSwapPost(title, description, photoUrl, desiredMaterial);
+        MaterialType mat = MaterialType.getByInt(material);
+        newPost.setMaterialType(mat);
+        newUserPostRef.setValue(newPost);
 
         startStashSwapActivity();
     }

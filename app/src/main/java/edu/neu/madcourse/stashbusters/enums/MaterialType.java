@@ -27,6 +27,27 @@ public enum MaterialType {
     public Category getCategory() {
         return category;
     }
+
+    public static MaterialType getByInt(int i) {
+        switch (i) {
+            case 0:
+                return MaterialType.CRAYONS;
+            case 1:
+                return MaterialType.WATERCOLORS;
+            case 2:
+                return MaterialType.YARN;
+            case 3:
+                return MaterialType.INK_PAD;
+            case 4:
+                return MaterialType.FEATHERS;
+            case 5:
+                return MaterialType.FABRIC;
+            case 6:
+                return MaterialType.MISC;
+            default:
+                return null;
+        }
+    }
 }
 
 /**
