@@ -132,15 +132,18 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         newPost.setMaterialType(mat);
         newUserPostRef.setValue(newPost);
 
-        startStashPanelActivity();
+        String postId = newUserPostRef.getKey();
+
+        startStashPanelActivity(postId);
     }
 
     /**
      * Function that switches to StashPanelActivity.
      */
-    public void startStashPanelActivity() {
-        // TODO: Should eventually display the post that was just created.
+    public void startStashPanelActivity(String postId) {
         Intent intent = new Intent(mContext, StashPanelActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }

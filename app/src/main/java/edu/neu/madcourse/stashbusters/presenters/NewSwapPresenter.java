@@ -134,15 +134,18 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
         newPost.setMaterialType(mat);
         newUserPostRef.setValue(newPost);
 
-        startStashSwapActivity();
+        String postId = newUserPostRef.getKey();
+
+        startStashSwapActivity(postId);
     }
 
     /**
      * Function that switches to StashSwapActivity.
      */
-    public void startStashSwapActivity() {
-        // TODO: Should eventually display the post that was just created.
+    public void startStashSwapActivity(String postId) {
         Intent intent = new Intent(mContext, StashSwapActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }

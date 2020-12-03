@@ -139,15 +139,18 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
         newUserPostRef.setValue(post);
 
-        startStashBustingActivity();
+        String postId = newUserPostRef.getKey();
+
+        startStashBustingActivity(postId);
     }
 
     /**
      * Function that switches to SnackBustingActivity.
      */
-    public void startStashBustingActivity() {
-        // TODO: Should eventually display the post that was just created.
+    public void startStashBustingActivity(String postId) {
         Intent intent = new Intent(mContext, SnackBustingActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }
