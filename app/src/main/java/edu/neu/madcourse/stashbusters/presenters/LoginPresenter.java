@@ -13,6 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import edu.neu.madcourse.stashbusters.YourFeedActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
@@ -40,7 +41,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void startWorldFeedActivity() {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
-        Intent intent = new Intent(mContext, PersonalProfileActivity.class);
+        Intent intent = new Intent(mContext, YourFeedActivity.class);
         mContext.startActivity(intent);
     }
 
