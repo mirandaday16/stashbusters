@@ -67,10 +67,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         mAuth = FirebaseAuth.getInstance();
 
-        authorUserRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(authorId);
-        postRef = FirebaseDatabase.getInstance().getReference().child("panelPosts")
-                .child(authorId).child(postId);
+        setRefs();
 
         mPresenter = new PostPresenter(this, authorId, postId);
         mPresenter.loadAuthorDataToView();
