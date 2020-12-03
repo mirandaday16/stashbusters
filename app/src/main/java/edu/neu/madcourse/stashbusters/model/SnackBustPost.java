@@ -53,6 +53,10 @@ public class SnackBustPost {
         return id;
     }
 
+    public long getDate() {
+        return createdDate;
+    }
+
     public List<SnackBustChoice> getChoiceList() {
         return choiceList;
     }
