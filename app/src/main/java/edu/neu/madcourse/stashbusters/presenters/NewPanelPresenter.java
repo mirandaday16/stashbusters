@@ -19,10 +19,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashPanelActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 
 import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
 
@@ -132,11 +132,11 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
     }
 
     /**
-     * Function that switches to StashPanelActivity.
+     * Function that switches to PanelPostActivity.
      */
     public void startStashPanelActivity() {
         // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, StashPanelActivity.class);
+        Intent intent = new Intent(mContext, PanelPostActivity.class);
         mContext.startActivity(intent);
         mView.finishActivity();
     }
