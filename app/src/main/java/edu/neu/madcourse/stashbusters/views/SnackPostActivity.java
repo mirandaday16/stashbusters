@@ -15,17 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.contracts.SnackPostContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
+import edu.neu.madcourse.stashbusters.presenters.SnackPostPresenter;
 
-public class SnackPostActivity extends AppCompatActivity {
+public class SnackPostActivity extends AppCompatActivity implements SnackPostContract.MvpView {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SnackRVAdapter adapter;
     private List<SnackBustPost> posts;
-    int currPost;
+    int currPost = 0;
     ImageView snackImage;
     TextView postText;
+    SnackPostPresenter mPresenter;
 
     protected String authorId, postId;
 
@@ -34,40 +37,35 @@ public class SnackPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snack_busting);
 
+        snackImage = (ImageView) findViewById(R.id.snack_image);
+        postText = (TextView) findViewById(R.id.post_text);
+
+        mPresenter = new SnackPostPresenter(this);
+
+        // Try to get userId and postId from Intent.
+        // This is used if the user is coming from the NewSnackActivity.
+        // Otherwise, authorId and postId will be null.
         Intent intent = getIntent();
         authorId = intent.getStringExtra("userId");
         postId = intent.getStringExtra("postId");
 
-        if (authorId == null || postId == null) {
-            // ONLY SHOW THIS ONE POST
+        authorId= "xCwxgdr4pBWzCvDHLpMtLfU90XI2";
+        postId = "-MNaaijz4_JqhFnrsXiZ";
+
+        if (authorId == null && postId == null) {
+            // Show all SnackBusting posts
+            mPresenter.loadSnackPosts();
+
         } else {
-            // SHOW ALL SNACKBUSTING POSTS
+            // Get just the one SnackBusting post
+            mPresenter.loadSingleSnackPost(authorId, postId);
         }
+    }
 
-        snackImage = (ImageView) findViewById(R.id.snack_image);
-        postText = (TextView) findViewById(R.id.post_text);
+    @Override
+    public void setPostView(List<SnackBustPost> postList) {
 
-        // Set up dummy data
-        SnackBustChoice choice_one = new SnackBustChoice("smiley mouth");
-        SnackBustChoice choice_two = new SnackBustChoice("-_- mouth");
-        List<SnackBustChoice> choices = new ArrayList<>();
-        choices.add(choice_one);
-        choices.add(choice_two);
-        SnackBustPost post = new SnackBustPost("What kind of mouth?",
-                "https://i.ibb.co/cQg5V0d/test-photo-plush.png", choices);
-        posts = new ArrayList<>();
-        posts.add(post);
-        choice_one = new SnackBustChoice("yes, change it");
-        choice_two = new SnackBustChoice("no, keep as is");
-        choices = new ArrayList<>();
-        choices.add(choice_one);
-        choices.add(choice_two);
-        post = new SnackBustPost("Leather handle?",
-                "https://i.ibb.co/P6mt3d5/test-laptop-case.png", choices);
-        posts.add(post);
-
-        currPost = 0;
-
+        this.posts = postList;
 
         // Set up recycler view
         recyclerView = findViewById(R.id.recycler_view);
@@ -76,38 +74,42 @@ public class SnackPostActivity extends AppCompatActivity {
         adapter = new SnackRVAdapter(posts.get(currPost));
         recyclerView.setAdapter(adapter);
 
+        setUpSwipeHandler();
+    }
 
+    private void setUpSwipeHandler(){
         // Attach itemTouchHandler to handle swipes
         // Adapted from: https://stackoverflow.com/questions/54042319/how-do-i-add-swipe-to-delete-to-cards-on-cardview
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                                  RecyclerView.ViewHolder target) {
-                // do something
-                return false;
-            }
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        // do something
+                        return false;
+                    }
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                int position = viewHolder.getAdapterPosition();
-                // code to add a vote to the corresponding choice when swiped left or right
-                // notify the recyclerview changes
-                currPost++;
-                if (currPost < posts.size()) {
-                    adapter = new SnackRVAdapter(posts.get(1));
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    snackImage.setImageResource(R.drawable.cookie_icon);
-                    postText.setText(R.string.no_more_snacks);
-                }
-            }
-        };
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        int position = viewHolder.getAdapterPosition();
+                        // code to add a vote to the corresponding choice when swiped left or right
+                        // notify the recyclerview changes
+                        currPost++;
+                        if (currPost < posts.size()) {
+                            adapter = new SnackRVAdapter(posts.get(1));
+                            recyclerView.setAdapter(adapter);
+                        } else {
+                            snackImage.setImageResource(R.drawable.cookie_icon);
+                            postText.setText(R.string.no_more_snacks);
+                        }
+                    }
+                };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
+
     // An unscrollable linear layout manager object
     public class UnscrollableLinearLayoutManager extends LinearLayoutManager {
         public UnscrollableLinearLayoutManager(Context context) {

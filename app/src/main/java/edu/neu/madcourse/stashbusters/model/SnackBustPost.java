@@ -12,6 +12,8 @@ public class SnackBustPost {
     private String authorId;
     private List<SnackBustChoice> choiceList;
 
+    public SnackBustPost(){}
+
     public SnackBustPost(String title, String photoUrl) {
         this.title = title;
         this.photoUrl = photoUrl;
