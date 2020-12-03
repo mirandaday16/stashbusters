@@ -87,7 +87,6 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     @Override
     public boolean onToolbarClick(MenuItem item) {
         if (item.getItemId() == R.id.edit_profile_menu_item) {
-//            startEditProfileActivity();
             startEditProfileActivity();
         } else if (item.getItemId() == R.id.log_out_menu_item) {
             FirebaseAuth.getInstance().signOut();
@@ -99,7 +98,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     @Override
     public void getUserPostsData() {
         // query this user's posts data in DB
-        Query getPosts = postsRef.child(userId).limitToLast(10);
+        Query getPosts = postsRef.child(userId);
         FirebaseRecyclerOptions<StashPanelPost> options = new FirebaseRecyclerOptions.Builder<StashPanelPost>()
             .setQuery(getPosts, StashPanelPost.class)
             .build();

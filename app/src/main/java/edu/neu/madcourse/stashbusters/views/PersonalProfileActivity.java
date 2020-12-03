@@ -63,9 +63,10 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         // set up presenter + load data to view
         mPresenter = new PersonalProfilePresenter(this, userId);
         mPresenter.loadDataToView();
-        mPresenter.getUserPostsData();
 
         setContentView(binding.getRoot());
+
+        mPresenter.getUserPostsData();
     }
 
     private void initAuthentication() {
@@ -121,7 +122,8 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: get user's posts from Firebase and display in RecyclerView
+                System.out.println("my posts btn clicked");
+//                mPresenter.getUserPostsData();
             }
         });
 
@@ -140,6 +142,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     protected void onStart() {
         super.onStart();
         adapter.startListening();
+
     }
 
     @Override
