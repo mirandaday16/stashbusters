@@ -19,8 +19,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashSwapActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSwapContract;
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.NewSwapActivity;
 
@@ -127,17 +129,24 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
      */
     private void uploadPost(final String title, final String description, int material, final String photoUrl, final String desiredMaterial) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        newUserPostRef.setValue(new StashSwapPost(title, description, photoUrl, desiredMaterial));
+        StashSwapPost newPost = new StashSwapPost(title, description, photoUrl, desiredMaterial);
+        MaterialType mat = MaterialType.getByInt(material);
+        newPost.setMaterialType(mat);
+        newPost.setId(newUserPostRef.getKey());
+        newUserPostRef.setValue(newPost);
 
-        startStashSwapActivity();
+        String postId = newUserPostRef.getKey();
+
+        startStashSwapActivity(postId);
     }
 
     /**
-     * Function that switches to StashSwapActivity.
+     * Function that switches to SwapPostActivity.
      */
-    public void startStashSwapActivity() {
-        // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, StashSwapActivity.class);
+    public void startStashSwapActivity(String postId) {
+        Intent intent = new Intent(mContext, SwapPostActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }

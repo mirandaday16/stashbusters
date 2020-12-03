@@ -37,9 +37,6 @@ public interface PersonalProfileContract {
         void getUserPostsData();
         void onEditProfileButtonClick(String userId);
         boolean onToolbarClick(MenuItem item);
-        void onNewPostButtonClick();
-        void onMyProfileButtonClick();
-        void onSnackBustingButtonClick();
         // TODO: void displayUsersPosts();
 
     }

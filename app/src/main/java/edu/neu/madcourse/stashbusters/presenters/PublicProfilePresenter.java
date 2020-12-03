@@ -1,7 +1,6 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();
@@ -98,38 +94,5 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     private void unfollowUser() {
         followRef.child(currentUserId).child("following").child(targetUserId).removeValue();
         followRef.child(targetUserId).child("followers").child(currentUserId).removeValue();
-    }
-
-    @Override
-    public void onSnackBustingButtonClick() {
-        startSnackBustingActivity();
-    }
-
-    @Override
-    public void onMyProfileButtonClick() {
-        startMyProfileActivity();
-    }
-
-    @Override
-    public void onNewPostButtonClick() {
-        startNewPostActivity();
-    }
-
-    // Starts New Post Activity
-    private void startNewPostActivity() {
-        Intent intent = new Intent(this.mContext, NewPostActivity.class);
-        mContext.startActivity(intent);
-    }
-
-    // Restarts My Profile Activity (current activity, will just reload page)
-    private void startMyProfileActivity() {
-        Intent intent = new Intent(this.mContext, PersonalProfileActivity.class);
-        mContext.startActivity(intent);
-    }
-
-    // Starts Snack Busting Activity
-    private void startSnackBustingActivity() {
-        Intent intent = new Intent(this.mContext, SnackBustingActivity.class);
-        mContext.startActivity(intent);
     }
 }

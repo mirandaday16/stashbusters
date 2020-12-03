@@ -19,8 +19,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashPanelActivity;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
+import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.views.NewPanelActivity;
 
@@ -126,17 +127,24 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
      */
     private void uploadPost(final String title, final String description, int material, final String photoUrl) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
-        newUserPostRef.setValue(new StashPanelPost(title, description, photoUrl));
+        StashPanelPost newPost = new StashPanelPost(title, description, photoUrl);
+        MaterialType mat = MaterialType.getByInt(material);
+        newPost.setMaterialType(mat);
+        newPost.setId(newUserPostRef.getKey());
+        newUserPostRef.setValue(newPost);
 
-        startStashPanelActivity();
+        String postId = newUserPostRef.getKey();
+
+        startStashPanelActivity(postId);
     }
 
     /**
-     * Function that switches to StashPanelActivity.
+     * Function that switches to SwapPostActivity.
      */
-    public void startStashPanelActivity() {
-        // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, StashPanelActivity.class);
+    public void startStashPanelActivity(String postId) {
+        Intent intent = new Intent(mContext, PanelPostActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }
