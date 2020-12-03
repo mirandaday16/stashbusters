@@ -49,9 +49,6 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
         authorId = intent.getStringExtra("userId");
         postId = intent.getStringExtra("postId");
 
-//        authorId= "xCwxgdr4pBWzCvDHLpMtLfU90XI2";
-//        postId = "-MNaaijz4_JqhFnrsXiZ";
-
         if (authorId == null && postId == null) {
             // Show all SnackBusting posts
             mPresenter.loadSnackPosts();
