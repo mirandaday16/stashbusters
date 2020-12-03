@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.views;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 
 public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackViewHolder> {

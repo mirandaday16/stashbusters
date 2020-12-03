@@ -8,11 +8,9 @@ import android.view.View;
 
 import com.google.firebase.FirebaseApp;
 
-import edu.neu.madcourse.stashbusters.views.LoginActivity;
-import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 

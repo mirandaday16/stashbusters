@@ -1,7 +1,6 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();

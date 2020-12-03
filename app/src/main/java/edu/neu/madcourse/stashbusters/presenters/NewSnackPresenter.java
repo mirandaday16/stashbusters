@@ -22,7 +22,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
+import edu.neu.madcourse.stashbusters.views.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSnackContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;

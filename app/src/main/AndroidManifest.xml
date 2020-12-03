@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SnackBustingActivity" android:label="@string/snack_busting"/>
+        <activity android:name=".views.SnackBustingActivity" android:label="@string/snack_busting"/>
         <activity
             android:name=".views.PersonalProfileActivity"
             android:label="Personal Profile"/>
