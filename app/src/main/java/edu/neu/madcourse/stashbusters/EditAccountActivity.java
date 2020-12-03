@@ -104,7 +104,8 @@ public class EditAccountActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
                         // Transaction completed
-                        Log.d(NewAccountActivity.TAG, "sentTransaction:onComplete:" + error);
+                        // TODO: tag is private
+//                        Log.d(NewAccountActivity.TAG, "sentTransaction:onComplete:" + error);
 
                     }
                 });

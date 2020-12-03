@@ -6,23 +6,23 @@ import edu.neu.madcourse.stashbusters.enums.MaterialType;
  * Stash Swap Post is a type of Post whose content is specifically about swapping materials.
  */
 public class StashSwapPost extends Post {
-    private MaterialType interestedMaterial;
+    private String interestedMaterial;
     private Boolean isAvailable;
 
-    public StashSwapPost(MaterialType material) {
+    public StashSwapPost(String material) {
         super();
         this.interestedMaterial = material;
         // by default, the material is available for swapping
         this.isAvailable = true;
     }
 
-    public StashSwapPost(String title, String description, String photoUrl, MaterialType material) {
+    public StashSwapPost(String title, String description, String photoUrl, String material) {
         super(title, description, photoUrl);
         this.interestedMaterial = material;
         this.isAvailable = true;
     }
 
-    public MaterialType getMaterial() {
+    public String getMaterial() {
         return interestedMaterial;
     }
 
@@ -30,7 +30,7 @@ public class StashSwapPost extends Post {
         return isAvailable;
     }
 
-    public void setMaterial(MaterialType material) {
+    public void setMaterial(String material) {
         this.interestedMaterial = material;
     }
 

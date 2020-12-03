@@ -77,7 +77,7 @@ public class StashSwapActivity extends AppCompatActivity {
                 "Bought them because they were pretty to look at, but never ended up " +
                         "making anything with them. About 100 beads.",
                 "https://montclairdispatch.com/wp-content/uploads/2015/04/Wooden_beads.jpg",
-                MaterialType.YARN);
+                "YARN");
 
         // Post liked dummy data
         boolean like = false;

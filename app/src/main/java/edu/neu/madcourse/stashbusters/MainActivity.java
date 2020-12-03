@@ -6,12 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.FirebaseApp;
+
+import edu.neu.madcourse.stashbusters.views.LoginActivity;
+import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
+import edu.neu.madcourse.stashbusters.views.NewPostActivity;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseApp.initializeApp(this);
     }
 
 

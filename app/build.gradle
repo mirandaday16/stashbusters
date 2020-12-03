@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
-
 android {
     compileSdkVersion 29
 
@@ -34,8 +33,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-storage'
 
     // General
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -46,14 +45,16 @@ dependencies {
     // Layouts + Views
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "androidx.cardview:cardview:1.0.0"
-
+    implementation "androidx.appcompat:appcompat:1.0.0"
 
     // Test Implementations
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // picasso for image
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

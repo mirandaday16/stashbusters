@@ -3,6 +3,7 @@
     package="edu.neu.madcourse.stashbusters">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -14,49 +15,71 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".StashPanelActivity" android:label="@string/stash_panel"/>
+        <activity android:name=".StashSwapActivity" android:label="@string/stash_swap"/>
+        <activity android:name=".SnackBustingActivity" android:label="@string/snack_busting"/>
         <activity
-            android:name=".StashSwapActivity"
-            android:label="@string/stash_swap" />
+            android:name=".views.PersonalProfileActivity"
+            android:label="Personal Profile"/>
         <activity
-            android:name=".StashPanelActivity"
-            android:label="@string/stash_panel" />
-        <activity android:name=".SnackBustingActivity" />
-        <activity android:name=".PersonalProfileActivity"></activity>
-        <activity android:name=".PublicProfileActivity" />
-        <activity android:name=".EditAccountActivity" />
-        <activity android:name=".NewAccountActivity" />
-        <activity android:name=".LoginActivity">
+            android:name=".views.EditProfileActivity"
+            android:label="Edit Profile"/>
+        <activity
+            android:name=".views.PublicProfileActivity"
+            android:label="Public Profile"/>
+        <activity
+            android:name=".EditAccountActivity"
+            android:label="Edit Account"/>
+        <activity android:name=".views.NewAccountActivity" />
+        <activity android:name=".views.LoginActivity">
+
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        <activity android:name=".YourFeedActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name=".NewSnackActivity"
+            android:name=".views.NewSnackActivity"
             android:label="@string/new_snack_post" />
         <activity
-            android:name=".NewPostActivity"
+            android:name=".views.NewPostActivity"
             android:label="@string/new_post" />
         <activity
-            android:name=".NewPanelActivity"
+            android:name=".views.NewPanelActivity"
             android:label="@string/new_panel_post" />
         <activity
-            android:name=".NewSwapActivity"
+            android:name=".views.NewSwapActivity"
             android:label="@string/new_swap_post" />
         <activity android:name=".MainActivity">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
+            android:authorities="edu.neu.madcourse.stashbusters.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths"/>
         </provider>
 
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
