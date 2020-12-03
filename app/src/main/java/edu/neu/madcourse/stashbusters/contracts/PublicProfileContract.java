@@ -20,9 +20,6 @@ public interface PublicProfileContract {
          * @param buttonText button text
          */
         void onFollowButtonClick(String buttonText);
-        void onSnackBustingButtonClick();
-        void onMyProfileButtonClick();
-        void onNewPostButtonClick();
 
         /**
          * Load current user's data from Firebase to view.

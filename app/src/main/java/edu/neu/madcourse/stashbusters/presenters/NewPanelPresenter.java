@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashPanelActivity;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewPanelContract;
 import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -138,10 +138,10 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
     }
 
     /**
-     * Function that switches to StashPanelActivity.
+     * Function that switches to SwapPostActivity.
      */
     public void startStashPanelActivity(String postId) {
-        Intent intent = new Intent(mContext, StashPanelActivity.class);
+        Intent intent = new Intent(mContext, PanelPostActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("postId", postId);
         mContext.startActivity(intent);

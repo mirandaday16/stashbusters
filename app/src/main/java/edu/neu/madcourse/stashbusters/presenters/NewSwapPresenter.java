@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.neu.madcourse.stashbusters.StashSwapActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSwapContract;
 import edu.neu.madcourse.stashbusters.enums.MaterialType;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -140,10 +140,10 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
     }
 
     /**
-     * Function that switches to StashSwapActivity.
+     * Function that switches to SwapPostActivity.
      */
     public void startStashSwapActivity(String postId) {
-        Intent intent = new Intent(mContext, StashSwapActivity.class);
+        Intent intent = new Intent(mContext, SwapPostActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("postId", postId);
         mContext.startActivity(intent);

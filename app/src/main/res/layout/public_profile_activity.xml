@@ -86,67 +86,11 @@
             android:background="@color/colorSurfaceDark" />
 
 
-        <LinearLayout
+        <edu.neu.madcourse.stashbusters.views.NavigationBarView
             android:id="@+id/navigationBar"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorSecondaryLight"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-
-
-            <ImageButton
-                android:id="@+id/myFeed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/palette_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/worldFeed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/world_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/newPost"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/new_post_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/myProfile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/mouse_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/snackBusting"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/cookie_icon"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 
