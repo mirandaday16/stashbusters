@@ -149,20 +149,14 @@
             </RelativeLayout>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/user_posts">
-
-                <edu.neu.madcourse.stashbusters.views.NavigationBarView
-                    android:id="@+id/navigationBar"
-                    android:layout_height="56dp"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="bottom"
-                    android:layout_alignParentBottom="true"/>
-            </RelativeLayout>
-
         </RelativeLayout>
     </ScrollView>
+
+    <edu.neu.madcourse.stashbusters.views.NavigationBarView
+        android:id="@+id/navigationBar"
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
