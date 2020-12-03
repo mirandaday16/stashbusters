@@ -23,6 +23,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,6 +76,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
                     }
                 }
 
+                Collections.reverse(posts);
 
 
                 mView.setPostView(posts);

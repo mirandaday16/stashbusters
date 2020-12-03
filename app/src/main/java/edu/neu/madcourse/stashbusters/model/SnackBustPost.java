@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This class represents a Snack Bust Post.
  */
-public class SnackBustPost {
+public class SnackBustPost implements Comparable<SnackBustPost>{
     private String id;
     private String title;
     private String photoUrl;
@@ -67,5 +67,10 @@ public class SnackBustPost {
 
     public void setDate(long currentTime) {
         this.createdDate = currentTime;
+    }
+
+    @Override
+    public int compareTo(SnackBustPost o) {
+        return Long.compare(this.getDate(), o.getDate());
     }
 }

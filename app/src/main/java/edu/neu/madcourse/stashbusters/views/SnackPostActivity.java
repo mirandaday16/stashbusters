@@ -97,7 +97,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         // notify the recyclerview changes
                         currPost++;
                         if (currPost < posts.size()) {
-                            adapter = new SnackRVAdapter(posts.get(1));
+                            adapter = new SnackRVAdapter(posts.get(currPost));
                             recyclerView.setAdapter(adapter);
                         } else {
                             snackImage.setImageResource(R.drawable.cookie_icon);
