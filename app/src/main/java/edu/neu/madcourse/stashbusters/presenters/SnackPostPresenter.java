@@ -56,49 +56,34 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
 
     @Override
     public void loadSnackPosts() {
-//        postsRef = FirebaseDatabase.getInstance().getReference()
-//                .child("snackPosts");
-//
-//        postsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                // This code grabs the history map from the DB and then initializes a history adapter
-//                // in order to put this info into the actual screen
-//                // The method lower down the class called getReceiptHistory is the same
-//                // except it grabs the received messages to display.
-//
-//
-//                HashMap historyMap = (HashMap) snapshot.getValue();
-//                List posts = (List) historyMap.get("sent");
-//
-//                mView.setPostView(posts);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//        });
+        postsRef = FirebaseDatabase.getInstance().getReference()
+                .child("snackPosts");
 
-        SnackBustChoice choice_one = new SnackBustChoice("smiley mouth");
-        SnackBustChoice choice_two = new SnackBustChoice("-_- mouth");
-        List<SnackBustChoice> choices = new ArrayList<>();
-        choices.add(choice_one);
-        choices.add(choice_two);
-        SnackBustPost post = new SnackBustPost("What kind of mouth?",
-                "https://i.ibb.co/cQg5V0d/test-photo-plush.png", choices);
-        List<SnackBustPost> posts = new ArrayList<>();
-        posts.add(post);
-        choice_one = new SnackBustChoice("yes, change it");
-        choice_two = new SnackBustChoice("no, keep as is");
-        choices = new ArrayList<>();
-        choices.add(choice_one);
-        choices.add(choice_two);
-        post = new SnackBustPost("Leather handle?",
-                "https://i.ibb.co/P6mt3d5/test-laptop-case.png", choices);
-        posts.add(post);
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        mView.setPostView(posts);
+                ArrayList posts = new ArrayList();
+
+                // For each user under the "snackPosts" node, retrieve all the child posts...
+                for (DataSnapshot dsp : snapshot.getChildren()) {
+                    // For each child post, retrieve and append to the posts ArrayList
+                    for (DataSnapshot child: dsp.getChildren()){
+                        SnackBustPost post = child.getValue(SnackBustPost.class);
+                        posts.add(post);
+                    }
+                }
+
+
+
+                mView.setPostView(posts);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
     @Override
