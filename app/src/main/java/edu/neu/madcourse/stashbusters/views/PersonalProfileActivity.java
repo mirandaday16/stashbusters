@@ -1,10 +1,9 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
-import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
-import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
+import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -33,7 +36,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     // Set up ViewBinding for the layout
     private PersonalProfileActivityBinding binding;
     private PersonalProfilePresenter mPresenter;
-    RecyclerView postsView;
+    RecyclerView postList;
     TextView username, followerCountView, bio;
     ImageView profilePic;
     ImageButton myFeedButton, worldFeedButton, newPostButton, myProfileButton, snackBustingButton;
@@ -42,7 +45,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
 
     private FirebaseAuth mAuth;
     private String userId;
-
+    private FirebaseRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         // set up presenter + load data to view
         mPresenter = new PersonalProfilePresenter(this, userId);
         mPresenter.loadDataToView();
+        mPresenter.getUserPostsData();
 
         setContentView(binding.getRoot());
     }
@@ -86,7 +90,12 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         bio = binding.bio;
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
-        postsView = binding.postViewArea;
+        postList = binding.postViewArea;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postList.setLayoutManager(linearLayoutManager);
+        postList.setHasFixedSize(true);
 
         // TODO: might want to separate toolbar out to be reused
         // Navigation bar buttons
@@ -158,6 +167,26 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
                 mPresenter.onSnackBustingButtonClick();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    public void setPostListAdapter(FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder> firebaseRecyclerAdapter) {
+        adapter = firebaseRecyclerAdapter;
+        postList.setAdapter(firebaseRecyclerAdapter);
     }
 
     @Override

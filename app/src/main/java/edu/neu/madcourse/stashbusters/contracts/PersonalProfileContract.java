@@ -3,6 +3,11 @@ package edu.neu.madcourse.stashbusters.contracts;
 import android.graphics.Bitmap;
 import android.view.MenuItem;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+
+import edu.neu.madcourse.stashbusters.PostsViewHolder;
+import edu.neu.madcourse.stashbusters.model.Post;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
@@ -21,7 +26,7 @@ public interface PersonalProfileContract {
          * @param followerCount user's follower count
          */
         void setViewData(String photo, String username, String bio, String followerCount);
-        // TODO: set list of user's posts
+        void setPostListAdapter(FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder> firebaseRecyclerAdapter);
     }
 
     interface Presenter {
@@ -29,6 +34,7 @@ public interface PersonalProfileContract {
          * Load data from database so view can update the UI.
          */
         void loadDataToView();
+        void getUserPostsData();
         void onEditProfileButtonClick(String userId);
         boolean onToolbarClick(MenuItem item);
         void onNewPostButtonClick();

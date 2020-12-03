@@ -3,17 +3,27 @@ package edu.neu.madcourse.stashbusters.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
+import edu.neu.madcourse.stashbusters.PostsViewHolder;
+import edu.neu.madcourse.stashbusters.model.Post;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.views.NewPostActivity;
 
 import edu.neu.madcourse.stashbusters.R;
@@ -35,6 +45,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     private FirebaseAuth mAuth;
     private DatabaseReference userProfileRef;
+    private DatabaseReference postsRef; //TODO: panel vs swap
 
     public PersonalProfilePresenter(Context context, String userId) {
         this.mView = (PersonalProfileContract.MvpView) context;
@@ -44,7 +55,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         mAuth = FirebaseAuth.getInstance();
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        postsRef = FirebaseDatabase.getInstance().getReference().child("panelPosts");
     }
+
 
     @Override
     public void loadDataToView() {
@@ -102,10 +115,33 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         startSnackBustingActivity();
     }
 
-    private void getPostsData() {
+    @Override
+    public void getUserPostsData() {
         // query this user's posts data in DB
-        // possible order newest->older
-        // call View to display the data
+        Query getPosts = postsRef.child(userId).limitToLast(10);
+        FirebaseRecyclerOptions<StashPanelPost> options = new FirebaseRecyclerOptions.Builder<StashPanelPost>()
+            .setQuery(getPosts, StashPanelPost.class)
+            .build();
+
+        FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull StashPanelPost model) {
+//                final String postId = getRef(position).getKey();
+                holder.setHeadline(model.getTitle());
+                holder.setUsername(model.getAuthorId());
+                holder.setPostPhoto(model.getPhotoUrl());
+            }
+
+            @NonNull
+            @Override
+            public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.content_feed_list_item, parent, false);
+                return new PostsViewHolder(view);
+            };
+        };
+        mView.setPostListAdapter(firebaseRecyclerAdapter);
     }
 
     // Starts New Post Activity
