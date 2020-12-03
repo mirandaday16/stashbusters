@@ -20,6 +20,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
@@ -138,6 +139,8 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
 
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
         String postId = newUserPostRef.getKey();
+        post.setId(postId);
+        post.setDate(new Date().getTime());
         newUserPostRef.setValue(post);
 
         startStashBustingActivity(postId);

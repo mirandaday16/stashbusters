@@ -64,4 +64,8 @@ public class SnackBustPost {
     public void setId(String id) {
         this.id = id;
     }
+
+    public void setDate(long currentTime) {
+        this.createdDate = currentTime;
+    }
 }
