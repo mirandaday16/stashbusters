@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 
-public class SnackBustingActivity extends AppCompatActivity {
+public class SnackPostActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SnackRVAdapter adapter;
@@ -26,10 +27,22 @@ public class SnackBustingActivity extends AppCompatActivity {
     ImageView snackImage;
     TextView postText;
 
+    protected String authorId, postId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snack_busting);
+
+        Intent intent = getIntent();
+        authorId = intent.getStringExtra("userId");
+        postId = intent.getStringExtra("postId");
+
+        if (authorId == null || postId == null) {
+            // ONLY SHOW THIS ONE POST
+        } else {
+            // SHOW ALL SNACKBUSTING POSTS
+        }
 
         snackImage = (ImageView) findViewById(R.id.snack_image);
         postText = (TextView) findViewById(R.id.post_text);

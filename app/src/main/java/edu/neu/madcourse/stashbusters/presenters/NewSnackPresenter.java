@@ -22,7 +22,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.views.SnackBustingActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSnackContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
@@ -147,7 +147,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
      */
     public void startStashBustingActivity() {
         // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, SnackBustingActivity.class);
+        Intent intent = new Intent(mContext, SnackPostActivity.class);
         mContext.startActivity(intent);
         mView.finishActivity();
     }
