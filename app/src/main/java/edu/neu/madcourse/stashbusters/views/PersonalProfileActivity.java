@@ -90,7 +90,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         bio = binding.bio;
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
-        postList = binding.postViewArea;
+        postList = binding.postViewRecycler;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
