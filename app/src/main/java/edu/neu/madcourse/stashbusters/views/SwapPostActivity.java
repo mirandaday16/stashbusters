@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
 
@@ -21,6 +22,13 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         postRef = FirebaseDatabase.getInstance().getReference().child("swapPosts")
                 .child(authorId).child(postId);
 
+    }
+
+    @Override
+    public void setPresenter() {
+        mPresenter = new SwapPostPresenter(this, authorId, postId);
+        mPresenter.loadAuthorDataToView();
+        mPresenter.loadPostDataToView();
     }
 
     @Override

@@ -69,9 +69,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         setRefs();
 
-        mPresenter = new PostPresenter(this, authorId, postId);
-        mPresenter.loadAuthorDataToView();
-        mPresenter.loadPostDataToView();
+        setPresenter();
 
 
         // Setting up binding instance and view instances
@@ -85,6 +83,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     }
 
     public abstract void setRefs();
+
+    public abstract void setPresenter();
 
     public void initViews() {
         userPic = binding.profilePic;
