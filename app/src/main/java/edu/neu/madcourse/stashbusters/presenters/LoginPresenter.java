@@ -13,7 +13,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 import edu.neu.madcourse.stashbusters.YourFeedActivity;
+
+import edu.neu.madcourse.stashbusters.utils.Utils;
+
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
@@ -60,9 +64,16 @@ public class LoginPresenter implements LoginContract.Presenter {
                                 Log.d(TAG, "signInWithEmail:success");
                                 startWorldFeedActivity();
                             } else {
-                                // If sign in fails, display a toast message to the user
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                mView.showToastMessage("Authentication failed.");
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                if (task.getException().toString().contains("FirebaseAuthInvalidUserException")) {
+                                    Utils.showToast(mContext, "An account for this email address does not exist.");
+                                }
+                                else if (task.getException().toString().contains("FirebaseAuthInvalidCredentialsException")) {
+                                    Utils.showToast(mContext, "Make sure your password is correct");
+                                } else {
+                                    Utils.showToast(mContext, "Authorization failed.");
+                                }
                             }
 
                         }

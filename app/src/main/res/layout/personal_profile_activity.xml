@@ -35,21 +35,20 @@
                 style="@style/PostHeadline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/username_filler" />
+                android:text="" />
 
             <ImageView
                 android:id="@+id/profile_picture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:contentDescription="@string/default_profile_picture"
-                android:src="@drawable/mouse_icon" />
+                android:contentDescription="@string/default_profile_picture" />
 
             <TextView
                 android:id="@+id/follower_count"
                 style="@style/Detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/follower_count_default" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/bio"
@@ -57,33 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="@string/lorem_ipsum" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_info_area">
-
-                <Button
-                    android:id="@+id/edit_profile"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-
-                    android:background="@color/colorPrimary"
-                    android:text="@string/edit_profile"
-                    android:theme="@style/ButtonText" />
-
-                <TextView
-                    android:id="@+id/test_target_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="test_target_user"/>
-            </LinearLayout>
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
@@ -138,68 +111,11 @@
             android:background="@color/colorSurfaceDark" />
 
 
-        <LinearLayout
+        <edu.neu.madcourse.stashbusters.views.NavigationBarView
             android:id="@+id/navigationBar"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorSecondaryLight"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-
-
-            <ImageButton
-                android:id="@+id/myFeed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/palette_icon"
-                android:layout_weight="1"
-                android:contentDescription="TODO" />
-
-            <ImageButton
-                android:id="@+id/worldFeed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/world_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/newPost"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/new_post_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/myProfile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:background="@color/colorSecondary"
-                android:src="@drawable/mouse_icon"
-                android:layout_weight="1"
-                />
-
-            <ImageButton
-                android:id="@+id/snackBusting"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                style="?android:attr/buttonBarButtonStyle"
-                android:src="@drawable/cookie_icon"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 

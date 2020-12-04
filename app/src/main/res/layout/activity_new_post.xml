@@ -1,143 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSurface"
-    tools:context=".views.NewPostActivity">
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:id="@+id/new_panel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:background="@color/colorAccent"
-        android:onClick="onClick"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/new_swap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintWidth_percent=".80">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSurface"
+        android:layout_above="@id/navigationBar"
+        tools:context=".views.NewPostActivity">
 
-        <ImageView
-            android:id="@+id/panel_image"
+        <LinearLayout
+            android:id="@+id/new_panel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:src="@drawable/lightbulb_icon" />
-
-        <Button
-            android:id="@+id/panel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:autoSizeMaxTextSize="40sp"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeStepGranularity="2sp"
-            android:autoSizeTextType="uniform"
-            android:background="@null"
-            android:gravity="left|center_vertical"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
             android:onClick="onClick"
-            android:text="@string/stash_panel_n"
-            android:textAppearance="@style/ButtonText"
-            android:textColor="@color/colorText" />
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@id/new_swap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintWidth_percent=".80">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/panel_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:src="@drawable/lightbulb_icon" />
 
-    <LinearLayout
-        android:id="@+id/new_swap"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:background="@color/colorSecondaryLight"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:onClick="onClick"
-        app:layout_constraintBottom_toTopOf="@id/new_snack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_panel"
-        app:layout_constraintWidth_percent=".80">
+            <Button
+                android:id="@+id/panel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:autoSizeMaxTextSize="40sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:onClick="onClick"
+                android:text="@string/stash_panel_n"
+                android:textAppearance="@style/ButtonText"
+                android:textColor="@color/colorText" />
 
-        <ImageView
-            android:id="@+id/swap_image"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/new_swap"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:src="@drawable/swap_icon" />
-
-        <Button
-            android:id="@+id/swap_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:autoSizeMaxTextSize="40sp"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeStepGranularity="2sp"
-            android:autoSizeTextType="uniform"
-            android:background="@null"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="@color/colorSecondaryLight"
             android:onClick="onClick"
-            android:text="@string/stash_swap_n"
-            android:textAppearance="@style/ButtonText"
-            android:textColor="@color/colorText" />
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@id/new_snack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_panel"
+            app:layout_constraintWidth_percent=".80">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/swap_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:src="@drawable/swap_icon" />
 
-    <LinearLayout
-        android:id="@+id/new_snack"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimaryLight"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:onClick="onClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_swap"
-        app:layout_constraintWidth_percent=".80">
+            <Button
+                android:id="@+id/swap_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:autoSizeMaxTextSize="40sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:onClick="onClick"
+                android:paddingLeft="10dp"
+                android:text="@string/stash_swap_n"
+                android:textAppearance="@style/ButtonText"
+                android:textColor="@color/colorText" />
 
-        <ImageView
-            android:id="@+id/snack_image"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/new_snack"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:src="@drawable/cookie_icon" />
-
-        <Button
-            android:id="@+id/snack_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:autoSizeMaxTextSize="40sp"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeStepGranularity="2sp"
-            android:autoSizeTextType="uniform"
-            android:background="@null"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryLight"
             android:onClick="onClick"
-            android:text="@string/snack_busting_n"
-            android:textAppearance="@style/ButtonText"
-            android:textColor="@color/colorText" />
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_swap"
+            app:layout_constraintWidth_percent=".80">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/snack_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:src="@drawable/cookie_icon" />
+
+            <Button
+                android:id="@+id/snack_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:autoSizeMaxTextSize="40sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:onClick="onClick"
+                android:paddingLeft="10dp"
+                android:text="@string/snack_busting_n"
+                android:textAppearance="@style/ButtonText"
+                android:textColor="@color/colorText" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <edu.neu.madcourse.stashbusters.views.NavigationBarView
+            android:id="@+id/navigationBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
