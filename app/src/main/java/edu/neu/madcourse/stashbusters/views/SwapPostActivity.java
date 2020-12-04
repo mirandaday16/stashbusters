@@ -46,12 +46,10 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 String currentUserId = currentUser.getUid();
                 if (authorId.equals(currentUserId)) {
                     // If current user, take user to their personal profile
-                    Utils.showToast(SwapPostActivity.this, "This is your post!");
                     Intent intent = new Intent(context, PersonalProfileActivity.class);
                     context.startActivity(intent);
                 } else {
                     // Send user to author user's public profile
-                    Utils.showToast(SwapPostActivity.this, "This is NOT your post!" + currentUserId);
                     Intent intent = new Intent(context, PublicProfileActivity.class);
                     intent.putExtra("userId", authorId);
                     context.startActivity(intent);
