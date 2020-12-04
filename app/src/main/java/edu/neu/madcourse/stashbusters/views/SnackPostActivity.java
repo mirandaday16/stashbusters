@@ -98,9 +98,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         if (currPost < posts.size()) {
                             mPresenter.loadAuthorData(posts.get(currPost).getAuthorId());
                         } else {
-                            snackImage.setImageResource(R.drawable.cookie_icon);
-                            postText.setText(R.string.no_more_snacks);
-                            swipeText.setVisibility(View.GONE);
+                            setNoPosts();
                         }
                     }
                 };
@@ -113,6 +111,13 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
     public void setNewCard(User author) {
         adapter = new SnackRVAdapter(posts.get(currPost), author, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setNoPosts(){
+        snackImage.setImageResource(R.drawable.cookie_icon);
+        postText.setText(R.string.no_more_snacks);
+        swipeText.setVisibility(View.GONE);
     }
 
     // An unscrollable linear layout manager object
