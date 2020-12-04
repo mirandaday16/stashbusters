@@ -69,19 +69,25 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
 
                 ArrayList posts = new ArrayList();
 
-                // For each user under the "snackPosts" node, retrieve all the child posts...
-                for (DataSnapshot dsp : snapshot.getChildren()) {
-                    // For each child post, retrieve and append to the posts ArrayList
-                    for (DataSnapshot child: dsp.getChildren()){
-                        SnackBustPost post = child.getValue(SnackBustPost.class);
-                        posts.add(post);
+                if (snapshot.getValue() == null) {
+                    mView.setNoPosts();
+                } else {
+
+                    // For each user under the "snackPosts" node, retrieve all the child posts...
+                    for (DataSnapshot dsp : snapshot.getChildren()) {
+                        // For each child post, retrieve and append to the posts ArrayList
+                        for (DataSnapshot child : dsp.getChildren()) {
+                            SnackBustPost post = child.getValue(SnackBustPost.class);
+                            posts.add(post);
+                        }
                     }
+
+
+                    Collections.reverse(posts);
+
+
+                    mView.setPostView(posts);
                 }
-
-                Collections.reverse(posts);
-
-
-                mView.setPostView(posts);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

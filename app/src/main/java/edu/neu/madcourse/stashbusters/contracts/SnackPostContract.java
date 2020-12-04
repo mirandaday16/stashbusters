@@ -15,6 +15,7 @@ public interface SnackPostContract {
     interface MvpView {
         void setPostView(List<SnackBustPost> postList);
         void setNewCard(User author);
+        void setNoPosts();
     }
 
     interface Presenter {
