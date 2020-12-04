@@ -31,6 +31,8 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         private TextView questionText;
         private TextView choiceOne;
         private TextView choiceTwo;
+        private TextView username;
+        private ImageView profilePic;
         private Handler imageHandler = new Handler();
 
         SnackViewHolder (View itemView){

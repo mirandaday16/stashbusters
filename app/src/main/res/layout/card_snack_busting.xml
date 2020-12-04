@@ -11,6 +11,41 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/colorPrimary"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_max="wrap"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textAppearance="@style/Body"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toEndOf="@+id/profile_pic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <ImageView
             android:id="@+id/snack_image"
@@ -19,30 +54,33 @@
             app:layout_constraintWidth_max="wrap"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintHeight_max="wrap"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintBottom_toTopOf="@+id/swipe"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintBottom_toTopOf="@+id/choice_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/question_text" />
 
         <TextView
             android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryLight"
-            android:textSize="30sp"
+            android:layout_marginTop="10dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
             android:textAppearance="@style/PostHeadline"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/user" />
 
         <TextView
             android:id="@+id/choice_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:textAppearance="@style/Body"
             android:textColor="@color/colorAccentLight"
@@ -56,6 +94,8 @@
             android:id="@+id/choice_two"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:textAppearance="@style/Body"
             android:textColor="@color/colorAccentLight"
