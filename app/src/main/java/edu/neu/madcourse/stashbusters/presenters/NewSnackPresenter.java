@@ -20,9 +20,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 import edu.neu.madcourse.stashbusters.contracts.NewSnackContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
@@ -137,17 +138,22 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         SnackBustPost post = new SnackBustPost(question, photoUrl, choices);
 
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
+        String postId = newUserPostRef.getKey();
+        post.setId(postId);
+        post.setDate(new Date().getTime());
+        post.setAuthorId(userId);
         newUserPostRef.setValue(post);
 
-        startStashBustingActivity();
+        startStashBustingActivity(postId);
     }
 
     /**
      * Function that switches to SnackBustingActivity.
      */
-    public void startStashBustingActivity() {
-        // TODO: Should eventually display the post that was just created.
-        Intent intent = new Intent(mContext, SnackBustingActivity.class);
+    public void startStashBustingActivity(String postId) {
+        Intent intent = new Intent(mContext, SnackPostActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("postId", postId);
         mContext.startActivity(intent);
         mView.finishActivity();
     }

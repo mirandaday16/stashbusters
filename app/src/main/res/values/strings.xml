@@ -52,6 +52,7 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
+    <string name="swipe_to_vote"><![CDATA[<-- swipe to vote -->]]></string>
 
     <!-- Strings for stash panel and swap posts -->
     <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>

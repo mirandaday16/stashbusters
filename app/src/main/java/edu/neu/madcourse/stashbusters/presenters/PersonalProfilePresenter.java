@@ -14,16 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.views.NewPostActivity;
-
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.SnackBustingActivity;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
-import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
-import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.

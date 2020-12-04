@@ -8,6 +8,7 @@ public class SnackBustChoice {
     private String text;
     private Integer voteCount;
 
+    public SnackBustChoice(){};
     public SnackBustChoice(String text) {
         this.text = text;
         this.voteCount = 0;
