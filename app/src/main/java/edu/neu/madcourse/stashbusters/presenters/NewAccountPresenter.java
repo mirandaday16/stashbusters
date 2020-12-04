@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -123,7 +124,14 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Utils.showToast(mContext, "Authentication failed.");
+                            if (task.getException().toString().contains("FirebaseAuthUserCollisionException")) {
+                                Utils.showToast(mContext, "An account for this email address already exists.");
+                            }
+                            else if (task.getException().toString().contains("FirebaseAuthInvalidCredentialsException")) {
+                                Utils.showToast(mContext, "Enter a valid email address.");
+                            } else {
+                                Utils.showToast(mContext, "Authorization failed.");
+                            }
                         }
                     }
                 });
@@ -208,7 +216,7 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                             mView.setProfilePhoto(userPhotoUrl);
                             mView.setProfilePicUrl(userPhotoUrl);
                         } else {
-                            // Handle failures
+                            // TODO: Handle failures
                             // ...
                         }
                     }
