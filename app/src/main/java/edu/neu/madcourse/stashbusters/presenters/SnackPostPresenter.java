@@ -31,6 +31,7 @@ import java.util.List;
 import edu.neu.madcourse.stashbusters.contracts.SnackPostContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
+import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 /**
@@ -43,6 +44,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
 
     private DatabaseReference mDatabase;
     private DatabaseReference postsRef;
+    private DatabaseReference authorRef;
     private FirebaseAuth mAuth;
 
     private String userId; // owner of the profile
@@ -110,5 +112,26 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
             }
 
         });
+    }
+
+    @Override
+    public void loadAuthorData(String authorId) {
+        authorRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(authorId);
+
+        authorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User author = snapshot.getValue(User.class);
+
+                mView.setNewCard(author);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
 }

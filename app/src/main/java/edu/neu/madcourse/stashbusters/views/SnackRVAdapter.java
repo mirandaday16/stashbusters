@@ -18,12 +18,15 @@ import java.net.URL;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
+import edu.neu.madcourse.stashbusters.model.User;
 
 public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackViewHolder> {
     SnackBustPost post;
+    User author;
 
-    SnackRVAdapter(SnackBustPost snack){
-        post = snack;
+    SnackRVAdapter(SnackBustPost snack, User author){
+        this.post = snack;
+        this.author = author;
     }
 
     static class SnackViewHolder extends RecyclerView.ViewHolder {
@@ -38,9 +41,11 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         SnackViewHolder (View itemView){
             super(itemView);
             snackImage = (ImageView) itemView.findViewById(R.id.snack_image);
+            profilePic = (ImageView) itemView.findViewById(R.id.profile_pic);
             questionText = (TextView) itemView.findViewById(R.id.question_text);
             choiceOne = (TextView) itemView.findViewById(R.id.choice_one);
             choiceTwo = (TextView) itemView.findViewById(R.id.choice_two);
+            username = (TextView) itemView.findViewById(R.id.username);
         }
     }
 
@@ -62,18 +67,27 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         holder.questionText.setText(post.getTitle());
         holder.choiceOne.setText(post.getChoiceList().get(0).getText());
         holder.choiceTwo.setText(post.getChoiceList().get(1).getText());
+        holder.username.setText(author.getUsername());
 
-        // Load in the image in a separate thread
+        // Load in the snack image in a separate thread
         new Thread(new Runnable() {
             @Override
             public void run() {
-                setImageView(holder, post.getPhotoUrl());
+                setImageView(holder, post.getPhotoUrl(), holder.snackImage);
+            }
+        }).start();
+
+        // Load in the user image in a separate thread
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setImageView(holder, post.getPhotoUrl(), holder.profilePic);
             }
         }).start();
     }
 
     // Function to load in an image from an image URL.
-    private void setImageView(final SnackViewHolder holder, String url) {
+    private void setImageView(final SnackViewHolder holder, String url, final ImageView iView) {
         Bitmap bitmap = null;
         try {
             InputStream in = new
@@ -88,7 +102,7 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         holder.imageHandler.post(new Runnable() {
             @Override
             public void run() {
-                holder.snackImage.setImageBitmap(finalBitmap);
+                iView.setImageBitmap(finalBitmap);
             }
         });
     }

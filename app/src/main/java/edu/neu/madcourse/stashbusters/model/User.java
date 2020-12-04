@@ -20,6 +20,8 @@ public class User {
     private Integer followerCount;
     private String deviceToken; // user's device token
 
+    public User(){};
+
     public User(String username, String deviceToken) {
         this.username = username;
         this.deviceToken = deviceToken;

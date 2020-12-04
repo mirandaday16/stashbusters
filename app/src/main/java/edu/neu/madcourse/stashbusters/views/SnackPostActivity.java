@@ -19,6 +19,7 @@ import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SnackPostContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
+import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.presenters.SnackPostPresenter;
 
 public class SnackPostActivity extends AppCompatActivity implements SnackPostContract.MvpView {
@@ -70,8 +71,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new UnscrollableLinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new SnackRVAdapter(posts.get(currPost));
-        recyclerView.setAdapter(adapter);
+        mPresenter.loadAuthorData(posts.get(currPost).getAuthorId());
 
         setUpSwipeHandler();
     }
@@ -96,8 +96,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         // notify the recyclerview changes
                         currPost++;
                         if (currPost < posts.size()) {
-                            adapter = new SnackRVAdapter(posts.get(currPost));
-                            recyclerView.setAdapter(adapter);
+                            mPresenter.loadAuthorData(posts.get(currPost).getAuthorId());
                         } else {
                             snackImage.setImageResource(R.drawable.cookie_icon);
                             postText.setText(R.string.no_more_snacks);
@@ -108,6 +107,12 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void setNewCard(User author) {
+        adapter = new SnackRVAdapter(posts.get(currPost), author);
+        recyclerView.setAdapter(adapter);
     }
 
     // An unscrollable linear layout manager object
