@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
+
+            case R.id.feed_test:
+                intent = new Intent(this,YourFeedActivity.class);
+                startActivity(intent);
+                break;
             case R.id.new_post_button:
                 intent = new Intent(this, NewPostActivity.class);
                 startActivity(intent);

@@ -59,6 +59,17 @@
         app:layout_constraintTop_toBottomOf="@id/stash_panel_button" />
 
     <Button
+
+        android:id="@+id/feed_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feed test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stash_swap_button"
+        app:layout_constraintVertical_bias="0.053" />
+<Button
         android:id="@+id/user_profile_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,5 +81,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/snack_busting_button" />
 
+>>>>>>> 36996aca889d4ad27829da0118fc760261986747
 
 </androidx.constraintlayout.widget.ConstraintLayout>
