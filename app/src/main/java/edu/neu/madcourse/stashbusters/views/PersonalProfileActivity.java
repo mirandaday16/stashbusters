@@ -121,8 +121,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("my posts btn clicked");
-//                mPresenter.getUserPostsData();
+                //
             }
         });
 

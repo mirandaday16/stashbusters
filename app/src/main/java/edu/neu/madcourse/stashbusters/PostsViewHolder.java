@@ -32,7 +32,6 @@ public class PostsViewHolder extends RecyclerView.ViewHolder{
 
     public void setHeadline(String inputHeadline) {
         headline.setText(inputHeadline);
-        System.out.println("HERE IN SET HEADLINE");
     }
 
     public void setUsername(String inputUsername) {
