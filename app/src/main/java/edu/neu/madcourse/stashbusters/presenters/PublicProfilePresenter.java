@@ -43,6 +43,7 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
         followRef = FirebaseDatabase.getInstance().getReference().child("follows");
     }
 
+
     @Override
     public void loadDataToView() {
         //load data of target user (might not be current user)

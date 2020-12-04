@@ -1,8 +1,11 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -13,6 +16,7 @@ import java.util.Locale;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
 
@@ -30,6 +34,31 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         submitButton = binding.postButton;
 
         commentInput.setHint(R.string.advice_hint);
+    }
+
+    @Override
+    public void initListeners(final Context context) {
+        usernameView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check to see if the author user is the same as the current user
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String currentUserId = currentUser.getUid();
+                if (authorId.equals(currentUserId)) {
+                    // If current user, take user to their personal profile
+                    Utils.showToast(SwapPostActivity.this, "This is your post!");
+                    Intent intent = new Intent(context, PersonalProfileActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    // Send user to author user's public profile
+                    Utils.showToast(SwapPostActivity.this, "This is NOT your post!" + currentUserId);
+                    Intent intent = new Intent(context, PublicProfileActivity.class);
+                    intent.putExtra("userId", authorId);
+                    context.startActivity(intent);
+                }
+            }
+        });
+        // TODO: Implement onClickListener for submit button
     }
 
     @Override
