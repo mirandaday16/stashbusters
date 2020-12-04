@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
     private List<SnackBustPost> posts;
     int currPost = 0;
     ImageView snackImage;
-    TextView postText;
+    TextView postText, swipeText;
     SnackPostPresenter mPresenter;
 
     protected String authorId, postId;
@@ -39,6 +40,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
 
         snackImage = (ImageView) findViewById(R.id.snack_image);
         postText = (TextView) findViewById(R.id.post_text);
+        swipeText = (TextView) findViewById(R.id.swipe);
 
         mPresenter = new SnackPostPresenter(this);
 
@@ -99,6 +101,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         } else {
                             snackImage.setImageResource(R.drawable.cookie_icon);
                             postText.setText(R.string.no_more_snacks);
+                            swipeText.setVisibility(View.GONE);
                         }
                     }
                 };
