@@ -29,6 +29,7 @@ import edu.neu.madcourse.stashbusters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
@@ -81,7 +82,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         View rootView = binding.getRoot();
 
         initViews();
-        initListeners(this);
+        onUsernameClick(this);
+        initListeners();
 
         setContentView(rootView);
     }
@@ -92,8 +94,27 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initViews();
 
-    public abstract void initListeners(Context context);
+    public abstract void onUsernameClick(Context context);
 
+    public void initListeners() {
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a new Comment object
+                String commentText = commentInput.getText().toString();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                Comment comment = new Comment(commentText);
+                comment.setAuthorId(currentUser.getUid());
+                // Check that the user has entered a comment in the EditText field
+                if (commentText != null) {
+                    mPresenter.uploadComment(comment);
+                    // Reset comment field and update RecyclerView so user can see their comment
+                    commentInput.setText("");
+                    // TODO: Hide soft keyboard and update RecyclerView
+                }
+            }
+        });
+    }
 
 
     @Override

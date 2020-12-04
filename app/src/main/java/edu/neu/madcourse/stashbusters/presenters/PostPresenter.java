@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+
+import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
 
 public class PostPresenter implements PostContract.Presenter {
     private static final String TAG = PostPresenter.class.getSimpleName();
@@ -86,4 +93,14 @@ public class PostPresenter implements PostContract.Presenter {
             });
         }
 
+    /**
+     * Function that attempts to upload the post when the postButton is clicked.
+     */
+    @Override
+    public void uploadComment(Comment comment) {
+        // Stores comments in a separate "comments" node in Firebase
+        DatabaseReference commentNodeRef = postRef.child("comments");
+        DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
+        newCommentRef.setValue(comment);
+        }
     }

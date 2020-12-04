@@ -7,8 +7,10 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
@@ -61,7 +63,7 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
                 }
             }
         });
-        // TODO: Implement onClickListener for submit button
+
     }
 
     @Override

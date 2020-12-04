@@ -57,7 +57,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 }
             }
         });
-        // TODO: Implement onClickListener for submit button
     }
 
     @Override
