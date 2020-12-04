@@ -141,6 +141,7 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
         String postId = newUserPostRef.getKey();
         post.setId(postId);
         post.setDate(new Date().getTime());
+        post.setAuthorId(userId);
         newUserPostRef.setValue(post);
 
         startStashBustingActivity(postId);

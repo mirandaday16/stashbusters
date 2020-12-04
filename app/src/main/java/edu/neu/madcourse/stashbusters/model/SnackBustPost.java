@@ -69,6 +69,10 @@ public class SnackBustPost implements Comparable<SnackBustPost>{
         this.createdDate = currentTime;
     }
 
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
     @Override
     public int compareTo(SnackBustPost o) {
         return Long.compare(this.getDate(), o.getDate());
