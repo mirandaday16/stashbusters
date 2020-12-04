@@ -1,5 +1,7 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -12,6 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -23,10 +29,15 @@ import edu.neu.madcourse.stashbusters.model.User;
 public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackViewHolder> {
     SnackBustPost post;
     User author;
+    Context rContext;
+    String currentUserId;
 
-    SnackRVAdapter(SnackBustPost snack, User author){
+    SnackRVAdapter(SnackBustPost snack, User author, Context rContext){
         this.post = snack;
         this.author = author;
+        this.rContext = rContext;
+
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     static class SnackViewHolder extends RecyclerView.ViewHolder {
@@ -36,6 +47,7 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         private TextView choiceTwo;
         private TextView username;
         private ImageView profilePic;
+        private View authorView;
         private Handler imageHandler = new Handler();
 
         SnackViewHolder (View itemView){
@@ -46,6 +58,7 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
             choiceOne = (TextView) itemView.findViewById(R.id.choice_one);
             choiceTwo = (TextView) itemView.findViewById(R.id.choice_two);
             username = (TextView) itemView.findViewById(R.id.username);
+            authorView = (View) itemView.findViewById(R.id.user);
         }
     }
 
@@ -84,6 +97,24 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
                 setImageView(holder, post.getPhotoUrl(), holder.profilePic);
             }
         }).start();
+
+        holder.authorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String authorId = post.getAuthorId();
+
+                if (authorId.equals(currentUserId)) {
+                    // If current user, take user to their personal profile
+                    Intent intent = new Intent(rContext, PersonalProfileActivity.class);
+                    rContext.startActivity(intent);
+                } else {
+                    // Send user to author user's public profile
+                    Intent intent = new Intent(rContext, PublicProfileActivity.class);
+                    intent.putExtra("userId", authorId);
+                    rContext.startActivity(intent);
+                }
+            }
+        });
     }
 
     // Function to load in an image from an image URL.

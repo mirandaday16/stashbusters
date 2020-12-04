@@ -111,12 +111,12 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
 
     @Override
     public void setNewCard(User author) {
-        adapter = new SnackRVAdapter(posts.get(currPost), author);
+        adapter = new SnackRVAdapter(posts.get(currPost), author, this);
         recyclerView.setAdapter(adapter);
     }
 
     // An unscrollable linear layout manager object
-    public class UnscrollableLinearLayoutManager extends LinearLayoutManager {
+    public static class UnscrollableLinearLayoutManager extends LinearLayoutManager {
         public UnscrollableLinearLayoutManager(Context context) {
             super(context);
         }
