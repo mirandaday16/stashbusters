@@ -1,5 +1,6 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -39,6 +42,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected ActivityPanelSwapPostBinding binding;
 
     // Views
+    protected ConstraintLayout userView;
     protected ImageView userPic;
     protected TextView usernameView;
     protected ImageView likedIcon;
@@ -77,7 +81,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         View rootView = binding.getRoot();
 
         initViews();
-        initListeners();
+        initListeners(this);
 
         setContentView(rootView);
     }
@@ -88,9 +92,9 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initViews();
 
-    public void initListeners() {
-        // TODO: Implement onClickListener for submit button
-    }
+    public abstract void initListeners(Context context);
+
+
 
     @Override
     public void setAuthorViewData(String username, String profilePicUrl) {
