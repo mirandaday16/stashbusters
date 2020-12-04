@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +42,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected ActivityPanelSwapPostBinding binding;
 
     // Views
+    protected ConstraintLayout userView;
     protected ImageView userPic;
     protected TextView usernameView;
     protected ImageView likedIcon;

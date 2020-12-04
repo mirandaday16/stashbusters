@@ -22,6 +22,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
     @Override
     public void initViews() {
+        userView = binding.user;
         userPic = binding.profilePic;
         usernameView = binding.username;
         likedIcon = binding.liked;
@@ -38,7 +39,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
     @Override
     public void initListeners(final Context context) {
-        usernameView.setOnClickListener(new View.OnClickListener() {
+        userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Check to see if the author user is the same as the current user
