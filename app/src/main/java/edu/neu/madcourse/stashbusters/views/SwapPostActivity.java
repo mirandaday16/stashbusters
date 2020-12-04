@@ -37,7 +37,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
     }
 
     @Override
-    public void initListeners(final Context context) {
+    public void onUsernameClick(final Context context) {
         usernameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +56,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 }
             }
         });
-        // TODO: Implement onClickListener for submit button
     }
 
     @Override
