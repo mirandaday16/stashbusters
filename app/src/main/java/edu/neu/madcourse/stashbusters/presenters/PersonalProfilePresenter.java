@@ -22,9 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
+import edu.neu.madcourse.stashbusters.PostAdapter;
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -43,6 +45,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     private Context mContext;
     private String userId; // owner of the profile
 
+    private List<Post> postList;
+    private PostAdapter postAdapter;
+
     private FirebaseAuth mAuth;
     private DatabaseReference userProfileRef;
     private DatabaseReference postsRef; //TODO: panel vs swap
@@ -53,6 +58,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         this.userId = userId;
 
         mAuth = FirebaseAuth.getInstance();
+
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(mContext, postList);
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
         postsRef = FirebaseDatabase.getInstance().getReference();
@@ -102,19 +110,23 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     @Override
     public void getUserPostsData() {
-        FeedRecyclerAdapter adapter = new FeedRecyclerAdapter();
-        final List<Post> allPosts = new ArrayList<>();
         // Panel posts
         DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
 
+        // TODO panelposts have multiple children index by post id
         panelPosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    allPosts.add(new StashPanelPost(snapshot.child("title").getValue().toString(),
-                            snapshot.child("photoUrl").getValue().toString(),
-                            snapshot.child("description").getValue().toString()));
+                    postList.clear();
+                    System.out.println("Count " + snapshot.getChildrenCount());
 
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
+                        postList.add(post);
+                    }
+                    Collections.reverse(postList);
+                    postAdapter.notifyDataSetChanged();
                     Log.i(TAG, "getUserPostsData:success");
                 }
             }
@@ -125,8 +137,8 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
             }
 
         });
-        System.out.println("ALL POSTS" + allPosts);
-        mView.setPostListAdapter(adapter);
+
+        mView.setPostListAdapter(postAdapter);
     }
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {

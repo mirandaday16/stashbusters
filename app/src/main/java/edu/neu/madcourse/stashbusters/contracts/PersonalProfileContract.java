@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
+import edu.neu.madcourse.stashbusters.PostAdapter;
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -27,7 +28,7 @@ public interface PersonalProfileContract {
          * @param followerCount user's follower count
          */
         void setViewData(String photo, String username, String bio, String followerCount);
-        void setPostListAdapter(FeedRecyclerAdapter adapter);
+        void setPostListAdapter(PostAdapter adapter);
     }
 
     interface Presenter {

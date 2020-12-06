@@ -14,9 +14,11 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
+import edu.neu.madcourse.stashbusters.PostAdapter;
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
+import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
@@ -25,6 +27,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Responsible for the UI of a user's profile page and sending data to {@link PersonalProfilePresenter}
@@ -42,7 +47,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     Toolbar toolbar;
     RecyclerView postListRecyclerView;
 
-    private FirebaseRecyclerAdapter adapter;
     private PersonalProfilePresenter mPresenter;
     private FirebaseAuth mAuth;
     private String userId;
@@ -103,7 +107,10 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     private void initRecyclerView(){
         // recycler view for posts
         postListRecyclerView = binding.postViewArea;
+        postListRecyclerView.setNestedScrollingEnabled(false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         postListRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -135,7 +142,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     }
 
     @Override
-    public void setPostListAdapter(FeedRecyclerAdapter adapter) {
+    public void setPostListAdapter(PostAdapter adapter) {
         postListRecyclerView.setAdapter(adapter);
     }
 
