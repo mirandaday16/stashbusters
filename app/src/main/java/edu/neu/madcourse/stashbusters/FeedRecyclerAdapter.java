@@ -33,6 +33,10 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         this.mContext = mContext;
     }
 
+    public FeedRecyclerAdapter(){
+        //
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -76,5 +80,45 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
             headline = itemView.findViewById(R.id.headline);
 
         }
+    }
+
+    public ArrayList<String> getmImageNames() {
+        return mImageNames;
+    }
+
+    public ArrayList<String> getmImages() {
+        return mImages;
+    }
+
+    public ArrayList<String> getmUserNames() {
+        return mUserNames;
+    }
+
+    public ArrayList<String> getmHeadlines() {
+        return mHeadlines;
+    }
+
+    public ArrayList<String> getmNumlikes() {
+        return mNumlikes;
+    }
+
+    public void setmImageNames(ArrayList<String> mImageNames) {
+        this.mImageNames = mImageNames;
+    }
+
+    public void setmImages(ArrayList<String> mImages) {
+        this.mImages = mImages;
+    }
+
+    public void setmUserNames(ArrayList<String> mUserNames) {
+        this.mUserNames = mUserNames;
+    }
+
+    public void setmHeadlines(ArrayList<String> mHeadlines) {
+        this.mHeadlines = mHeadlines;
+    }
+
+    public void setmNumlikes(ArrayList<String> mNumlikes) {
+        this.mNumlikes = mNumlikes;
     }
 }

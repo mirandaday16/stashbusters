@@ -1,7 +1,6 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +9,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
@@ -42,7 +40,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     private NavigationBarView navigationBarView;
     Button myPostsButton, likedPostsButton;
     Toolbar toolbar;
-    RecyclerView postList;
+    RecyclerView postListRecyclerView;
 
     private FirebaseRecyclerAdapter adapter;
     private PersonalProfilePresenter mPresenter;
@@ -57,7 +55,8 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         initAuthentication();
 
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
-        initViews(binding);
+        initViews();
+        initRecyclerView();
         initListeners();
 
         // set up presenter + load data to view
@@ -84,7 +83,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     /**
      * Initialize the view and set up all UI elements.
      */
-    private void initViews(PersonalProfileActivityBinding binding) {
+    private void initViews() {
         toolbar = binding.profilePageToolbar;
 
         // Setting up UI elements
@@ -95,18 +94,17 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
 
-        // recycler view for posts
-        postList = binding.postRecyclerView;
-        postList.setNestedScrollingEnabled(false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        postList.setLayoutManager(linearLayoutManager);
-
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
 
+    }
+
+    private void initRecyclerView(){
+        // recycler view for posts
+        postListRecyclerView = binding.postViewArea;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        postListRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     private void initListeners() {
@@ -137,24 +135,8 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (adapter != null) {
-            adapter.stopListening();
-        }
-    }
-
-    @Override
-    public void setPostListAdapter(FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder> firebaseRecyclerAdapter) {
-        adapter = firebaseRecyclerAdapter;
-        postList.setAdapter(firebaseRecyclerAdapter);
+    public void setPostListAdapter(FeedRecyclerAdapter adapter) {
+        postListRecyclerView.setAdapter(adapter);
     }
 
     @Override

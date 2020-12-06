@@ -131,6 +131,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         MaterialType mat = MaterialType.getByInt(material);
         newPost.setMaterialType(mat);
         newPost.setId(newUserPostRef.getKey());
+        newPost.setAuthorId(userId);
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();

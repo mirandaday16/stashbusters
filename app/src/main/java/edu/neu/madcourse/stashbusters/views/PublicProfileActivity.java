@@ -51,7 +51,7 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         currentUserId = mAuth.getCurrentUser().getUid();
 
         Intent intent = getIntent();
-        targetUserId = intent.getStringExtra("targetUserId");
+        targetUserId = intent.getStringExtra("userId");
 
         mPresenter = new PublicProfilePresenter(this, targetUserId);
         mPresenter.loadDataToView();

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SnackPostContract;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
+import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.presenters.SnackPostPresenter;
 
 public class SnackPostActivity extends AppCompatActivity implements SnackPostContract.MvpView {
@@ -27,7 +29,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
     private List<SnackBustPost> posts;
     int currPost = 0;
     ImageView snackImage;
-    TextView postText;
+    TextView postText, swipeText;
     SnackPostPresenter mPresenter;
 
     protected String authorId, postId;
@@ -39,6 +41,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
 
         snackImage = (ImageView) findViewById(R.id.snack_image);
         postText = (TextView) findViewById(R.id.post_text);
+        swipeText = (TextView) findViewById(R.id.swipe);
 
         mPresenter = new SnackPostPresenter(this);
 
@@ -68,8 +71,7 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new UnscrollableLinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new SnackRVAdapter(posts.get(currPost));
-        recyclerView.setAdapter(adapter);
+        mPresenter.loadAuthorData(posts.get(currPost).getAuthorId());
 
         setUpSwipeHandler();
     }
@@ -94,11 +96,9 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         // notify the recyclerview changes
                         currPost++;
                         if (currPost < posts.size()) {
-                            adapter = new SnackRVAdapter(posts.get(currPost));
-                            recyclerView.setAdapter(adapter);
+                            mPresenter.loadAuthorData(posts.get(currPost).getAuthorId());
                         } else {
-                            snackImage.setImageResource(R.drawable.cookie_icon);
-                            postText.setText(R.string.no_more_snacks);
+                            setNoPosts();
                         }
                     }
                 };
@@ -107,8 +107,21 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    @Override
+    public void setNewCard(User author) {
+        adapter = new SnackRVAdapter(posts.get(currPost), author, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setNoPosts(){
+        snackImage.setImageResource(R.drawable.cookie_icon);
+        postText.setText(R.string.no_more_snacks);
+        swipeText.setVisibility(View.GONE);
+    }
+
     // An unscrollable linear layout manager object
-    public class UnscrollableLinearLayoutManager extends LinearLayoutManager {
+    public static class UnscrollableLinearLayoutManager extends LinearLayoutManager {
         public UnscrollableLinearLayoutManager(Context context) {
             super(context);
         }

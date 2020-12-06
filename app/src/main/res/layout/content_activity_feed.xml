@@ -4,49 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
-    tools:context=".NewPanelActivity">
+    android:background="@color/colorSurface">
+<!--    tools:context=".NewPanelActivity">-->
 
-   <ImageView
-       android:layout_width="40dp"
-       android:layout_height="40dp"
-       android:layout_alignBottom="@+id/my_feed"
-       android:layout_marginLeft="10dp"
-       android:layout_marginBottom="5dp"
+   <androidx.appcompat.widget.Toolbar
+       android:id="@+id/profile_page_toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="?attr/actionBarSize"
+       android:background="@color/colorPrimary"
+       android:elevation="4dp"
+       android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+       app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+       app:menu="@menu/options_menu">
+
+         <ImageView
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_alignBottom="@+id/my_feed"
+          android:layout_marginLeft="10dp"
+          android:layout_marginBottom="5dp"
+             android:layout_marginTop="10dp"
+          android:src="@drawable/palette_icon" />
+
+         <TextView
+             android:id="@+id/my_feed"
+             android:layout_width="150dp"
+             android:layout_height="50dp"
+             android:layout_marginLeft="30dp"
+             android:fontFamily="@font/quicksand_bold"
+             android:text="My Feed"
+             android:textColor="@color/colorText"
+             android:textSize="30dp" />
 
 
-       android:src="@drawable/palette_icon" />
+      <Button
+          android:layout_width="110dp"
+          android:layout_height="50dp"
+          android:layout_alignRight="@id/my_feed"
+          android:layout_marginTop="5dp"
+          android:background="@color/colorPrimary"
+          android:fontFamily="@font/quicksand_bold"
+          android:id="@+id/filter_button"
+          android:text="Filter"
+          android:textSize="20dp"
+           />
 
-   <TextView
-       android:id="@+id/my_feed"
-       android:layout_width="200dp"
-       android:layout_height="50dp"
-       android:layout_marginLeft="60dp"
-       android:layout_marginTop="10dp"
-       android:fontFamily="@font/quicksand_bold"
-       android:text="My Feed"
-       android:textColor="@color/colorText"
-       android:textSize="30dp" />
+   </androidx.appcompat.widget.Toolbar>
 
-
-   <Button
-       android:layout_width="110dp"
-       android:layout_height="50dp"
-       android:layout_alignRight="@id/my_feed"
-       android:layout_marginTop="14dp"
-       android:layout_marginRight="-130dp"
-       android:background="#4CAF50"
-       android:fontFamily="@font/quicksand_bold"
-       android:text="Filter"
-       android:textColor="@color/colorText"
-       android:textSize="20dp" />
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/recycler_view_feed"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
        android:layout_marginTop="60dp">
 
 
    </androidx.recyclerview.widget.RecyclerView>
+
+    <edu.neu.madcourse.stashbusters.views.NavigationBarView
+        android:id="@+id/navigationBar"
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

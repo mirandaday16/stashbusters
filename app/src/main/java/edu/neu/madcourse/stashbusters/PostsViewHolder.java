@@ -21,9 +21,9 @@ public class PostsViewHolder extends RecyclerView.ViewHolder{
         this.mView = itemView;
 
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        postImage = mView.findViewById(R.id.user_post_image);
-        headline = mView.findViewById(R.id.user_post_headline);
-        username = mView.findViewById(R.id.user_post_username);
+        postImage = mView.findViewById(R.id.image);
+        headline = mView.findViewById(R.id.headline);
+        username = mView.findViewById(R.id.username);
     }
 
     public void setPostPhoto(String photoUrl) {

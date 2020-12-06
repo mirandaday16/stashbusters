@@ -20,6 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
 import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -50,7 +55,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         mAuth = FirebaseAuth.getInstance();
 
         userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-        postsRef = FirebaseDatabase.getInstance().getReference().child("panelPosts");
+        postsRef = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -97,31 +102,31 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     @Override
     public void getUserPostsData() {
-        // query this user's posts data in DB
-        Query getPosts = postsRef.child(userId);
-        FirebaseRecyclerOptions<StashPanelPost> options = new FirebaseRecyclerOptions.Builder<StashPanelPost>()
-            .setQuery(getPosts, StashPanelPost.class)
-            .build();
+        FeedRecyclerAdapter adapter = new FeedRecyclerAdapter();
+        final List<Post> allPosts = new ArrayList<>();
+        // Panel posts
+        DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
 
-        FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<StashPanelPost, PostsViewHolder>(options) {
+        panelPosts.addValueEventListener(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull StashPanelPost model) {
-//                final String postId = getRef(position).getKey();
-                holder.setHeadline(model.getTitle());
-                holder.setUsername(model.getAuthorId());
-                holder.setPostPhoto(model.getPhotoUrl());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    allPosts.add(new StashPanelPost(snapshot.child("title").getValue().toString(),
+                            snapshot.child("photoUrl").getValue().toString(),
+                            snapshot.child("description").getValue().toString()));
+
+                    Log.i(TAG, "getUserPostsData:success");
+                }
             }
 
-            @NonNull
             @Override
-            public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.content_feed_list_item, parent, false);
-                return new PostsViewHolder(view);
-            };
-        };
-        mView.setPostListAdapter(firebaseRecyclerAdapter);
+            public void onCancelled (@NonNull DatabaseError error){
+                Log.e(TAG, error.toString());
+            }
+
+        });
+        System.out.println("ALL POSTS" + allPosts);
+        mView.setPostListAdapter(adapter);
     }
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {

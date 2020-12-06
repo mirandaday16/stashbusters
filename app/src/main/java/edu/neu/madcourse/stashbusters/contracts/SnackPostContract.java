@@ -3,6 +3,7 @@ package edu.neu.madcourse.stashbusters.contracts;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
+import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 /**
@@ -13,10 +14,13 @@ import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 public interface SnackPostContract {
     interface MvpView {
         void setPostView(List<SnackBustPost> postList);
+        void setNewCard(User author);
+        void setNoPosts();
     }
 
     interface Presenter {
         void loadSnackPosts();
         void loadSingleSnackPost(String userId, String postId);
+        void loadAuthorData(String authorId);
     }
 }
