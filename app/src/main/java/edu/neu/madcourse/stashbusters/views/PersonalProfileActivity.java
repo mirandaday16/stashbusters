@@ -44,10 +44,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     private FirebaseAuth mAuth;
     private String userId;
 
-    //todo: remove
-    TextView test_public_profile;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +90,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
 
-        // todo: remove
-        test_public_profile = binding.testPublicProfile;
-
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
@@ -135,16 +128,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
             @Override
             public void onClick(View view) {
                 // TODO: get liked posts from Firebase and display in RecyclerView
-            }
-        });
-
-        // todo: remove
-        test_public_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PersonalProfileActivity.this, PublicProfileActivity.class);
-                intent.putExtra("targetUserId", "1N0HougqnWZ61NQYejmVmpwPFkT2");
-                startActivity(intent);
             }
         });
     }

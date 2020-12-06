@@ -42,7 +42,6 @@
                     android:id="@+id/user_info_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:background="@color/colorSurface"
                     android:gravity="center"
                     android:orientation="vertical">
