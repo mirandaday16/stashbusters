@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 
 public class SwapPostPresenter extends PostPresenter implements SwapPostContract.Presenter {
     private static final String TAG = SwapPostPresenter.class.getSimpleName();
@@ -64,5 +65,13 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             }
 
         });
+    }
+
+    @Override
+    public void uploadComment(Comment comment) {
+        // Stores comments in a separate "comments" node in Firebase
+        DatabaseReference commentNodeRef = postRef.child("comments");
+        DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
+        newCommentRef.setValue(comment);
     }
 }

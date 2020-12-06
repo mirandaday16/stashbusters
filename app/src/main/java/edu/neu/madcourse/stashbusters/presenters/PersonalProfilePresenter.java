@@ -19,6 +19,7 @@ import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.
@@ -89,8 +90,8 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     private void startEditProfileActivity() {
 //        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
 //        mContext.startActivity(intent);
-        Intent intent = new Intent(this.mContext, PanelPostActivity.class);
-        intent.putExtra("userId", "1N0HougqnWZ61NQYejmVmpwPFkT2").putExtra("postId", "-MNTlGIH0MaY3keb6MyD");
+        Intent intent = new Intent(this.mContext, SwapPostActivity.class);
+        intent.putExtra("userId", "1N0HougqnWZ61NQYejmVmpwPFkT2").putExtra("postId", "-MNsRgl1hK6_fzlZoHZj");
         mContext.startActivity(intent);
     }
 

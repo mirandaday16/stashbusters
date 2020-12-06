@@ -17,7 +17,7 @@ import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 public class YourFeedActivity extends AppCompatActivity {
     private NavigationBarView navigationBarView;
     private ContentActivityFeedBinding binding;
-    private static final String TAG = "Feed activfity ";
+    private static final String TAG = "Feed activity ";
 
     //vars
     private ArrayList<String> mImageNames = new ArrayList<>();
