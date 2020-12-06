@@ -78,6 +78,16 @@
                     android:layout_below="@id/follower_count"
                     android:layout_marginLeft="20dp"
                     android:text="@string/lorem_ipsum" />
+
+                <TextView
+                    android:id="@+id/test_public_profile"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/profile_picture"
+                    android:layout_below="@id/bio"
+                    android:layout_marginLeft="20dp"
+                    android:text="test_public_profile" />
             </RelativeLayout> <!-- User info -->
 
             <!-- Button panel -->

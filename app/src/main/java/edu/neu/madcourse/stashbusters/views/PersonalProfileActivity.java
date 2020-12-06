@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,6 +43,9 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     private PersonalProfilePresenter mPresenter;
     private FirebaseAuth mAuth;
     private String userId;
+
+    //todo: remove
+    TextView test_public_profile;
 
 
     @Override
@@ -90,6 +94,9 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
 
+        // todo: remove
+        test_public_profile = binding.testPublicProfile;
+
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
@@ -131,6 +138,15 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
             }
         });
 
+        // todo: remove
+        test_public_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PersonalProfileActivity.this, PublicProfileActivity.class);
+                intent.putExtra("targetUserId", "1N0HougqnWZ61NQYejmVmpwPFkT2");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

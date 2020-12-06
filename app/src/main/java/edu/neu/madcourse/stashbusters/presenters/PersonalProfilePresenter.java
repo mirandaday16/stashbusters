@@ -42,7 +42,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     private FirebaseAuth mAuth;
     private DatabaseReference userProfileRef;
-    private DatabaseReference postsRef; //TODO: panel vs swap
+    private DatabaseReference postsRef;
 
     public PersonalProfilePresenter(Context context, String userId) {
         this.mView = (PersonalProfileContract.MvpView) context;
@@ -152,6 +152,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         Log.i(TAG, "getUserPostsData:success");
         mView.setPostListAdapter(postAdapter);
     }
+
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {
         Intent intent = new Intent(this.mContext, EditProfileActivity.class);
