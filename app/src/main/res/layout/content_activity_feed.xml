@@ -57,7 +57,12 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_marginTop="60dp">
-
-
    </androidx.recyclerview.widget.RecyclerView>
+
+    <!-- Navbar -->
+    <edu.neu.madcourse.stashbusters.views.NavigationBarView
+        android:id="@+id/navigationBar"
+        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

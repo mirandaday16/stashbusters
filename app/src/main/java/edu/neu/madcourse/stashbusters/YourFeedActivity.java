@@ -10,8 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class YourFeedActivity extends AppCompatActivity {
+import edu.neu.madcourse.stashbusters.databinding.ContentActivityFeedBinding;
+import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
+import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 
+public class YourFeedActivity extends AppCompatActivity {
+    private NavigationBarView navigationBarView;
+    private ContentActivityFeedBinding binding;
     private static final String TAG = "Feed activfity ";
 
     //vars
@@ -33,6 +38,11 @@ public class YourFeedActivity extends AppCompatActivity {
         initNumlikes();
         initImages();
         initRecylcerView();
+
+        // Navigation bar setup:
+        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
+        navigationBarView = binding.navigationBar;
+        navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
     }
 
     private void initUserNames() {
