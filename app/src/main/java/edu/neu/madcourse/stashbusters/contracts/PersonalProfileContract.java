@@ -2,7 +2,7 @@ package edu.neu.madcourse.stashbusters.contracts;
 
 import android.view.MenuItem;
 
-import edu.neu.madcourse.stashbusters.PostAdapter;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 

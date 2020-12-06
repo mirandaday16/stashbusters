@@ -1,6 +1,6 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
-import edu.neu.madcourse.stashbusters.PostAdapter;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 
 public interface PublicProfileContract {
     interface MvpView {

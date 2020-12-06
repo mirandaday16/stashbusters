@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
-import edu.neu.madcourse.stashbusters.PostAdapter;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
@@ -118,7 +117,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+                mPresenter.getUserPostsData();
             }
         });
 

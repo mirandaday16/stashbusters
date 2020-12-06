@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import edu.neu.madcourse.stashbusters.PostAdapter;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;

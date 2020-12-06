@@ -121,4 +121,12 @@ public abstract class Post {
     public void setCreatedDate(long createdDate) {
         this.createdDate = createdDate;
     }
+
+    /**
+     * Return type of post - StashSwapPost or StashPanelPost
+     * @return
+     */
+    public String getPostType() {
+        return this.getClass().getSimpleName();
+    }
 }

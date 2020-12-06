@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.PostAdapter;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.model.Post;
