@@ -23,6 +23,7 @@ import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 
@@ -103,8 +104,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     public void getUserPostsData() {
         // Panel posts
         DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
+        // Swap Posts
+        DatabaseReference swapPosts = postsRef.child("swapPosts").child(userId);
 
-        // TODO panelposts have multiple children index by post id
         panelPosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,9 +118,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
                         StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
                         postList.add(post);
                     }
-                    Collections.reverse(postList);
                     postAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "getUserPostsData:success");
                 }
             }
 
@@ -129,6 +129,27 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
         });
 
+        swapPosts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        StashSwapPost post = dataSnapshot.getValue(StashSwapPost.class);
+                        postList.add(post);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                Log.e(TAG, error.toString());
+            }
+
+        });
+
+        Log.i(TAG, "getUserPostsData:success");
         mView.setPostListAdapter(postAdapter);
     }
     // Starts Edit Profile Activity

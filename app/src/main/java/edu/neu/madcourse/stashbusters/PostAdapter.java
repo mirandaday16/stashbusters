@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,12 +43,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PostAdapter.ImageViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder called");
         final Post post = mPosts.get(position);
 
-        holder.headline.setText(post.getTitle());
-        Picasso.get().load(post.getPhotoUrl()).into(holder.image);
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(userId);
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String usernameStr = snapshot.child("username").getValue().toString();
+                    // TODO: get like count
+                    holder.headline.setText(post.getTitle());
+                    holder.username.setText(usernameStr);
+
+                    Picasso.get().load(post.getPhotoUrl()).into(holder.image);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

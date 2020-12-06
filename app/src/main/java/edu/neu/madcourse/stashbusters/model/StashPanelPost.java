@@ -7,6 +7,7 @@ package edu.neu.madcourse.stashbusters.model;
 public class StashPanelPost extends Post {
 
     public StashPanelPost() {
+        // For DataSnapshot
         super();
     }
 
