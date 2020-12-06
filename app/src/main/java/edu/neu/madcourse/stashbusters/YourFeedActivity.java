@@ -15,10 +15,9 @@ import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 
 public class YourFeedActivity extends AppCompatActivity {
-
-    private static final String TAG = "Feed activfity ";
-    private ContentActivityFeedBinding binding;
     private NavigationBarView navigationBarView;
+    private ContentActivityFeedBinding binding;
+    private static final String TAG = "Feed activfity ";
 
     //vars
     private ArrayList<String> mImageNames = new ArrayList<>();
@@ -40,8 +39,8 @@ public class YourFeedActivity extends AppCompatActivity {
         initImages();
         initRecylcerView();
 
-        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
         // Navigation bar setup:
+        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
     }
