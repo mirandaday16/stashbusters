@@ -18,6 +18,7 @@ import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.

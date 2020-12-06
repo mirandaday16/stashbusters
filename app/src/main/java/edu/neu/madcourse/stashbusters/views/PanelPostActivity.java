@@ -44,7 +44,7 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
     }
 
     @Override
-    public void initListeners(final Context context) {
+    public void onUsernameClick(final Context context) {
         userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
