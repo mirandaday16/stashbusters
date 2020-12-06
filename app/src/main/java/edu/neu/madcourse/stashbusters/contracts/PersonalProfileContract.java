@@ -1,15 +1,8 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
-import android.graphics.Bitmap;
 import android.view.MenuItem;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-
-import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
 import edu.neu.madcourse.stashbusters.PostAdapter;
-import edu.neu.madcourse.stashbusters.PostsViewHolder;
-import edu.neu.madcourse.stashbusters.model.Post;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 

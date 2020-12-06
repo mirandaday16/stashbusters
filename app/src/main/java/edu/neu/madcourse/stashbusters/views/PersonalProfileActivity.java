@@ -13,23 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
-import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
 import edu.neu.madcourse.stashbusters.PostAdapter;
-import edu.neu.madcourse.stashbusters.PostsViewHolder;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
-import edu.neu.madcourse.stashbusters.model.Post;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Responsible for the UI of a user's profile page and sending data to {@link PersonalProfilePresenter}
