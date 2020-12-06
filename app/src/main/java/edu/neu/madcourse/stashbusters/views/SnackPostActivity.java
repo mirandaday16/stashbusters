@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -92,7 +93,14 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         int position = viewHolder.getAdapterPosition();
-                        // code to add a vote to the corresponding choice when swiped left or right
+                        // Add a vote to the corresponding choice when swiped left or right
+                        if (swipeDir == ItemTouchHelper.LEFT) {
+                            increaseVote(0);
+                        }
+                        else if (swipeDir == ItemTouchHelper.RIGHT) {
+                            increaseVote(1);
+                        }
+
                         // notify the recyclerview changes
                         currPost++;
                         if (currPost < posts.size()) {
@@ -105,6 +113,12 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void increaseVote(int i){
+        SnackBustPost updatePost = posts.get(currPost);
+        mPresenter.updateSnackPost(updatePost.getAuthorId(), updatePost.getId(), i,
+                posts.get(currPost).getChoiceList().get(i).getVoteCount());
     }
 
     @Override

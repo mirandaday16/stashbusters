@@ -22,5 +22,6 @@ public interface SnackPostContract {
         void loadSnackPosts();
         void loadSingleSnackPost(String userId, String postId);
         void loadAuthorData(String authorId);
+        void updateSnackPost(String authorId, String postId, int choice, int currCount);
     }
 }
