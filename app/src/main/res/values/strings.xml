@@ -52,7 +52,7 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
-    <string name="swipe_to_vote"><![CDATA[<-- swipe to vote -->]]></string>
+    <string name="swipe_to_vote"><![CDATA[← swipe to vote →]]></string>
     <string name="snack_bust_title">Snack Busting!</string>
     <string name="snack_bust_tag">Help other crafters make quick decisions!\nSimply swipe to vote.</string>
     <string name="snack_start">Tap the cookie to start!</string>
