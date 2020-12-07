@@ -111,7 +111,6 @@ public class PostPresenter implements PostContract.Presenter {
 
     @Override
     public void loadCommentDataToView(Context context) {
-        // Get all comments for this post from Firebase
         commentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

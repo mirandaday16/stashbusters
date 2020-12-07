@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 
@@ -32,11 +33,14 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
     private DatabaseReference commentsRef;
 
     private List<Comment> commentsList;
+    protected CommentRVAdapter commentsAdapter;
 
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);
+        this.mContext = context;
         this.mView = (SwapPostContract.MvpView) context;
+        this.authorId = authorId;
         this.postId = postId;
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,10 +91,16 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     commentsList.clear();
-                    System.out.println("Comments count: " + snapshot.getChildrenCount());
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Comment comment = dataSnapshot.getValue(Comment.class);
+                        // Each snapshot is a comment
+                        Comment comment = new Comment();
+
+                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
+
+                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
+                        comment.setCreatedDate(createdDate);
+                        comment.setText(dataSnapshot.child("text").getValue().toString());
                         commentsList.add(comment);
                     }
                     commentsAdapter.notifyDataSetChanged();

@@ -33,6 +33,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        commentsSection = binding.commentRecyclerView;
 
         commentInput.setHint(R.string.swap_hint);
 
