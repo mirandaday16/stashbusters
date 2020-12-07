@@ -12,7 +12,7 @@ public class Comment {
     private String authorId;
 
     public Comment () {
-        // for Datasnapshot 
+        // for Datasnapshot
     }
 
     public Comment(String text) {

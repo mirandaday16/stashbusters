@@ -15,9 +15,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.R;
@@ -111,10 +114,13 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     postList.clear();
-                    System.out.println("Count " + snapshot.getChildrenCount());
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
+                        // each datasnapshot is a post
+                        List<Comment> postComments = getPostCommentsList(snapshot);
+                        StashPanelPost post = (StashPanelPost) setPostData(dataSnapshot, "StashPanel");
+                        post.setComments(postComments);
+
                         postList.add(post);
                     }
                     postAdapter.notifyDataSetChanged();
@@ -134,7 +140,9 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
                 if (snapshot.exists()) {
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashSwapPost post = dataSnapshot.getValue(StashSwapPost.class);
+                        List<Comment> postComments = getPostCommentsList(snapshot);
+                        StashSwapPost post = (StashSwapPost) setPostData(dataSnapshot, "StashSwap");
+                        post.setComments(postComments);
                         postList.add(post);
                     }
                     postAdapter.notifyDataSetChanged();
@@ -150,6 +158,38 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
         Log.i(TAG, "getUserPostsData:success");
         mView.setPostListAdapter(postAdapter);
+    }
+
+    private List<Comment> getPostCommentsList(DataSnapshot postSnapShot) {
+        List<Comment> postComments = new ArrayList<>();
+        DataSnapshot commentsSnapshot = postSnapShot.child("comments");
+
+        for (DataSnapshot singleComment : commentsSnapshot.getChildren()) {
+            Comment comment = singleComment.getValue(Comment.class);
+            postComments.add(comment);
+        }
+
+        return postComments;
+    }
+
+    private Post setPostData(DataSnapshot postSnapShot, String postType){
+        Post post;
+        if (postType.equals("StashPanel")) {
+            post = new StashPanelPost();
+        } else {
+            post = new StashSwapPost();
+        }
+
+        long createdDate = (long) postSnapShot.child("createdDate").getValue();
+
+        post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
+        post.setPhotoUrl(postSnapShot.child("photoUrl").getValue().toString());
+        post.setTitle(postSnapShot.child("title").getValue().toString());
+        post.setId(postSnapShot.child("id").getValue().toString());
+        post.setDescription(postSnapShot.child("description").getValue().toString());
+        post.setCreatedDate(createdDate);
+
+        return post;
     }
 
     // Starts Edit Profile Activity
