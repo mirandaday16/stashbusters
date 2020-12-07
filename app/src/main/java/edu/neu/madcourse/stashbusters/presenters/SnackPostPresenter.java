@@ -47,6 +47,8 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
     private DatabaseReference authorRef;
     private FirebaseAuth mAuth;
 
+    private boolean postsSet = false;
+
     private String userId; // owner of the profile
 
     public SnackPostPresenter(Context context) {
@@ -67,26 +69,30 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                ArrayList posts = new ArrayList();
+                if (!postsSet) {
 
-                if (snapshot.getValue() == null) {
-                    mView.setNoPosts();
-                } else {
+                    ArrayList posts = new ArrayList();
 
-                    // For each user under the "snackPosts" node, retrieve all the child posts...
-                    for (DataSnapshot dsp : snapshot.getChildren()) {
-                        // For each child post, retrieve and append to the posts ArrayList
-                        for (DataSnapshot child : dsp.getChildren()) {
-                            SnackBustPost post = child.getValue(SnackBustPost.class);
-                            posts.add(post);
+                    if (snapshot.getValue() == null) {
+                        mView.setNoPosts();
+                    } else {
+
+                        // For each user under the "snackPosts" node, retrieve all the child posts...
+                        for (DataSnapshot dsp : snapshot.getChildren()) {
+                            // For each child post, retrieve and append to the posts ArrayList
+                            for (DataSnapshot child : dsp.getChildren()) {
+                                SnackBustPost post = child.getValue(SnackBustPost.class);
+                                posts.add(post);
+                            }
                         }
+
+
+                        Collections.reverse(posts);
+
+
+                        mView.setPostView(posts);
+                        postsSet = true;
                     }
-
-
-                    Collections.reverse(posts);
-
-
-                    mView.setPostView(posts);
                 }
             }
             @Override
@@ -105,12 +111,15 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
         postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SnackBustPost post = snapshot.getValue(SnackBustPost.class);
+                if (!postsSet) {
+                    SnackBustPost post = snapshot.getValue(SnackBustPost.class);
 
-                List<SnackBustPost> posts = new ArrayList();
-                posts.add(post);
+                    List<SnackBustPost> posts = new ArrayList();
+                    posts.add(post);
 
-                mView.setPostView(posts);
+                    mView.setPostView(posts);
+                    postsSet = true;
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -139,5 +148,14 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
 
         });
 
+    }
+
+    @Override
+    public void updateSnackPost(String authorId, String postId, int choice, int currCount) {
+        FirebaseDatabase.getInstance().getReference()
+                .child("snackPosts").child(authorId).child(postId)
+                .child("choiceList").child(String.valueOf(choice))
+                .child("voteCount")
+                .setValue(currCount + 1);
     }
 }

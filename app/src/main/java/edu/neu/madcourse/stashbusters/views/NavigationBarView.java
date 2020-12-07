@@ -66,7 +66,7 @@ public class NavigationBarView extends FrameLayout {
         snackBustButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SnackPostActivity.class);
+                Intent intent = new Intent(context, SnackIntroActivity.class);
                 context.startActivity(intent);
             }
         });
