@@ -71,16 +71,27 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
     public void onBindViewHolder(@NonNull final CommentViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder called");
         final Comment comment = comments.get(position);
-        String authorId = comment.getAuthorId();
-        final DatabaseReference authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-        final String authorUsername = authorUserRef.child("username").child(authorId).toString();
+        final String authorId = comment.getAuthorId();
         DatabaseReference commentsListRef = postRef.child("comments");
 
         commentsListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String username = authorUsername;
-                holder.username.setText(authorUsername);
+                DatabaseReference authorUsernameRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
+                authorUsernameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String username = snapshot.child("username").getValue().toString();
+                        final String profilePicUrl = snapshot.child("photoUrl").getValue().toString();
+                        holder.username.setText(username);
+                        Picasso.get().load(profilePicUrl).into(holder.user_pic);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -99,14 +110,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         String dateString = df.format(date);
         holder.time.setText(dateString);
 
-        // Load in the image in a separate thread
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String userPicUrl = usersRefs.get(position).child("photoUrl").toString();
-                Picasso.get().load(userPicUrl).into(holder.user_pic);
-            }
-        }).start();
+
     }
 
     @Override

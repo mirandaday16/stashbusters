@@ -33,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:textAppearance="@style/Detail"/>
+            android:textAppearance="@style/Body"
+            android:textSize="15sp"/>
         </LinearLayout>
 
         <TextView
@@ -52,8 +53,7 @@
             android:id="@+id/comment_time_stamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Body"
-            android:textSize="15sp"
+            android:textAppearance="@style/Detail"
             app:layout_constraintTop_toBottomOf="@+id/comment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

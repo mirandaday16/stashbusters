@@ -23,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.CommentRVAdapter;
@@ -77,6 +79,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         setRefs();
 
         setPresenter();
+
 
 
         // Setting up binding instance and view instances
@@ -154,6 +157,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     @Override
     public void setCommentAdapter (CommentRVAdapter commentsAdapter) {
-        commentsSection.setAdapter(adapter);
+        commentsSection.setAdapter(commentsAdapter);
     }
 }

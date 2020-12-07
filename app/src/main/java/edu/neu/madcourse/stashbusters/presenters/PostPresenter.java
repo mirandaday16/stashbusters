@@ -57,6 +57,8 @@ public class PostPresenter implements PostContract.Presenter {
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
         commentsRef = FirebaseDatabase.getInstance().getReference()
                 .child("panelPosts").child(authorId).child(postId).child("comments");
+
+        commentsList = new ArrayList<>();
         commentsAdapter = new CommentRVAdapter(commentsList, postRef);
     }
 
@@ -114,12 +116,17 @@ public class PostPresenter implements PostContract.Presenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Initialize a list of comments
-                    getCommentsList(snapshot);
+                    commentsList.clear();
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         // Each snapshot is a comment
-                        Comment comment = (Comment) setCommentData(dataSnapshot);
+                        Comment comment = new Comment();
+
+                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
+
+                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
+                        comment.setCreatedDate(createdDate);
+                        comment.setText(dataSnapshot.child("text").getValue().toString());
                         commentsList.add(comment);
                     }
                     commentsAdapter.notifyDataSetChanged();
@@ -134,30 +141,6 @@ public class PostPresenter implements PostContract.Presenter {
 
         Log.i(TAG, "getPostCommentsData:success");
         mView.setCommentAdapter(commentsAdapter);
-    }
-
-    private Comment setCommentData(DataSnapshot commentSnapshot) {
-        Comment comment = null;
-
-        long createdDate = (long) commentSnapshot.child("createdDate").getValue();
-
-        comment.setAuthorId(commentSnapshot.child("authorId").getValue().toString());
-        comment.setCreatedDate(createdDate);
-        comment.setText(commentSnapshot.child("text").getValue().toString());
-
-        return comment;
-    }
-
-    private List<Comment> getCommentsList(DataSnapshot commentSnapShot) {
-        commentsList = new ArrayList<>();
-        DataSnapshot commentsSnapshot = commentSnapShot;
-
-        for (DataSnapshot singleComment : commentsSnapshot.getChildren()) {
-            Comment comment = singleComment.getValue(Comment.class);
-            commentsList.add(comment);
-        }
-
-        return commentsList;
     }
 
     /**

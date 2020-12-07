@@ -11,6 +11,10 @@ public class Comment {
     private long createdDate;
     private String authorId;
 
+    public Comment() {
+
+    }
+
     public Comment(String text) {
         this.text = text;
         this.createdDate = new Date().getTime();
