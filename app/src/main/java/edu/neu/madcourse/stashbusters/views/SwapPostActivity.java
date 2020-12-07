@@ -35,6 +35,9 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         submitButton = binding.postButton;
 
         commentInput.setHint(R.string.swap_hint);
+
+        mPresenter.loadCommentDataToView(this);
+
     }
 
     @Override

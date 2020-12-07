@@ -12,6 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 
@@ -25,6 +29,10 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
     private FirebaseAuth mAuth;
     private DatabaseReference postRef;
     private DatabaseReference authorUserRef;
+    private DatabaseReference commentsRef;
+
+    private List<Comment> commentsList;
+
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);
@@ -36,6 +44,11 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("swapPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
+        commentsRef = FirebaseDatabase.getInstance().getReference()
+                .child("swapPosts").child(authorId).child(postId).child("comments");
+
+        commentsList = new ArrayList<>();
+        commentsAdapter = new CommentRVAdapter(commentsList, postRef);
 
     }
 
@@ -65,6 +78,33 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             }
 
         });
+    }
+
+    @Override
+    public void loadCommentDataToView(Context context) {
+        commentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    commentsList.clear();
+                    System.out.println("Comments count: " + snapshot.getChildrenCount());
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Comment comment = dataSnapshot.getValue(Comment.class);
+                        commentsList.add(comment);
+                    }
+                    commentsAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        Log.i(TAG, "getPostCommentsData:success");
+        mView.setCommentAdapter(commentsAdapter);
     }
 
     @Override

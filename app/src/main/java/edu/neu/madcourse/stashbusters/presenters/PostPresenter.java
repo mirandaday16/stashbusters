@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.data.DataBuffer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,8 +16,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
@@ -31,6 +39,10 @@ public class PostPresenter implements PostContract.Presenter {
     private FirebaseAuth mAuth;
     private DatabaseReference postRef;
     private DatabaseReference authorUserRef;
+    private DatabaseReference commentsRef;
+
+    private List<Comment> commentsList;
+    protected CommentRVAdapter commentsAdapter;
 
     public PostPresenter(Context context, String authorId, String postId) {
         this.mContext = context;
@@ -43,7 +55,9 @@ public class PostPresenter implements PostContract.Presenter {
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("panelPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-
+        commentsRef = FirebaseDatabase.getInstance().getReference()
+                .child("panelPosts").child(authorId).child(postId).child("comments");
+        commentsAdapter = new CommentRVAdapter(commentsList, postRef);
     }
 
     @Override
@@ -85,13 +99,66 @@ public class PostPresenter implements PostContract.Presenter {
                 }
             }
 
-                @Override
-                public void onCancelled (@NonNull DatabaseError error){
-                    Log.e(TAG, error.toString());
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
+            }
 
-            });
+        });
+    }
+
+    @Override
+    public void loadCommentDataToView(Context context) {
+        // Get all comments for this post from Firebase
+        commentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Initialize a list of comments
+                    getCommentsList(snapshot);
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        // Each snapshot is a comment
+                        Comment comment = (Comment) setCommentData(dataSnapshot);
+                        commentsList.add(comment);
+                    }
+                    commentsAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        Log.i(TAG, "getPostCommentsData:success");
+        mView.setCommentAdapter(commentsAdapter);
+    }
+
+    private Comment setCommentData(DataSnapshot commentSnapshot) {
+        Comment comment = null;
+
+        long createdDate = (long) commentSnapshot.child("createdDate").getValue();
+
+        comment.setAuthorId(commentSnapshot.child("authorId").getValue().toString());
+        comment.setCreatedDate(createdDate);
+        comment.setText(commentSnapshot.child("text").getValue().toString());
+
+        return comment;
+    }
+
+    private List<Comment> getCommentsList(DataSnapshot commentSnapShot) {
+        commentsList = new ArrayList<>();
+        DataSnapshot commentsSnapshot = commentSnapShot;
+
+        for (DataSnapshot singleComment : commentsSnapshot.getChildren()) {
+            Comment comment = singleComment.getValue(Comment.class);
+            commentsList.add(comment);
         }
+
+        return commentsList;
+    }
 
     /**
      * Function that attempts to upload the post when the postButton is clicked.
@@ -102,5 +169,5 @@ public class PostPresenter implements PostContract.Presenter {
         DatabaseReference commentNodeRef = postRef.child("comments");
         DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
         newCommentRef.setValue(comment);
-        }
     }
+}

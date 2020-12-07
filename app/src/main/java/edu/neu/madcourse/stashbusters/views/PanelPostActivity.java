@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,9 +40,12 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        commentsSection = binding.commentRecyclerView;
 
         commentInput.setHint(R.string.advice_hint);
         swapSection.setVisibility(View.GONE);
+
+        mPresenter.loadCommentDataToView(this);
     }
 
     @Override

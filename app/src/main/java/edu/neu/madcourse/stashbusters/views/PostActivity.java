@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,10 +55,11 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected TextView timeStamp;
     protected LinearLayout swapSection;
     protected Button submitButton;
+    protected RecyclerView commentsSection;
 
     // Attributes needed for displaying comments in recycler view.
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     CommentRVAdapter adapter;
 
     // For updating ImageView in a separate thread.
@@ -82,10 +84,13 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         View rootView = binding.getRoot();
 
         initViews();
+        initRecyclerView();
         onUsernameClick(this);
         initListeners();
 
+
         setContentView(rootView);
+
     }
 
     public abstract void setRefs();
@@ -95,6 +100,16 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     public abstract void initViews();
 
     public abstract void onUsernameClick(Context context);
+
+    public void initRecyclerView() {
+        commentsSection = binding.commentRecyclerView;
+        commentsSection.setNestedScrollingEnabled(false);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        commentsSection.setLayoutManager(layoutManager);
+
+    }
 
     public void initListeners() {
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +147,13 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         // Format time stamp
         Date date = new Date(createdDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.US);
         String dateText = dateFormat.format(date);
         timeStamp.setText(dateText);
+    }
+
+    @Override
+    public void setCommentAdapter (CommentRVAdapter commentsAdapter) {
+        commentsSection.setAdapter(adapter);
     }
 }
