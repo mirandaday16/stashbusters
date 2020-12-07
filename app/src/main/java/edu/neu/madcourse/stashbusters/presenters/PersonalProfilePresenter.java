@@ -90,8 +90,8 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
     private void startEditProfileActivity() {
 //        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
 //        mContext.startActivity(intent);
-        Intent intent = new Intent(this.mContext, SwapPostActivity.class);
-        intent.putExtra("userId", "1N0HougqnWZ61NQYejmVmpwPFkT2").putExtra("postId", "-MNsRgl1hK6_fzlZoHZj");
+        Intent intent = new Intent(this.mContext, PanelPostActivity.class);
+        intent.putExtra("userId", "1N0HougqnWZ61NQYejmVmpwPFkT2").putExtra("postId", "-MNpdDx7B6mVwGIayzF1");
         mContext.startActivity(intent);
     }
 

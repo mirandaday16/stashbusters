@@ -59,7 +59,7 @@ public class PostPresenter implements PostContract.Presenter {
                 .child("panelPosts").child(authorId).child(postId).child("comments");
 
         commentsList = new ArrayList<>();
-        commentsAdapter = new CommentRVAdapter(commentsList, postRef);
+        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
     }
 
     @Override

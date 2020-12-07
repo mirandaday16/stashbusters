@@ -2,6 +2,7 @@ package edu.neu.madcourse.stashbusters;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,24 +32,31 @@ import java.util.Date;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.model.Comment;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 
 public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.CommentViewHolder> {
     private static final String TAG = CommentRVAdapter.class.getSimpleName();
+    private Context context;
     private List<Comment> comments;
     private DatabaseReference postRef;
-    private List<DatabaseReference> usersRefs;
+    private FirebaseAuth mAuth;
 
-    public CommentRVAdapter(List<Comment> comments, DatabaseReference postRef) {
+    public CommentRVAdapter(Context context, List<Comment> comments, DatabaseReference postRef) {
         this.comments = comments;
+        this.context = context;
         this.postRef = postRef;
+        this.mAuth = FirebaseAuth.getInstance();
+
     }
 
-    static class CommentViewHolder extends RecyclerView.ViewHolder {
+    public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         LinearLayout user_info_area;
         ImageView user_pic;
         TextView username;
         TextView comment;
         TextView time;
+        String authorId;
 
         CommentViewHolder (View itemView) {
             super(itemView);
@@ -56,6 +66,30 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
             username = (TextView) itemView.findViewById(R.id.comment_user);
             comment = (TextView) itemView.findViewById(R.id.comment);
             time = (TextView) itemView.findViewById(R.id.comment_time_stamp);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String currentUserId = currentUser.getUid();
+
+            Intent intent;
+
+            if (authorId.equals(currentUserId)) {
+                // Comment author is the same as current user; go to Personal Profile
+                intent = new Intent(context, PersonalProfileActivity.class);
+            } else {
+                // different user; send to their public profile
+                intent = new Intent(context, PublicProfileActivity.class);
+                intent.putExtra("userId", authorId);
+            }
+                context.startActivity(intent);
+        }
+
+        public void setAuthorId(String authorId) {
+            this.authorId = authorId;
         }
     }
 
@@ -84,6 +118,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
                         String username = snapshot.child("username").getValue().toString();
                         final String profilePicUrl = snapshot.child("photoUrl").getValue().toString();
                         holder.username.setText(username);
+                        holder.setAuthorId(authorId);
                         Picasso.get().load(profilePicUrl).into(holder.user_pic);
                     }
 
@@ -118,15 +153,4 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         return comments.size();
     }
 
-    public List<DatabaseReference> getUsersList(List<Comment> commentList) {
-        ArrayList<DatabaseReference> usersRefs = new ArrayList<>();
-        DatabaseReference usersNodeRef = FirebaseDatabase.getInstance().getReference().child("users");
-        for (Comment comment : commentList) {
-            String userId = comment.getAuthorId();
-            DatabaseReference firebaseUserRef = usersNodeRef.child(userId);
-            usersRefs.add(firebaseUserRef);
-        }
-
-        return usersRefs;
-    }
 }

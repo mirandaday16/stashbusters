@@ -52,7 +52,7 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
                 .child("swapPosts").child(authorId).child(postId).child("comments");
 
         commentsList = new ArrayList<>();
-        commentsAdapter = new CommentRVAdapter(commentsList, postRef);
+        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
 
     }
 
