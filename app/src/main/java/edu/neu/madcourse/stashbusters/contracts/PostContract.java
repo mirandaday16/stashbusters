@@ -23,8 +23,11 @@ public interface PostContract {
 
     interface Presenter {
         void loadAuthorDataToView();
+
         void loadPostDataToView();
+
         void loadCommentDataToView(Context context);
+
         void uploadComment(Comment comment);
 
     }

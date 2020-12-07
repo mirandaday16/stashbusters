@@ -88,10 +88,7 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {
-//        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
-//        mContext.startActivity(intent);
-        Intent intent = new Intent(this.mContext, PanelPostActivity.class);
-        intent.putExtra("userId", "1N0HougqnWZ61NQYejmVmpwPFkT2").putExtra("postId", "-MNpdDx7B6mVwGIayzF1");
+        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
         mContext.startActivity(intent);
     }
 

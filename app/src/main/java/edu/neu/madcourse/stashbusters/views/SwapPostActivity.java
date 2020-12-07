@@ -16,7 +16,6 @@ import java.util.Locale;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
-import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
 
@@ -90,8 +89,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         TextView swapMaterial = binding.swapItem;
         if (isAvailable) {
             swapMaterial.setText(material);
-        }
-        else {
+        } else {
             swapMaterial.setText(this.getString(R.string.swapped));
         }
 

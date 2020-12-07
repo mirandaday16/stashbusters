@@ -19,17 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.CommentRVAdapter;
-import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.model.Comment;
@@ -79,7 +75,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         setRefs();
 
         setPresenter();
-
 
 
         // Setting up binding instance and view instances
@@ -156,7 +151,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     }
 
     @Override
-    public void setCommentAdapter (CommentRVAdapter commentsAdapter) {
+    public void setCommentAdapter(CommentRVAdapter commentsAdapter) {
         commentsSection.setAdapter(commentsAdapter);
     }
 }

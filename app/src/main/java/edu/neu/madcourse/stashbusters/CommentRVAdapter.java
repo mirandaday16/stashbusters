@@ -3,7 +3,6 @@ package edu.neu.madcourse.stashbusters;
 import android.content.Context;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.squareup.picasso.Picasso;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
 
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         LinearLayout user_info_area;
         ImageView user_pic;
         TextView username;
@@ -58,7 +56,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         TextView time;
         String authorId;
 
-        CommentViewHolder (View itemView) {
+        CommentViewHolder(View itemView) {
             super(itemView);
 
             user_info_area = (LinearLayout) itemView.findViewById(R.id.user_info_area);
@@ -85,7 +83,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
                 intent = new Intent(context, PublicProfileActivity.class);
                 intent.putExtra("userId", authorId);
             }
-                context.startActivity(intent);
+            context.startActivity(intent);
         }
 
         public void setAuthorId(String authorId) {

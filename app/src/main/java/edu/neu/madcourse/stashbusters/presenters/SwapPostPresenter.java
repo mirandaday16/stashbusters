@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.CommentRVAdapter;
-import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 
@@ -77,7 +76,7 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             }
 
             @Override
-            public void onCancelled (@NonNull DatabaseError error){
+            public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, error.toString());
             }
 
