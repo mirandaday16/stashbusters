@@ -1,20 +1,19 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
@@ -31,19 +30,18 @@ import com.squareup.picasso.Picasso;
 public class PersonalProfileActivity extends AppCompatActivity implements PersonalProfileContract.MvpView {
     private static final String TAG = PersonalProfileActivity.class.getSimpleName();
 
-    // Set up ViewBinding for the layout
+    // Set up UI elements
     private PersonalProfileActivityBinding binding;
-    private PersonalProfilePresenter mPresenter;
-    RecyclerView postsView;
     TextView username, followerCountView, bio;
     ImageView profilePic;
     private NavigationBarView navigationBarView;
     Button myPostsButton, likedPostsButton;
     Toolbar toolbar;
+    RecyclerView postListRecyclerView;
 
+    private PersonalProfilePresenter mPresenter;
     private FirebaseAuth mAuth;
     private String userId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,8 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         initAuthentication();
 
         binding = PersonalProfileActivityBinding.inflate(getLayoutInflater());
-        initViews(binding);
+        initViews();
+        initRecyclerView();
         initListeners();
 
         // set up presenter + load data to view
@@ -60,6 +59,8 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         mPresenter.loadDataToView();
 
         setContentView(binding.getRoot());
+
+        mPresenter.getUserPostsData();
     }
 
     private void initAuthentication() {
@@ -77,7 +78,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
     /**
      * Initialize the view and set up all UI elements.
      */
-    private void initViews(PersonalProfileActivityBinding binding) {
+    private void initViews() {
         toolbar = binding.profilePageToolbar;
 
         // Setting up UI elements
@@ -87,12 +88,21 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         bio = binding.bio;
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
-        postsView = binding.postViewArea;
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYPROFILE);
 
+    }
+
+    private void initRecyclerView(){
+        // recycler view for posts
+        postListRecyclerView = binding.postViewArea;
+        postListRecyclerView.setNestedScrollingEnabled(false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postListRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     private void initListeners() {
@@ -107,17 +117,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
         myPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: get user's posts from Firebase and display in RecyclerView
-            }
-        });
-        // TODO: Set onClickListener for toolbar menu -- these should be moved to Presenter
-
-        // Setting onClickListener for My Posts Button - switches RecyclerView to user's own posts
-        myPostsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // send to presenter
-                // TODO: get user's posts from Firebase and display in RecyclerView
+                mPresenter.getUserPostsData();
             }
         });
 
@@ -129,6 +129,11 @@ public class PersonalProfileActivity extends AppCompatActivity implements Person
                 // TODO: get liked posts from Firebase and display in RecyclerView
             }
         });
+    }
+
+    @Override
+    public void setPostListAdapter(PostAdapter adapter) {
+        postListRecyclerView.setAdapter(adapter);
     }
 
     @Override

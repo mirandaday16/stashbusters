@@ -1,5 +1,7 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
+
 public interface PublicProfileContract {
     interface MvpView {
         void setViewData(String photoUrl,
@@ -11,6 +13,7 @@ public interface PublicProfileContract {
          *
          */
         void updateFollowButton(String text);
+        void setPostListAdapter(PostAdapter adapter);
     }
 
     interface Presenter {
@@ -25,5 +28,7 @@ public interface PublicProfileContract {
          * Load current user's data from Firebase to view.
          */
         void loadDataToView();
+
+        void getUserPostsData();
     }
 }

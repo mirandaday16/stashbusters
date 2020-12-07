@@ -9,6 +9,11 @@ public class StashSwapPost extends Post {
     private String interestedMaterial;
     private Boolean isAvailable;
 
+    public StashSwapPost() {
+        // For DataSnapshot
+        super();
+    }
+
     public StashSwapPost(String material) {
         super();
         this.interestedMaterial = material;

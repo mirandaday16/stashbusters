@@ -3,6 +3,7 @@ package edu.neu.madcourse.stashbusters.views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
@@ -35,7 +36,7 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
     private ImageView profilePic;
     private TextView usernameView, followerCountView, bio;
     private Button followButton;
-    private RecyclerView userPostsFeed;
+    private RecyclerView postListRecyclerView;
     private NavigationBarView navigationBarView;
 
     private PublicProfilePresenter mPresenter;
@@ -62,10 +63,12 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         binding = PublicProfileActivityBinding.inflate(getLayoutInflater());
 
         initViews();
+        initRecyclerView();
         initListeners();
         checkFollowingState();
 
         setContentView(binding.getRoot());
+        mPresenter.getUserPostsData();
     }
 
     private void initViews() {
@@ -74,10 +77,19 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         followerCountView = binding.followerCount;
         bio = binding.bio;
         followButton = binding.followButton;
-        userPostsFeed = binding.postViewArea;
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
+    }
+
+    private void initRecyclerView(){
+        // recycler view for posts
+        postListRecyclerView = binding.postViewArea;
+        postListRecyclerView.setNestedScrollingEnabled(false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postListRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     private void initListeners() {
@@ -139,5 +151,10 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
             followButton.setBackgroundColor(Color.GRAY);
         }
 
+    }
+
+    @Override
+    public void setPostListAdapter(PostAdapter adapter) {
+        postListRecyclerView.setAdapter(adapter);
     }
 }

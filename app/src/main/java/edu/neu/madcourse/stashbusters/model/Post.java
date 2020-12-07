@@ -2,6 +2,9 @@ package edu.neu.madcourse.stashbusters.model;
 
 import android.location.Location;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,16 +14,16 @@ import edu.neu.madcourse.stashbusters.enums.MaterialType;
  * This class represents a Post object.
  */
 public abstract class Post {
-    protected String id;
-    protected String title;
-    protected String description;
-    protected String authorId;
-    protected String photoUrl;
-    protected Location location;
-    protected MaterialType materialType; //which material is this post about
-    protected List<Comment> comments;
-    protected List<User> likers; //TODO: maybe a better name?
-    protected long createdDate;
+    public String id;
+    public String title;
+    public String description;
+    public String authorId;
+    public String photoUrl;
+    public Location location;
+    public MaterialType materialType; //which material is this post about
+    public List<Comment> comments;
+    public List<User> likers; //TODO: maybe a better name?
+    public long createdDate;
 
     protected Post() {
         this.createdDate = new Date().getTime();
@@ -117,5 +120,13 @@ public abstract class Post {
 
     public void setCreatedDate(long createdDate) {
         this.createdDate = createdDate;
+    }
+
+    /**
+     * Return type of post - StashSwapPost or StashPanelPost
+     * @return
+     */
+    public String getPostType() {
+        return this.getClass().getSimpleName();
     }
 }

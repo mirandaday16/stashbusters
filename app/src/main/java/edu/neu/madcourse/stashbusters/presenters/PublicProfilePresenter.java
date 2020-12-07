@@ -12,8 +12,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
+import edu.neu.madcourse.stashbusters.model.Post;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 
 public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();
@@ -26,6 +33,10 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     private DatabaseReference targetUserProfileRef;
     private DatabaseReference followRef;
 
+    private List<Post> postList;
+    private PostAdapter postAdapter;
+    private DatabaseReference postsRef;
+
     public PublicProfilePresenter(Context context, String targetUserId) {
         this.mContext = context;
         this.mView = (PublicProfileContract.MvpView) context;
@@ -33,6 +44,10 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
+
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(mContext, postList);
+        postsRef = FirebaseDatabase.getInstance().getReference();
 
         targetUserProfileRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(targetUserId);
@@ -66,6 +81,58 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
     }
 
     @Override
+    public void getUserPostsData() {
+        // Panel posts
+        DatabaseReference panelPosts = postsRef.child("panelPosts").child(targetUserId);
+        // Swap Posts
+        DatabaseReference swapPosts = postsRef.child("swapPosts").child(targetUserId);
+
+        panelPosts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    postList.clear();
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
+                        postList.add(post);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                Log.e(TAG, error.toString());
+            }
+
+        });
+
+        swapPosts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        StashSwapPost post = dataSnapshot.getValue(StashSwapPost.class);
+                        postList.add(post);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                Log.e(TAG, error.toString());
+            }
+
+        });
+
+        Log.i(TAG, "getUserPostsData:success");
+        mView.setPostListAdapter(postAdapter);
+    }
+
+    @Override
     public void onFollowButtonClick(String buttonText) {
         // if button text is following -- unfollow
         // else, text is follow -- follow
@@ -96,4 +163,6 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
         followRef.child(currentUserId).child("following").child(targetUserId).removeValue();
         followRef.child(targetUserId).child("followers").child(currentUserId).removeValue();
     }
+
+
 }
