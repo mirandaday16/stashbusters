@@ -11,7 +11,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
@@ -30,6 +32,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         details = binding.details;
         timeStamp = binding.timeStamp;
         swapSection = binding.swapFor;
+        swapButton = binding.swapButton;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
         commentsSection = binding.commentRecyclerView;
@@ -63,6 +66,42 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
     }
 
     @Override
+    public void onSwapButtonClick() {
+        swapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check to see if the author is the same as the current user
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String currentUserId = currentUser.getUid();
+                if (authorId.equals(currentUserId)) {
+                    // Swap completion button is visible and can be used to mark swaps as complete
+                    // Now, check to see if swap is already marked as complete:
+                    if (swapButton.getText().equals(getResources().getString(R.string.mark_swap_as_complete))) {
+                        // Swap is not yet completed; click marks it as complete
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("availability", false);
+                        postRef.updateChildren(updates);
+                        // Change button appearance
+                        swapButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+                        swapButton.setText(getResources().getString(R.string.mark_swap_as_available));
+                    } else {
+                        // Otherwise, swap is already marked as complete; click marks as incomplete
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("availability", true);
+                        postRef.updateChildren(updates);
+                        // Change button appearance
+                        swapButton.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
+                        swapButton.setText(getResources().getString(R.string.mark_swap_as_complete));
+                    }
+                } else {
+                    // Otherwise, button is gone and cannot be used to complete swaps
+                    swapButton.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    @Override
     public void setRefs() {
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(authorId);
@@ -90,7 +129,9 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         if (isAvailable) {
             swapMaterial.setText(material);
         } else {
+            // Mark swap as complete - change text and color of swap section
             swapMaterial.setText(this.getString(R.string.swapped));
+            swapSection.setBackgroundColor(getResources().getColor(R.color.colorSurfaceDark));
         }
 
         // Format time stamp

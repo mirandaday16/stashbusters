@@ -68,6 +68,11 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
     }
 
     @Override
+    public void onSwapButtonClick() {
+        // No swap button for this activity
+    }
+
+    @Override
     public void setPresenter() {
         mPresenter = new PostPresenter(this, authorId, postId);
         mPresenter.loadAuthorDataToView();

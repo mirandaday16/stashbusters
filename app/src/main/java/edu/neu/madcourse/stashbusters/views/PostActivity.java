@@ -52,6 +52,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected EditText commentInput;
     protected TextView timeStamp;
     protected LinearLayout swapSection;
+    protected Button swapButton;
     protected Button submitButton;
     protected RecyclerView commentsSection;
 
@@ -84,6 +85,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         initViews();
         initRecyclerView();
         onUsernameClick(this);
+        onSwapButtonClick();
         initListeners();
 
 
@@ -98,6 +100,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     public abstract void initViews();
 
     public abstract void onUsernameClick(Context context);
+
+    public abstract void onSwapButtonClick();
 
     public void initRecyclerView() {
         commentsSection = binding.commentRecyclerView;
