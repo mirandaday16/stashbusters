@@ -33,4 +33,6 @@ public class SnackBustChoice {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
+
+    public void increaseVoteCount(){voteCount++;}
 }

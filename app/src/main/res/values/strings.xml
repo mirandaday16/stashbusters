@@ -52,10 +52,14 @@
 
     <!-- Strings for snack busting activity -->
     <string name="no_more_snacks">Uh-oh!\nThere are no more snacks!</string>
-    <string name="swipe_to_vote"><![CDATA[<-- swipe to vote -->]]></string>
+    <string name="swipe_to_vote"><![CDATA[← swipe to vote →]]></string>
+    <string name="snack_bust_title">Snack Busting!</string>
+    <string name="snack_bust_tag">Help other crafters make quick decisions!\nSimply swipe to vote.</string>
+    <string name="snack_start">Tap the cookie to start!</string>
 
     <!-- Strings for stash panel and swap posts -->
     <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>
+    <string name="swap_hint">What are you willing to swap for? (100 char. limit)</string>
     <string name="offer_hint">Make an offer! (100 char. limit)</string>
     <string name="submit">Submit!</string>
     <string name="swapped">SWAPPED! This swap is no longer available.</string>

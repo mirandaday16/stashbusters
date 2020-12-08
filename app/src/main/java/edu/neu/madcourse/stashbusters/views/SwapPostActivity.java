@@ -16,7 +16,6 @@ import java.util.Locale;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
-import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
 
@@ -33,12 +32,16 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        commentsSection = binding.commentRecyclerView;
 
-        commentInput.setHint(R.string.advice_hint);
+        commentInput.setHint(R.string.swap_hint);
+
+        mPresenter.loadCommentDataToView(this);
+
     }
 
     @Override
-    public void initListeners(final Context context) {
+    public void onUsernameClick(final Context context) {
         userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +60,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 }
             }
         });
-        // TODO: Implement onClickListener for submit button
     }
 
     @Override
@@ -87,8 +89,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         TextView swapMaterial = binding.swapItem;
         if (isAvailable) {
             swapMaterial.setText(material);
-        }
-        else {
+        } else {
             swapMaterial.setText(this.getString(R.string.swapped));
         }
 

@@ -12,7 +12,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 
 public class SwapPostPresenter extends PostPresenter implements SwapPostContract.Presenter {
     private static final String TAG = SwapPostPresenter.class.getSimpleName();
@@ -24,10 +29,17 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
     private FirebaseAuth mAuth;
     private DatabaseReference postRef;
     private DatabaseReference authorUserRef;
+    private DatabaseReference commentsRef;
+
+    private List<Comment> commentsList;
+    protected CommentRVAdapter commentsAdapter;
+
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);
+        this.mContext = context;
         this.mView = (SwapPostContract.MvpView) context;
+        this.authorId = authorId;
         this.postId = postId;
 
         mAuth = FirebaseAuth.getInstance();
@@ -35,6 +47,11 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("swapPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
+        commentsRef = FirebaseDatabase.getInstance().getReference()
+                .child("swapPosts").child(authorId).child(postId).child("comments");
+
+        commentsList = new ArrayList<>();
+        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
 
     }
 
@@ -59,10 +76,51 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             }
 
             @Override
-            public void onCancelled (@NonNull DatabaseError error){
+            public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, error.toString());
             }
 
         });
+    }
+
+    @Override
+    public void loadCommentDataToView(Context context) {
+        commentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    commentsList.clear();
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        // Each snapshot is a comment
+                        Comment comment = new Comment();
+
+                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
+
+                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
+                        comment.setCreatedDate(createdDate);
+                        comment.setText(dataSnapshot.child("text").getValue().toString());
+                        commentsList.add(comment);
+                    }
+                    commentsAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        Log.i(TAG, "getPostCommentsData:success");
+        mView.setCommentAdapter(commentsAdapter);
+    }
+
+    @Override
+    public void uploadComment(Comment comment) {
+        // Stores comments in a separate "comments" node in Firebase
+        DatabaseReference commentNodeRef = postRef.child("comments");
+        DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
+        newCommentRef.setValue(comment);
     }
 }

@@ -1,6 +1,8 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
-public interface SwapPostContract extends PostContract{
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+
+public interface SwapPostContract extends PostContract {
     interface MvpView {
         void setPostViewData(String title,
                              String postPicUrl,
@@ -8,5 +10,7 @@ public interface SwapPostContract extends PostContract{
                              long createdDate,
                              String material,
                              Boolean isAvailable);
+
+        void setCommentAdapter(CommentRVAdapter commentsAdapter);
     }
 }
