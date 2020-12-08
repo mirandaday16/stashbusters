@@ -88,14 +88,48 @@
             android:textAppearance="@style/Body"
             android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/time_stamp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/detailsView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginStart="5dp"
-            android:textAppearance="@style/Body"
-            android:textSize="15sp" />
+            android:layout_below="@+id/image"
+            android:layout_alignLeft="@+id/image"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/time_stamp"
+                style="@style/Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="20"
+                android:textSize="15sp"
+                android:text="date" />
+
+            <LinearLayout
+                android:id="@+id/likesView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/numLikes"
+                    android:textSize="15sp"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:text="Likes" />
+
+                <ImageView
+                    android:id="@+id/heart"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/heart_icon_empty" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
