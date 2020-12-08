@@ -1,20 +1,28 @@
 package edu.neu.madcourse.stashbusters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
+import android.content.Context;
+
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,31 +30,64 @@ import java.util.Date;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.model.Comment;
-import edu.neu.madcourse.stashbusters.model.User;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 
 public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.CommentViewHolder> {
+    private static final String TAG = CommentRVAdapter.class.getSimpleName();
+    private Context context;
     private List<Comment> comments;
-    private List<User> commenters;
+    private DatabaseReference postRef;
+    private FirebaseAuth mAuth;
 
-    CommentRVAdapter(List<Comment> comments, List<User> commenters) {
+    public CommentRVAdapter(Context context, List<Comment> comments, DatabaseReference postRef) {
         this.comments = comments;
-        this.commenters = commenters;
+        this.context = context;
+        this.postRef = postRef;
+        this.mAuth = FirebaseAuth.getInstance();
+
     }
 
-    static class CommentViewHolder extends RecyclerView.ViewHolder {
+    public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        LinearLayout user_info_area;
         ImageView user_pic;
         TextView username;
         TextView comment;
         TextView time;
-        private Handler imageHandler = new Handler();
+        String authorId;
 
-        CommentViewHolder (View itemView) {
+        CommentViewHolder(View itemView) {
             super(itemView);
 
+            user_info_area = (LinearLayout) itemView.findViewById(R.id.user_info_area);
             user_pic = (ImageView) itemView.findViewById(R.id.comment_user_pic);
             username = (TextView) itemView.findViewById(R.id.comment_user);
             comment = (TextView) itemView.findViewById(R.id.comment);
             time = (TextView) itemView.findViewById(R.id.comment_time_stamp);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String currentUserId = currentUser.getUid();
+
+            Intent intent;
+
+            if (authorId.equals(currentUserId)) {
+                // Comment author is the same as current user; go to Personal Profile
+                intent = new Intent(context, PersonalProfileActivity.class);
+            } else {
+                // different user; send to their public profile
+                intent = new Intent(context, PublicProfileActivity.class);
+                intent.putExtra("userId", authorId);
+            }
+            context.startActivity(intent);
+        }
+
+        public void setAuthorId(String authorId) {
+            this.authorId = authorId;
         }
     }
 
@@ -60,8 +101,40 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
 
     @Override
     public void onBindViewHolder(@NonNull final CommentViewHolder holder, final int position) {
+        Log.i(TAG, "onBindViewHolder called");
+        final Comment comment = comments.get(position);
+        final String authorId = comment.getAuthorId();
+        DatabaseReference commentsListRef = postRef.child("comments");
+
+        commentsListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DatabaseReference authorUsernameRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
+                authorUsernameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String username = snapshot.child("username").getValue().toString();
+                        final String profilePicUrl = snapshot.child("photoUrl").getValue().toString();
+                        holder.username.setText(username);
+                        holder.setAuthorId(authorId);
+                        Picasso.get().load(profilePicUrl).into(holder.user_pic);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // Load in comment and user info from Firebase
         holder.comment.setText(comments.get(position).getText());
-        holder.username.setText(commenters.get(position).getUsername());
 
         Timestamp time = new Timestamp(comments.get(position).getCreatedDate());
         Date date = new Date(time.getTime());
@@ -70,13 +143,7 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         String dateString = df.format(date);
         holder.time.setText(dateString);
 
-        // Load in the image in a separate thread
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setImageView(holder, commenters.get(position).getPhotoUrl());
-            }
-        }).start();
+
     }
 
     @Override
@@ -84,24 +151,4 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         return comments.size();
     }
 
-    // Function to load in an image from an image URL.
-    private void setImageView(final CommentRVAdapter.CommentViewHolder holder, String url) {
-        Bitmap bitmap = null;
-        try {
-            InputStream in = new
-                    URL(url)
-                    .openStream();
-            bitmap = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        final Bitmap finalBitmap = bitmap;
-        holder.imageHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                holder.user_pic.setImageBitmap(finalBitmap);
-            }
-        });
-    }
 }

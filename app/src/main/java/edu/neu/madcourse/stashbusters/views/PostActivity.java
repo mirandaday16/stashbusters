@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -26,17 +26,18 @@ import java.util.Date;
 import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.CommentRVAdapter;
-import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
+import edu.neu.madcourse.stashbusters.R;
 
 /**
  * Abstract class that represents the post detail activity.
  * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
  */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
-//    protected PostPresenter mPresenter;
+    protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
     protected String authorId, postId;
     protected DatabaseReference authorUserRef;
@@ -59,12 +60,13 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected ImageView heartIcon;
     protected LinearLayout swapSection;
     protected Button submitButton;
+    protected RecyclerView commentsSection;
 
     protected boolean currentUserLikedPost = false;
 
     // Attributes needed for displaying comments in recycler view.
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     CommentRVAdapter adapter;
 
     // For updating ImageView in a separate thread.
@@ -80,18 +82,16 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         mAuth = FirebaseAuth.getInstance();
 
         setRefs();
-
         setPresenter();
-
 
         // Setting up binding instance and view instances
         binding = ActivityPanelSwapPostBinding.inflate(getLayoutInflater());
         View rootView = binding.getRoot();
 
         initViews();
-        initListeners(this);
-
+        initRecyclerView();
         setContentView(rootView);
+
     }
 
     public abstract void setRefs();
@@ -100,11 +100,19 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initViews();
 
-    public abstract void initListeners(Context context);
 
     @Override
     public boolean getCurrentUserLikedPostStatus() {
         return this.currentUserLikedPost;
+    }
+
+    public void initRecyclerView() {
+        commentsSection = binding.commentRecyclerView;
+        commentsSection.setNestedScrollingEnabled(false);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        commentsSection.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -131,17 +139,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         }
     }
 
-//    @Override
-//    public void setPostViewData(String title, String postPicUrl, String description,
-//                                long createdDate) {
-//        titleView.setText(title);
-//        Picasso.get().load(postPicUrl).into(postPhoto);
-//        details.setText(description);
-//
-//        // Format time stamp
-//        Date date = new Date(createdDate);
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
-//        String dateText = dateFormat.format(date);
-//        timeStamp.setText(dateText);
-//    }
+    @Override
+    public void setCommentAdapter(CommentRVAdapter commentsAdapter) {
+        commentsSection.setAdapter(commentsAdapter);
+    }
 }

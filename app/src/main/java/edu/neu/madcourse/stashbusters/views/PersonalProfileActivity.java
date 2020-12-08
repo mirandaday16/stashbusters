@@ -142,5 +142,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
         username.setText(inputUsername);
         bio.setText(inputBio);
         followerCountView.setText(inputFollowerCount + " followers");
+
     }
 }

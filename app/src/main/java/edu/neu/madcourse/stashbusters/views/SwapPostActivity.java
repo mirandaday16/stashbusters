@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +20,7 @@ import java.util.Locale;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
@@ -41,11 +43,33 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         likeCountView = binding.numLikes;
         heartIcon = binding.heart;
 
-        commentInput.setHint(R.string.advice_hint);
+        commentsSection = binding.commentRecyclerView;
+
+        commentInput.setHint(R.string.swap_hint);
+
+        mPresenter.loadCommentDataToView(this);
+        initListeners();
     }
 
-    @Override
-    public void initListeners(final Context context) {
+    public void initListeners() {
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a new Comment object
+                String commentText = commentInput.getText().toString();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                Comment comment = new Comment(commentText);
+                comment.setAuthorId(currentUser.getUid());
+                // Check that the user has entered a comment in the EditText field
+                if (commentText != null) {
+                    mPresenter.uploadComment(postRef, comment);
+                    // Reset comment field and update RecyclerView so user can see their comment
+                    commentInput.setText("");
+                    // TODO: Hide soft keyboard and update RecyclerView
+                }
+            }
+        });
+
         userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,13 +78,13 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 String currentUserId = currentUser.getUid();
                 if (authorId.equals(currentUserId)) {
                     // If current user, take user to their personal profile
-                    Intent intent = new Intent(context, PersonalProfileActivity.class);
-                    context.startActivity(intent);
+                    Intent intent = new Intent(SwapPostActivity.this, PersonalProfileActivity.class);
+                    startActivity(intent);
                 } else {
                     // Send user to author user's public profile
-                    Intent intent = new Intent(context, PublicProfileActivity.class);
+                    Intent intent = new Intent(SwapPostActivity.this, PublicProfileActivity.class);
                     intent.putExtra("userId", authorId);
-                    context.startActivity(intent);
+                    startActivity(intent);
                 }
             }
         });
@@ -71,7 +95,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 mPresenter.onHeartIconClick(postRef);
             }
         });
-        // TODO: Implement onClickListener for submit button
     }
 
     @Override
@@ -81,6 +104,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         postRef = FirebaseDatabase.getInstance().getReference().child("swapPosts")
                 .child(authorId).child(postId);
 
+//        super.initListeners(postRef);
     }
 
     @Override
@@ -102,8 +126,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         TextView swapMaterial = binding.swapItem;
         if (isAvailable) {
             swapMaterial.setText(material);
-        }
-        else {
+        } else {
             swapMaterial.setText(this.getString(R.string.swapped));
         }
 

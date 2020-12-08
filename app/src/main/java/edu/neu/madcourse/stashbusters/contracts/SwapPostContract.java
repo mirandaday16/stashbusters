@@ -1,4 +1,5 @@
 package edu.neu.madcourse.stashbusters.contracts;
+import edu.neu.madcourse.stashbusters.CommentRVAdapter;
 
 public interface SwapPostContract extends PostContract{
     interface MvpView extends PostContract.MvpView {
@@ -9,5 +10,6 @@ public interface SwapPostContract extends PostContract{
                              String material,
                              Boolean isAvailable,
                              long likeCount);
+        void setCommentAdapter(CommentRVAdapter commentsAdapter);
     }
 }
