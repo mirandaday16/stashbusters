@@ -6,13 +6,22 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.contracts.PanelPostContract;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
+import edu.neu.madcourse.stashbusters.presenters.PanelPostPresenter;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
-public class PanelPostActivity extends PostActivity implements PostContract.MvpView {
+public class PanelPostActivity extends PostActivity implements PanelPostContract.MvpView {
+    private PanelPostPresenter mPresenter;
+//    private boolean currentUserLikedPost = false;
 
     @Override
     public void setRefs() {
@@ -36,6 +45,8 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        likeCountView = binding.numLikes;
+        heartIcon = binding.heart;
 
         commentInput.setHint(R.string.advice_hint);
         swapSection.setVisibility(View.GONE);
@@ -61,13 +72,40 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
                 }
             }
         });
+
+        heartIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mPresenter.onHeartIconClick(postRef);
+            }
+        });
         // TODO: Implement onClickListener for submit button
     }
 
     @Override
     public void setPresenter() {
-        mPresenter = new PostPresenter(this, authorId, postId);
+        mPresenter = new PanelPostPresenter(this, authorId, postId);
         mPresenter.loadAuthorDataToView();
         mPresenter.loadPostDataToView();
     }
+
+    @Override
+    public void setPostViewData(String title, String postPicUrl, String description,
+                                long createdDate, long likeCount) {
+        titleView.setText(title);
+        Picasso.get().load(postPicUrl).into(postPhoto);
+        details.setText(description);
+
+        // Format time stamp
+        Date date = new Date(createdDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
+        String dateText = dateFormat.format(date);
+        timeStamp.setText(dateText);
+
+        setNewLikeCount(likeCount);
+
+        // set heart state
+        mPresenter.checkLikeStatus();
+    }
+
 }

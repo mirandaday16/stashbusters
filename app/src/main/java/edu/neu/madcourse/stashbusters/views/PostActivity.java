@@ -36,7 +36,7 @@ import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
  * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
  */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
-    protected PostPresenter mPresenter;
+//    protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
     protected String authorId, postId;
     protected DatabaseReference authorUserRef;
@@ -77,7 +77,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 //        authorId = intent.getStringExtra("userId");
 //        postId = intent.getStringExtra("postId");
         authorId = "1N0HougqnWZ61NQYejmVmpwPFkT2";
-        postId = "-MNsRgl1hK6_fzlZoHZj";
+        postId = "-MNsRgl1hK6_fzlZoHZj"; // swap post
+//        postId = "-MNpdDx7B6mVwGIayzF1"; //panel post
         mAuth = FirebaseAuth.getInstance();
 
         setRefs();
@@ -119,17 +120,30 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         Picasso.get().load(profilePicUrl).into(userPic);
     }
 
-    @Override
-    public void setPostViewData(String title, String postPicUrl, String description,
-                                long createdDate) {
-        titleView.setText(title);
-        Picasso.get().load(postPicUrl).into(postPhoto);
-        details.setText(description);
-
-        // Format time stamp
-        Date date = new Date(createdDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
-        String dateText = dateFormat.format(date);
-        timeStamp.setText(dateText);
+    public void setNewLikeCount(long newLikeCount) {
+        String likeCountText = String.format(getResources().getString(R.string.like_count), newLikeCount);
+        likeCountView.setText(likeCountText);
     }
+
+    public void updateHeartIconDisplay(boolean status) {
+        if (status) {
+            heartIcon.setImageResource(R.drawable.heart_icon_filled);
+        } else {
+            heartIcon.setImageResource(R.drawable.heart_icon_empty);
+        }
+    }
+
+//    @Override
+//    public void setPostViewData(String title, String postPicUrl, String description,
+//                                long createdDate) {
+//        titleView.setText(title);
+//        Picasso.get().load(postPicUrl).into(postPhoto);
+//        details.setText(description);
+//
+//        // Format time stamp
+//        Date date = new Date(createdDate);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
+//        String dateText = dateFormat.format(date);
+//        timeStamp.setText(dateText);
+//    }
 }

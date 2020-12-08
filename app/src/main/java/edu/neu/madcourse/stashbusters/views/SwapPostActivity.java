@@ -17,13 +17,13 @@ import java.util.Date;
 import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
-import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
-import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
     protected SwapPostPresenter mPresenter;
+//    private boolean currentUserLikedPost = false;
 
     @Override
     public void initViews() {
@@ -68,7 +68,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         heartIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mPresenter.onHeartIconClick();
+                mPresenter.onHeartIconClick(postRef);
             }
         });
         // TODO: Implement onClickListener for submit button
@@ -118,29 +118,5 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         // set heart state
         mPresenter.checkLikeStatus();
     }
-
-    public void setNewLikeCount(long newLikeCount) {
-        String likeCountText = String.format(getResources().getString(R.string.like_count), newLikeCount);
-        likeCountView.setText(likeCountText);
-    }
-
-    public void updateHeartIconDisplay(boolean status) {
-        if (status) {
-            heartIcon.setImageResource(R.drawable.heart_icon_filled);
-        } else {
-            heartIcon.setImageResource(R.drawable.heart_icon_empty);
-        }
-    }
-
-    public String getHeartState() {
-        System.out.println("Heart state " + heartIcon.getDrawable());
-        System.out.println(ContextCompat.getDrawable(this, R.drawable.heart_icon_empty));
-        if (heartIcon.getDrawable() == ContextCompat.getDrawable(this, R.drawable.heart_icon_empty)) {
-            return "not liked";
-        } else {
-            return "liked";
-        }
-    }
-
 
 }
