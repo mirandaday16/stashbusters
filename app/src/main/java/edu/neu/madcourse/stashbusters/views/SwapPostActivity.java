@@ -37,6 +37,15 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         submitButton = binding.postButton;
         commentsSection = binding.commentRecyclerView;
 
+        // Check whether post belongs to current user; if so, swap button should be visible
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String currentUserId = currentUser.getUid();
+        if (authorId.equals(currentUserId)) {
+            swapButton.setVisibility(View.VISIBLE);
+        } else {
+            swapButton.setVisibility(View.GONE);
+        }
+
         commentInput.setHint(R.string.swap_hint);
 
         mPresenter.loadCommentDataToView(this);
@@ -70,10 +79,8 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         swapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check to see if the author is the same as the current user
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String currentUserId = currentUser.getUid();
-                if (authorId.equals(currentUserId)) {
+                // Check to see if the button is visible
+                if (swapButton.getVisibility() == View.VISIBLE) {
                     // Swap completion button is visible and can be used to mark swaps as complete
                     // Now, check to see if swap is already marked as complete:
                     if (swapButton.getText().equals(getResources().getString(R.string.mark_swap_as_complete))) {
@@ -93,9 +100,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                         swapButton.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
                         swapButton.setText(getResources().getString(R.string.mark_swap_as_complete));
                     }
-                } else {
-                    // Otherwise, button is gone and cannot be used to complete swaps
-                    swapButton.setVisibility(View.GONE);
                 }
             }
         });
