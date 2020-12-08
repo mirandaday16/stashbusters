@@ -52,7 +52,14 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
                     long createdDate = (long) snapshot.child("createdDate").getValue();
                     String material = snapshot.child("material").getValue().toString();
                     Boolean isAvailable = (Boolean) snapshot.child("availability").getValue();
-                    mView.setPostViewData(title, postPicUrl, description, createdDate, material, isAvailable);
+                    long likeCount = (long) snapshot.child("likeCount").getValue();
+                    mView.setPostViewData(title,
+                                    postPicUrl,
+                                    description,
+                                    createdDate,
+                                    material,
+                                    isAvailable,
+                                    likeCount);
 
                     Log.i(TAG, "loadPostDataToView:success");
                 }

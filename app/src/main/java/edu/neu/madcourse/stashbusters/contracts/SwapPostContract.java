@@ -7,6 +7,7 @@ public interface SwapPostContract extends PostContract{
                              String description,
                              long createdDate,
                              String material,
-                             Boolean isAvailable);
+                             Boolean isAvailable,
+                             long likeCount);
     }
 }

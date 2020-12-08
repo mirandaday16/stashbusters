@@ -33,6 +33,8 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        likeCountView = binding.numLikes;
+        heartIcon = binding.heart;
 
         commentInput.setHint(R.string.advice_hint);
     }
@@ -78,7 +80,8 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
     @Override
     public void setPostViewData(String title, String postPicUrl, String description,
-                                long createdDate, String material, Boolean isAvailable) {
+                                long createdDate, String material, Boolean isAvailable,
+                                long likeCount) {
         titleView.setText(title);
         Picasso.get().load(postPicUrl).into(postPhoto);
         details.setText(description);
@@ -98,5 +101,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         String dateText = dateFormat.format(date);
         timeStamp.setText(dateText);
 
+        String likeCountText = String.format(getResources().getString(R.string.like_count), likeCount);
+        likeCountView.setText(likeCountText);
     }
 }
