@@ -59,6 +59,7 @@
 
     <!-- Strings for stash panel and swap posts -->
     <string name="advice_hint">Give your suggestion here! (100 char. limit)</string>
+    <string name="swap_hint">What are you willing to swap for? (100 char. limit)</string>
     <string name="offer_hint">Make an offer! (100 char. limit)</string>
     <string name="submit">Submit!</string>
     <string name="swapped">SWAPPED! This swap is no longer available.</string>

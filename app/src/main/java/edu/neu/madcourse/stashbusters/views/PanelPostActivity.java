@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
-import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class PanelPostActivity extends PostActivity implements PostContract.MvpView {
 
@@ -36,13 +36,16 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
         swapSection = binding.swapFor;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        commentsSection = binding.commentRecyclerView;
 
         commentInput.setHint(R.string.advice_hint);
         swapSection.setVisibility(View.GONE);
+
+        mPresenter.loadCommentDataToView(this);
     }
 
     @Override
-    public void initListeners(final Context context) {
+    public void onUsernameClick(final Context context) {
         userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +64,7 @@ public class PanelPostActivity extends PostActivity implements PostContract.MvpV
                 }
             }
         });
-        // TODO: Implement onClickListener for submit button
+
     }
 
     @Override
