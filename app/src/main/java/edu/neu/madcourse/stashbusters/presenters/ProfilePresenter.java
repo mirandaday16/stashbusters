@@ -84,13 +84,12 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
         DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
         // Swap Posts
         DatabaseReference swapPosts = postsRef.child("swapPosts").child(userId);
+        postList.clear();
 
         panelPosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    postList.clear();
-
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         // each datasnapshot is a post
                         List<Comment> postComments = getPostCommentsList(snapshot);
