@@ -23,6 +23,7 @@ public abstract class Post {
     public MaterialType materialType; //which material is this post about
     public List<Comment> comments;
     public List<User> likers; //TODO: maybe a better name?
+    public long likeCount;
     public long createdDate;
 
     protected Post() {
@@ -82,6 +83,10 @@ public abstract class Post {
         return createdDate;
     }
 
+    public long getLikeCount() {
+        return likeCount;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -122,6 +127,9 @@ public abstract class Post {
         this.createdDate = createdDate;
     }
 
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
     /**
      * Return type of post - StashSwapPost or StashPanelPost
      * @return

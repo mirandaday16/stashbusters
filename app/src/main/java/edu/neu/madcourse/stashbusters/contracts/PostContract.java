@@ -9,10 +9,13 @@ public interface PostContract {
                              String postPicUrl,
                              String description,
                              long createdDate);
+        boolean getCurrentUserLikedPostStatus();
+        void setCurrentUserLikedPostStatus(boolean likeStatus);
     }
 
     interface Presenter {
         void loadAuthorDataToView();
         void loadPostDataToView();
+        void onHeartIconClick();
     }
 }

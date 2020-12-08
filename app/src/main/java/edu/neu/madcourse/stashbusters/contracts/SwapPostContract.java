@@ -9,5 +9,10 @@ public interface SwapPostContract extends PostContract{
                              String material,
                              Boolean isAvailable,
                              long likeCount);
+        void setNewLikeCount(long newLikeCount);
+        void updateHeartIconDisplay(boolean status);
+        String getHeartState();
+        boolean getCurrentUserLikedPostStatus();
+        void setCurrentUserLikedPostStatus(boolean likeStatus);
     }
 }

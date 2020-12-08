@@ -14,6 +14,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 
+/**
+ * Handles logic for {@link edu.neu.madcourse.stashbusters.views.PanelPostActivity}
+ */
 public class PostPresenter implements PostContract.Presenter {
     private static final String TAG = PostPresenter.class.getSimpleName();
 
@@ -86,4 +89,8 @@ public class PostPresenter implements PostContract.Presenter {
             });
         }
 
+    @Override
+    public void onHeartIconClick() {
+
     }
+}

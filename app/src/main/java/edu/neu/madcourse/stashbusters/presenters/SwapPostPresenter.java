@@ -12,17 +12,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 
-public class SwapPostPresenter extends PostPresenter implements SwapPostContract.Presenter {
+public class SwapPostPresenter extends PostPresenter {
     private static final String TAG = SwapPostPresenter.class.getSimpleName();
 
     private SwapPostContract.MvpView mView;
     private Context mContext;
 
-    private String authorId, postId;
+    private String authorId, postId, currentUserId;
     private FirebaseAuth mAuth;
-    private DatabaseReference postRef;
+    private DatabaseReference postRef, userLikesRef;
     private DatabaseReference authorUserRef;
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
@@ -31,11 +34,12 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
         this.postId = postId;
 
         mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
 
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("swapPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-
+        userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
     }
 
 
@@ -71,5 +75,103 @@ public class SwapPostPresenter extends PostPresenter implements SwapPostContract
             }
 
         });
+    }
+
+    /**
+     * At the beginning when the post first opened, check current user's like status with the post.
+     * If user liked the post, update heart icon accordingly and set state of the like status.
+     */
+    public void checkLikeStatus() {
+        userLikesRef.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    mView.updateHeartIconDisplay(true);
+                    mView.setCurrentUserLikedPostStatus(true);
+                } else {
+                    // have not liked
+                    mView.updateHeartIconDisplay(false);
+                    mView.setCurrentUserLikedPostStatus(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onHeartIconClick() {
+        // check current like status, if already liked, unlike post + remove from DB.
+        // else, like post and add to DB
+        boolean likeStatus = mView.getCurrentUserLikedPostStatus();
+        System.out.println("LIKE STATUS " + likeStatus);
+
+        if (likeStatus) {
+            System.out.println("UNLIKING POST");
+
+            // already liked, clicking heart icon again to unlike post
+            unlikePost();
+        } else {
+            System.out.println("LIKING POST");
+            // not liked yet, clicking heart icon to like post
+            likePost();
+        }
+
+
+        // call view to update to filled heart
+    }
+
+
+
+    private void likePost() {
+        // increment count + call view to reflect
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    long currLikeCount = (long) snapshot.child("likeCount").getValue();
+                    updatePost(currLikeCount + 1);
+                    mView.setNewLikeCount(currLikeCount + 1);
+                    mView.updateHeartIconDisplay(true);
+                    mView.setCurrentUserLikedPostStatus(true);
+                    // add this to myLikes
+                    userLikesRef.child(currentUserId).child(postId).setValue(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void unlikePost() {
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    long currLikeCount = (long) snapshot.child("likeCount").getValue();
+                    updatePost(currLikeCount - 1);
+                    mView.setNewLikeCount(currLikeCount - 1);
+                    mView.updateHeartIconDisplay(false);
+                    mView.setCurrentUserLikedPostStatus(false);
+                    // remove from userLikes
+                    userLikesRef.child(currentUserId).child(postId).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void updatePost(long newLikeCount) {
+        postRef.child("likeCount").setValue(newLikeCount);
     }
 }

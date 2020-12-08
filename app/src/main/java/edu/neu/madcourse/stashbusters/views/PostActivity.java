@@ -31,6 +31,10 @@ import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 
+/**
+ * Abstract class that represents the post detail activity.
+ * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
+ */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
     protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
@@ -51,8 +55,12 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected TextView details;
     protected EditText commentInput;
     protected TextView timeStamp;
+    protected TextView likeCountView;
+    protected ImageView heartIcon;
     protected LinearLayout swapSection;
     protected Button submitButton;
+
+    protected boolean currentUserLikedPost = false;
 
     // Attributes needed for displaying comments in recycler view.
     RecyclerView recyclerView;
@@ -66,9 +74,10 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        authorId = intent.getStringExtra("userId");
-        postId = intent.getStringExtra("postId");
-
+//        authorId = intent.getStringExtra("userId");
+//        postId = intent.getStringExtra("postId");
+        authorId = "1N0HougqnWZ61NQYejmVmpwPFkT2";
+        postId = "-MNsRgl1hK6_fzlZoHZj";
         mAuth = FirebaseAuth.getInstance();
 
         setRefs();
@@ -94,7 +103,15 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initListeners(Context context);
 
+    @Override
+    public boolean getCurrentUserLikedPostStatus() {
+        return this.currentUserLikedPost;
+    }
 
+    @Override
+    public void setCurrentUserLikedPostStatus(boolean likeStatus) {
+        this.currentUserLikedPost = likeStatus;
+    }
 
     @Override
     public void setAuthorViewData(String username, String profilePicUrl) {
