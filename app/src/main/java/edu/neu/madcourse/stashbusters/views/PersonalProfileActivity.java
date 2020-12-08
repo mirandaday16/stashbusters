@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
-import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
+import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
  * Responsible for the UI of a user's profile page and sending data to {@link PersonalProfilePresenter}
  * when there are user interactions.
  */
-public class PersonalProfileActivity extends AppCompatActivity implements PersonalProfileContract.MvpView {
+public class PersonalProfileActivity extends AppCompatActivity implements ProfileContract.MvpView {
     private static final String TAG = PersonalProfileActivity.class.getSimpleName();
 
     // Set up UI elements

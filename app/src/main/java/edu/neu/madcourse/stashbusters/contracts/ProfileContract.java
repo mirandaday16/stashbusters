@@ -3,15 +3,8 @@ package edu.neu.madcourse.stashbusters.contracts;
 import android.view.MenuItem;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
-import edu.neu.madcourse.stashbusters.presenters.PersonalProfilePresenter;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
-/**
- * Defines the contract between the View {@link PersonalProfileActivity}
- * and the Presenter {@link PersonalProfilePresenter}.
- * This is for a user's private profile.
- */
-public interface PersonalProfileContract {
+public interface ProfileContract {
     interface MvpView {
         /**
          * Updated the UI with provided info.
@@ -30,9 +23,6 @@ public interface PersonalProfileContract {
          */
         void loadDataToView();
         void getUserPostsData();
-        void onEditProfileButtonClick(String userId);
-        boolean onToolbarClick(MenuItem item);
-        // TODO: void displayUsersPosts();
 
     }
 }
