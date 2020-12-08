@@ -74,11 +74,9 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-//        authorId = intent.getStringExtra("userId");
-//        postId = intent.getStringExtra("postId");
-        authorId = "1N0HougqnWZ61NQYejmVmpwPFkT2";
-        postId = "-MNsRgl1hK6_fzlZoHZj"; // swap post
-//        postId = "-MNpdDx7B6mVwGIayzF1"; //panel post
+        authorId = intent.getStringExtra("userId");
+        postId = intent.getStringExtra("postId");
+
         mAuth = FirebaseAuth.getInstance();
 
         setRefs();
