@@ -12,9 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 
+/**
+ * Handles logic for {@link edu.neu.madcourse.stashbusters.views.SwapPostActivity}
+ */
 public class SwapPostPresenter extends PostPresenter {
     private static final String TAG = SwapPostPresenter.class.getSimpleName();
 
@@ -26,10 +28,6 @@ public class SwapPostPresenter extends PostPresenter {
     private DatabaseReference postRef, userLikesRef;
     private DatabaseReference authorUserRef;
     private DatabaseReference commentsRef;
-
-//    private List<Comment> commentsList;
-private CommentRVAdapter commentsAdapter;
-
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);

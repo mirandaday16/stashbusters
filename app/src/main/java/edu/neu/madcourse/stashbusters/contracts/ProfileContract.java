@@ -1,7 +1,5 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
-import android.view.MenuItem;
-
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 
 public interface ProfileContract {
@@ -19,10 +17,13 @@ public interface ProfileContract {
 
     interface Presenter {
         /**
-         * Load data from database so view can update the UI.
+         * Load user's data to show in UI.
          */
         void loadDataToView();
-        void getUserPostsData();
 
+        /**
+         * Get all user's posts data.
+         */
+        void getUserPostsData();
     }
 }

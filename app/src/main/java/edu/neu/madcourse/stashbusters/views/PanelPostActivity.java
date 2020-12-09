@@ -1,12 +1,10 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -16,14 +14,14 @@ import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PanelPostContract;
-import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PanelPostPresenter;
-import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 
+/**
+ * Handles UI for panel posts.
+ */
 public class PanelPostActivity extends PostActivity implements PanelPostContract.MvpView {
     private PanelPostPresenter mPresenter;
-//    private boolean currentUserLikedPost = false;
 
     @Override
     public void setRefs() {

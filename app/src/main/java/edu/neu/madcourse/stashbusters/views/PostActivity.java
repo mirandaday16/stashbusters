@@ -58,9 +58,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected boolean currentUserLikedPost = false;
 
     // Attributes needed for displaying comments in recycler view.
-    RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    CommentRVAdapter adapter;
 
     // For updating ImageView in a separate thread.
     private Handler imageHandler = new Handler();

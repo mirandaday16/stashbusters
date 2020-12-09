@@ -143,7 +143,6 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         String dateString = df.format(date);
         holder.time.setText(dateString);
 
-
     }
 
     @Override

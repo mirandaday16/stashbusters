@@ -13,7 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
@@ -24,7 +23,8 @@ import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 
 /**
- * Abtract class that handles some share functionalities between public and private user profile.
+ * An abstract class that handles some share functionalities between public and private user profile.
+ * Extended by {@link PersonalProfilePresenter} and {@link PublicProfilePresenter}
  */
 public abstract class ProfilePresenter implements ProfileContract.Presenter{
     private static final String TAG = ProfilePresenter.class.getSimpleName();
@@ -131,6 +131,12 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
         return postComments;
     }
 
+    /**
+     * Takes the post snapshot and extracts info into a {@link Post} then returns that post.
+     * @param postSnapShot data snapshot of the post to extract.
+     * @param postType type of the post – StashPanel or StashSwap.
+     * @return a Post object with data extracted from snapshot.
+     */
     protected Post setPostData(DataSnapshot postSnapShot, String postType){
         Post post;
         if (postType.equals("StashPanel")) {

@@ -1,15 +1,10 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -18,14 +13,15 @@ import java.util.Date;
 import java.util.Locale;
 
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
 
+/**
+ * Handles UI for swap posts.
+ */
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
     protected SwapPostPresenter mPresenter;
-//    private boolean currentUserLikedPost = false;
 
     @Override
     public void initViews() {

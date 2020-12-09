@@ -38,14 +38,11 @@ import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 public class PersonalProfilePresenter extends ProfilePresenter {
     private static final String TAG = PersonalProfilePresenter.class.getSimpleName();
 
-    private DatabaseReference likedPostsRef, mDatabase;
     private List<Post> likedPostList;
     private PostAdapter likedPostAdapter;
 
     public PersonalProfilePresenter(Context context, String userId) {
         super(context, userId);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        likedPostsRef = mDatabase.child("userLikes");
 
         likedPostList = new ArrayList<>();
         likedPostAdapter = new PostAdapter(mContext, likedPostList);
@@ -61,7 +58,11 @@ public class PersonalProfilePresenter extends ProfilePresenter {
         return false;
     }
 
+    /**
+     * Gets all current user's liked posts and update recycler view adapter.
+     */
     public void getUserLikedPosts() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -70,13 +71,10 @@ public class PersonalProfilePresenter extends ProfilePresenter {
                 // get userLikes
                 DataSnapshot likePostsSnapshot = snapshot.child("userLikes").child(userId);
 
-                // in here, I have a list of postIds of posts that user liked
-                // query all posts to display
                 Map<String, Object> likeMapping = (HashMap) likePostsSnapshot.getValue();
-                System.out.println("likeMapping" + likeMapping);
 
                 for (String key : likeMapping.keySet()) {
-                    System.out.println("Current key i.e. post id " + key);
+
                     DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
                     List<Comment> postComments = getPostCommentsList(postSnapshot);
 
