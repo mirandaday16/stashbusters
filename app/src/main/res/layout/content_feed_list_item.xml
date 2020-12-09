@@ -67,9 +67,10 @@
 
                 <TextView
                     android:id="@+id/numLikes"
-                    style="@style/Detail"
-                    android:layout_width="40dp"
+                    style="@style/Body"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
                     android:text="Likes" />
 
                 <ImageView

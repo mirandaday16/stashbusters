@@ -31,8 +31,8 @@ public class SwapPostPresenter extends PostPresenter {
     private DatabaseReference authorUserRef;
     private DatabaseReference commentsRef;
 
-    private List<Comment> commentsList;
-    protected CommentRVAdapter commentsAdapter;
+//    private List<Comment> commentsList;
+private CommentRVAdapter commentsAdapter;
 
 
     public SwapPostPresenter(Context context, String authorId, String postId) {
@@ -48,14 +48,17 @@ public class SwapPostPresenter extends PostPresenter {
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("swapPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-
         userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
 
+        // comment setup
         commentsRef = FirebaseDatabase.getInstance().getReference()
                 .child("swapPosts").child(authorId).child(postId).child("comments");
+        super.setPostRef(postRef);
+        super.setCommentRef(commentsRef);
 
-        commentsList = new ArrayList<>();
-        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
+
+//        commentsList = new ArrayList<>();
+//        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
     }
 
 
@@ -93,36 +96,36 @@ public class SwapPostPresenter extends PostPresenter {
         });
     }
 
-    @Override
-    public void loadCommentDataToView(Context context) {
-        commentsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    commentsList.clear();
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        // Each snapshot is a comment
-                        Comment comment = new Comment();
-
-                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
-
-                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
-                        comment.setCreatedDate(createdDate);
-                        comment.setText(dataSnapshot.child("text").getValue().toString());
-                        commentsList.add(comment);
-                    }
-                    commentsAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        Log.i(TAG, "getPostCommentsData:success");
-        mView.setCommentAdapter(commentsAdapter);
-    }
+//    @Override
+//    public void loadCommentDataToView(Context context) {
+//        commentsRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    commentsList.clear();
+//
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        // Each snapshot is a comment
+//                        Comment comment = new Comment();
+//
+//                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
+//
+//                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
+//                        comment.setCreatedDate(createdDate);
+//                        comment.setText(dataSnapshot.child("text").getValue().toString());
+//                        commentsList.add(comment);
+//                    }
+//                    commentsAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e(TAG, error.toString());
+//            }
+//        });
+//
+//        Log.i(TAG, "getPostCommentsData:success");
+//        mView.setCommentAdapter(commentsAdapter);
+//    }
 }

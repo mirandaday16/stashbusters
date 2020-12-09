@@ -40,13 +40,13 @@ public abstract class PostPresenter implements PostContract.Presenter {
     protected PostContract.MvpView mView;
     protected String authorId, postId, currentUserId;
     protected FirebaseAuth mAuth;
-    protected DatabaseReference userLikesRef;
+    protected DatabaseReference userLikesRef, postRef;
     protected DatabaseReference authorUserRef;
     protected boolean foundPostInDB = false;
 
     // comments
-    private DatabaseReference commentsRef;
-    private List<Comment> commentsList;
+    protected DatabaseReference commentsRef;
+    protected List<Comment> commentsList;
     protected CommentRVAdapter commentsAdapter;
 
     public PostPresenter(Context context, String authorId, String postId) {
@@ -61,12 +61,22 @@ public abstract class PostPresenter implements PostContract.Presenter {
 
         userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
 
-        commentsRef = FirebaseDatabase.getInstance().getReference()
-                .child("panelPosts").child(authorId).child(postId).child("comments");
-
         // todo: initialize these two in subclasses
-//        commentsList = new ArrayList<>();
-//        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
+
+    }
+
+    public void setPostRef(DatabaseReference postRef) {
+        this.postRef = postRef;
+        setupCommentAdapter();
+    }
+
+    public void setCommentRef(DatabaseReference commentRef) {
+        this.commentsRef = commentRef;
+    }
+
+    private void setupCommentAdapter() {
+        commentsList = new ArrayList<>();
+        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
     }
 
     @Override
@@ -204,14 +214,12 @@ public abstract class PostPresenter implements PostContract.Presenter {
         postRef.child("likeCount").setValue(newLikeCount);
     }
 
-    @Override
     public void loadCommentDataToView(Context context) {
         commentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     commentsList.clear();
-
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         // Each snapshot is a comment
                         Comment comment = new Comment();

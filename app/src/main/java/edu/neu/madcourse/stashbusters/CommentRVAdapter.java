@@ -45,7 +45,6 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         this.context = context;
         this.postRef = postRef;
         this.mAuth = FirebaseAuth.getInstance();
-
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.contracts.PanelPostContract;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 
 /**
@@ -28,6 +29,7 @@ public class PanelPostPresenter extends PostPresenter {
     private FirebaseAuth mAuth;
     private DatabaseReference postRef;
     private DatabaseReference authorUserRef;
+    private DatabaseReference commentsRef;
 
     public PanelPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);
@@ -38,7 +40,10 @@ public class PanelPostPresenter extends PostPresenter {
         postRef = FirebaseDatabase.getInstance().getReference()
                 .child("panelPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-
+        commentsRef = FirebaseDatabase.getInstance().getReference()
+                .child("panelPosts").child(authorId).child(postId).child("comments");
+        super.setCommentRef(commentsRef);
+        super.setPostRef(postRef);
     }
 
     @Override
@@ -66,4 +71,6 @@ public class PanelPostPresenter extends PostPresenter {
 
         });
     }
+
+
 }

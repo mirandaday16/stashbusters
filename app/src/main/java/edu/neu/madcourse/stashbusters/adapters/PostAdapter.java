@@ -74,6 +74,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         holder.setPostType(post.getPostType());
         holder.setPostId(post.getId());
         holder.setAuthorId(authorId);
+
+        // set count like
+        System.out.println("post.getLikeCount() " + post);
+        String likeCountText = post.getLikeCount() + " Likes";
+        holder.numLikes.setText(likeCountText);
     }
 
     @Override
