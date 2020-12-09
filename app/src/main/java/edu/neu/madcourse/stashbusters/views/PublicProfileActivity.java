@@ -156,4 +156,9 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
     public void setPostListAdapter(PostAdapter adapter) {
         postListRecyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void showNoPostText(String inputMsg) {
+        // do nothing in public profile
+    }
 }

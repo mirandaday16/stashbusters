@@ -21,6 +21,7 @@ import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.views.PostActivity;
 
 /**
  * An abstract class that handles some share functionalities between public and private user profile.
@@ -104,6 +105,10 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
                     postList.add(post);
                 }
 
+                if (postList.isEmpty()) {
+                    // no liked posts, display message
+                    mView.showNoPostText(PostActivity.MY_POSTS);
+                }
                 Collections.reverse(postList);
                 postAdapter.notifyDataSetChanged();
             }

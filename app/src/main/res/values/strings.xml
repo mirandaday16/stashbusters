@@ -84,6 +84,7 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="liked_posts">Liked Posts</string>
     <string name="my_posts">My Posts</string>
+    <string name="no_posts">You don\'t currently have any %1$s posts. %2$s a post to see it here!</string>
     <string name="username_filler">username</string>
     <string name="default_profile_picture">default profile picture</string>
     <string name="enter_your_email_address">Enter your email address</string>

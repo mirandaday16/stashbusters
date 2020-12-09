@@ -30,6 +30,9 @@ import edu.neu.madcourse.stashbusters.R;
  * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
  */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
+    public static final String LIKED_POSTS = "liked posts";
+    public static final String MY_POSTS = "my posts";
+
     protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
     protected String authorId, postId;

@@ -13,6 +13,7 @@ public interface ProfileContract {
          */
         void setViewData(String photo, String username, String bio, String followerCount);
         void setPostListAdapter(PostAdapter adapter);
+        void showNoPostText(String likedOrMyPost);
     }
 
     interface Presenter {

@@ -30,6 +30,7 @@ import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PostActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 /**
@@ -72,25 +73,30 @@ public class PersonalProfilePresenter extends ProfilePresenter {
                 DataSnapshot likePostsSnapshot = snapshot.child("userLikes").child(userId);
 
                 Map<String, Object> likeMapping = (HashMap) likePostsSnapshot.getValue();
+                if (likeMapping != null) {
+                    for (String key : likeMapping.keySet()) {
 
-                for (String key : likeMapping.keySet()) {
+                        DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
+                        List<Comment> postComments = getPostCommentsList(postSnapshot);
 
-                    DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
-                    List<Comment> postComments = getPostCommentsList(postSnapshot);
-
-                    String postType = postSnapshot.child("postType").getValue().toString();
-                    if (postType.equals("StashPanelPost")) {
-                        StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
-                        post.setComments(postComments);
-                        likedPostList.add(post);
-                    } else {
-                        StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
-                        post.setComments(postComments);
-                        likedPostList.add(post);
+                        String postType = postSnapshot.child("postType").getValue().toString();
+                        if (postType.equals("StashPanelPost")) {
+                            StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
+                            post.setComments(postComments);
+                            likedPostList.add(post);
+                        } else {
+                            StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
+                            post.setComments(postComments);
+                            likedPostList.add(post);
+                        }
                     }
                 }
 
                 Collections.reverse(likedPostList);
+                if (likedPostList.isEmpty()) {
+                    // no liked posts, display message
+                    mView.showNoPostText(PostActivity.LIKED_POSTS);
+                }
                 likedPostAdapter.notifyDataSetChanged();
             }
 

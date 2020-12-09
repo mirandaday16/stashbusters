@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PersonalProfileActivityBinding;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import static edu.neu.madcourse.stashbusters.views.PostActivity.LIKED_POSTS;
+
 /**
  * Responsible for the UI of a user's profile page and sending data to {@link PersonalProfilePresenter}
  * when there are user interactions.
@@ -32,7 +35,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
 
     // Set up UI elements
     private PersonalProfileActivityBinding binding;
-    TextView username, followerCountView, bio;
+    TextView username, followerCountView, bio, noPostsMessage;
     ImageView profilePic;
     private NavigationBarView navigationBarView;
     Button myPostsButton, likedPostsButton;
@@ -88,6 +91,10 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
         bio = binding.bio;
         myPostsButton = binding.myPosts;
         likedPostsButton = binding.likedPosts;
+        noPostsMessage = binding.noPostsMessage;
+
+        // hide no liked post text
+        noPostsMessage.setVisibility(View.GONE);
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
@@ -145,5 +152,15 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
 
     }
 
-
+    public void showNoPostText(String likedOrMyPost) {
+        String textToDisplay;
+        if (likedOrMyPost.equals(LIKED_POSTS)) {
+            textToDisplay = String.format(getResources().getString(R.string.no_posts), "liked", "Like");
+        } else {
+            // my post
+            textToDisplay = String.format(getResources().getString(R.string.no_posts), "", "Create");
+        }
+        noPostsMessage.setText(textToDisplay);
+        noPostsMessage.setVisibility(View.VISIBLE);
+    }
 }
