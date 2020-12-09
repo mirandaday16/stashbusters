@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.adapters;
 
 import android.content.Context;
 
@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
@@ -45,7 +46,6 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         this.context = context;
         this.postRef = postRef;
         this.mAuth = FirebaseAuth.getInstance();
-
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -142,7 +142,6 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
         DateFormat df = new SimpleDateFormat(pattern);
         String dateString = df.format(date);
         holder.time.setText(dateString);
-
 
     }
 

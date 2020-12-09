@@ -12,45 +12,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.contracts.PanelPostContract;
+import edu.neu.madcourse.stashbusters.contracts.PostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 
 /**
- * Handles logic for {@link edu.neu.madcourse.stashbusters.views.SwapPostActivity}
+ * Handles logic for {@link edu.neu.madcourse.stashbusters.views.PanelPostActivity}
  */
-public class SwapPostPresenter extends PostPresenter {
-    private static final String TAG = SwapPostPresenter.class.getSimpleName();
+public class PanelPostPresenter extends PostPresenter {
+    private static final String TAG = PanelPostPresenter.class.getSimpleName();
 
-    private SwapPostContract.MvpView mView;
     private Context mContext;
-
-    private String authorId, postId, currentUserId;
+    private PanelPostContract.MvpView mView;
+    private String authorId, postId;
     private FirebaseAuth mAuth;
-    private DatabaseReference postRef, userLikesRef;
+    private DatabaseReference postRef;
     private DatabaseReference authorUserRef;
     private DatabaseReference commentsRef;
 
-    public SwapPostPresenter(Context context, String authorId, String postId) {
+    public PanelPostPresenter(Context context, String authorId, String postId) {
         super(context, authorId, postId);
-        this.mContext = context;
-        this.mView = (SwapPostContract.MvpView) context;
-        this.authorId = authorId;
-        this.postId = postId;
+        this.mView = (PanelPostContract.MvpView) context;
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserId = mAuth.getCurrentUser().getUid();
 
         postRef = FirebaseDatabase.getInstance().getReference()
-                .child("swapPosts").child(authorId).child(postId);
+                .child("panelPosts").child(authorId).child(postId);
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-        userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
-
-        // comment setup
         commentsRef = FirebaseDatabase.getInstance().getReference()
-                .child("swapPosts").child(authorId).child(postId).child("comments");
-        super.setPostRef(postRef);
+                .child("panelPosts").child(authorId).child(postId).child("comments");
         super.setCommentRef(commentsRef);
+        super.setPostRef(postRef);
     }
-
 
     @Override
     public void loadPostDataToView() {
@@ -63,26 +57,20 @@ public class SwapPostPresenter extends PostPresenter {
                     String postPicUrl = snapshot.child("photoUrl").getValue().toString();
                     String description = snapshot.child("description").getValue().toString();
                     long createdDate = (long) snapshot.child("createdDate").getValue();
-                    String material = snapshot.child("material").getValue().toString();
-                    Boolean isAvailable = (Boolean) snapshot.child("availability").getValue();
                     long likeCount = (long) snapshot.child("likeCount").getValue();
-                    mView.setPostViewData(title,
-                                    postPicUrl,
-                                    description,
-                                    createdDate,
-                                    material,
-                                    isAvailable,
-                                    likeCount);
+                    mView.setPostViewData(title, postPicUrl, description, createdDate, likeCount);
 
                     Log.i(TAG, "loadPostDataToView:success");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled (@NonNull DatabaseError error){
                 Log.e(TAG, error.toString());
             }
 
         });
     }
+
+
 }

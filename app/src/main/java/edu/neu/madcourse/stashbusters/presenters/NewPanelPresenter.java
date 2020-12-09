@@ -37,7 +37,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
 
     private DatabaseReference mDatabase;
     private StorageReference storageRef;
-    private DatabaseReference userPostsRef;
+    private DatabaseReference userPostsRef, allPostRef;
     private FirebaseAuth mAuth;
 
     private String userId; // owner of the profile
@@ -50,6 +50,7 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = mAuth.getCurrentUser().getUid();
+        allPostRef = mDatabase.child("allPosts");
         userPostsRef = mDatabase.child("panelPosts").child(userId);
     }
 
@@ -127,14 +128,19 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
      */
     private void uploadPost(final String title, final String description, int material, final String photoUrl) {
         DatabaseReference newUserPostRef = userPostsRef.push(); // push used to generate unique id
+
         StashPanelPost newPost = new StashPanelPost(title, description, photoUrl);
         MaterialType mat = MaterialType.getByInt(material);
         newPost.setMaterialType(mat);
         newPost.setId(newUserPostRef.getKey());
         newPost.setAuthorId(userId);
+        newPost.setLikeCount(0); // start out without like
+
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();
+
+        allPostRef.child(postId).setValue(newPost);
 
         startStashPanelActivity(postId);
     }

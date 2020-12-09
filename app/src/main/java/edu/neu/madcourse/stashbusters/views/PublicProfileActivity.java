@@ -24,11 +24,11 @@ import com.squareup.picasso.Picasso;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
+import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
 import edu.neu.madcourse.stashbusters.databinding.PublicProfileActivityBinding;
 import edu.neu.madcourse.stashbusters.presenters.PublicProfilePresenter;
 
-public class PublicProfileActivity extends AppCompatActivity implements PublicProfileContract.MvpView {
+public class PublicProfileActivity extends AppCompatActivity implements ProfileContract.MvpView {
     private static final String TAG = PublicProfileActivity.class.getSimpleName();
 
     // Set up ViewBinding for the layout
@@ -53,6 +53,7 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
 
         Intent intent = getIntent();
         targetUserId = intent.getStringExtra("userId");
+        System.out.println("targetUserId in PublicProfileActivity " + targetUserId);
 
         mPresenter = new PublicProfilePresenter(this, targetUserId);
         mPresenter.loadDataToView();
@@ -136,7 +137,6 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
         });
     }
 
-    @Override
     public void updateFollowButton(String text) {
         String following = this.getResources().getString(R.string.following_text);
         String follow = this.getResources().getString(R.string.follow_text);
@@ -156,5 +156,10 @@ public class PublicProfileActivity extends AppCompatActivity implements PublicPr
     @Override
     public void setPostListAdapter(PostAdapter adapter) {
         postListRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showNoPostText(String inputMsg) {
+        // do nothing in public profile
     }
 }

@@ -13,7 +13,7 @@ import edu.neu.madcourse.stashbusters.enums.MaterialType;
 /**
  * This class represents a Post object.
  */
-public abstract class Post {
+public abstract class Post implements Comparable<Post>{
     public String id;
     public String title;
     public String description;
@@ -22,7 +22,8 @@ public abstract class Post {
     public Location location;
     public MaterialType materialType; //which material is this post about
     public List<Comment> comments;
-    public List<User> likers; //TODO: maybe a better name?
+    public List<User> likers;
+    public long likeCount;
     public long createdDate;
 
     protected Post() {
@@ -82,6 +83,10 @@ public abstract class Post {
         return createdDate;
     }
 
+    public long getLikeCount() {
+        return likeCount;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -122,6 +127,19 @@ public abstract class Post {
         this.createdDate = createdDate;
     }
 
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    // order post by date
+    @Override
+    public int compareTo(Post o) {
+        return Long.compare(this.getCreatedDate(), o.getCreatedDate());
+    }
+
+    public void incrementLikeCount() {
+        this.likeCount++;
+    }
     /**
      * Return type of post - StashSwapPost or StashPanelPost
      * @return
