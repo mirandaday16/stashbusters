@@ -11,6 +11,7 @@ import java.util.List;
 
 import edu.neu.madcourse.stashbusters.FeedRecyclerAdapter;
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.contracts.MyFeedContract;
 import edu.neu.madcourse.stashbusters.databinding.ContentActivityFeedBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
@@ -23,6 +24,8 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
 
     private List<Post> posts;
     MyFeedPresenter mPresenter;
+    private RecyclerView postListRecyclerView;
+    private PostAdapter postAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,16 +41,26 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
 
         mPresenter.loadPosts();
 
-
-        //initRecyclerView();
-
     }
 
-//    private void initRecyclerView() {
+    @Override
+    public void setPosts(List<Post> posts) {
+        if (posts != null && posts.size() > 0) {
+            // recycler view for posts
+            RecyclerView recyclerView = findViewById((R.id.recycler_view_feed));
+            PostAdapter adapter = new PostAdapter(this, posts);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            // SHOW THAT THERE ARE NO POSTS
+        }
+    }
+
+    private void initRecyclerView() {
 //        RecyclerView recyclerView = findViewById((R.id.recycler_view_feed));
 //        FeedRecyclerAdapter adapter = new FeedRecyclerAdapter(mImages,mUserNames,mHeadlines,mNumlikes,this);
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
+    }
 
 }

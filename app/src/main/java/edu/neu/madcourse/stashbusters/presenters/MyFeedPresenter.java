@@ -38,8 +38,6 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
     private DatabaseReference authorRef;
     private FirebaseAuth mAuth;
 
-    private boolean postsSet = false;
-
     private String userId; // owner of the profile
 
     public MyFeedPresenter(Context context) {
@@ -70,14 +68,14 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
                 // For each user in the following list.
                 for (String key : following.keySet()) {
 
-                    // Get all of their panel posts
+                    // Get all of their panel posts.
                     DataSnapshot panelPosts = snapshot.child("panelPosts").child(key);
                     for (DataSnapshot child : panelPosts.getChildren()) {
                         StashPanelPost post = (StashPanelPost) setPostData(child, "StashPanel");
                         posts.add(post);
                     }
 
-                    // Get all of their swap posts
+                    // Get all of their swap posts.
                     DataSnapshot swapPosts = snapshot.child("swapPosts").child(key);
                     for (DataSnapshot child : swapPosts.getChildren()) {
                         StashSwapPost post = (StashSwapPost) setPostData(child, "StashSwap");
@@ -85,33 +83,11 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
                     }
                 }
 
+                // Put the posts in descending order by date.
+                Collections.reverse(posts);
 
+                mView.setPosts(posts);
 
-
-
-
-
-
-//                    if (snapshot.getValue() == null) {
-//                        //mView.setNoPosts();
-//                    } else {
-//
-//                        // For each user under the "snackPosts" node, retrieve all the child posts...
-//                        for (DataSnapshot dsp : snapshot.getChildren()) {
-//                            // For each child post, retrieve and append to the posts ArrayList
-//                            for (DataSnapshot child : dsp.getChildren()) {
-//                                SnackBustPost post = child.getValue(SnackBustPost.class);
-//                                posts.add(post);
-//                            }
-//                        }
-//
-//
-//                        Collections.reverse(posts);
-//
-//
-//                        //mView.setPostView(posts);
-//                        //postsSet = true;
-//                    }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

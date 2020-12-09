@@ -13,7 +13,7 @@ import edu.neu.madcourse.stashbusters.enums.MaterialType;
 /**
  * This class represents a Post object.
  */
-public abstract class Post {
+public abstract class Post implements Comparable<Post>{
     public String id;
     public String title;
     public String description;
@@ -128,5 +128,10 @@ public abstract class Post {
      */
     public String getPostType() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        return Long.compare(this.getCreatedDate(), o.getCreatedDate());
     }
 }
