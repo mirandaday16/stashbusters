@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 
 // A navigation bar that navigates between the 5 major activities of the app
@@ -43,7 +44,8 @@ public class NavigationBarView extends FrameLayout {
         worldFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Send user to World Feed Activity
+                Intent intent = new Intent(context, WorldFeedActivity.class);
+                context.startActivity(intent);
             }
         });
 
