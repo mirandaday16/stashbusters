@@ -132,6 +132,8 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
         newPost.setMaterialType(mat);
         newPost.setId(newUserPostRef.getKey());
         newPost.setAuthorId(userId);
+        newPost.setLikeCount(0); // start out without like
+
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();

@@ -4,11 +4,8 @@ package edu.neu.madcourse.stashbusters.contracts;
 import com.google.firebase.database.DatabaseReference;
 
 import android.content.Context;
-import android.net.Uri;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.model.Comment;
 
 

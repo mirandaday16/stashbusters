@@ -12,12 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
-import edu.neu.madcourse.stashbusters.model.Comment;
 
 public class SwapPostPresenter extends PostPresenter {
     private static final String TAG = SwapPostPresenter.class.getSimpleName();
@@ -55,10 +51,6 @@ private CommentRVAdapter commentsAdapter;
                 .child("swapPosts").child(authorId).child(postId).child("comments");
         super.setPostRef(postRef);
         super.setCommentRef(commentsRef);
-
-
-//        commentsList = new ArrayList<>();
-//        commentsAdapter = new CommentRVAdapter(mContext, commentsList, postRef);
     }
 
 
@@ -95,37 +87,4 @@ private CommentRVAdapter commentsAdapter;
 
         });
     }
-
-//    @Override
-//    public void loadCommentDataToView(Context context) {
-//        commentsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    commentsList.clear();
-//
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        // Each snapshot is a comment
-//                        Comment comment = new Comment();
-//
-//                        long createdDate = (long) dataSnapshot.child("createdDate").getValue();
-//
-//                        comment.setAuthorId(dataSnapshot.child("authorId").getValue().toString());
-//                        comment.setCreatedDate(createdDate);
-//                        comment.setText(dataSnapshot.child("text").getValue().toString());
-//                        commentsList.add(comment);
-//                    }
-//                    commentsAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e(TAG, error.toString());
-//            }
-//        });
-//
-//        Log.i(TAG, "getPostCommentsData:success");
-//        mView.setCommentAdapter(commentsAdapter);
-//    }
 }

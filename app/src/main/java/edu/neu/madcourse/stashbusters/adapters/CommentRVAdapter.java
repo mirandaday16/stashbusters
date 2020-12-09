@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.adapters;
 
 import android.content.Context;
 
@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;

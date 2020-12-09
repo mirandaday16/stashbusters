@@ -1,14 +1,10 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.data.DataBuffer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,18 +12,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import edu.neu.madcourse.stashbusters.CommentRVAdapter;
-import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.model.Comment;
+import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-
-import static edu.neu.madcourse.stashbusters.utils.Utils.showToast;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 
 /**
  * Abstract class that handles logic for post details.
@@ -60,9 +53,6 @@ public abstract class PostPresenter implements PostContract.Presenter {
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
 
         userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
-
-        // todo: initialize these two in subclasses
-
     }
 
     public void setPostRef(DatabaseReference postRef) {
@@ -90,7 +80,6 @@ public abstract class PostPresenter implements PostContract.Presenter {
                     mView.setAuthorViewData(username, profilePicUrl);
 
                     Log.i(TAG, "loadAuthorDataToView:success");
-
                 }
             }
 
@@ -113,9 +102,8 @@ public abstract class PostPresenter implements PostContract.Presenter {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // check against post id
-//                    boolean foundPost = false;
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        System.out.println("postSnapshot " + postSnapshot);
+
                         if (postSnapshot.getKey().equals(postId)) {
                             foundPostInDB = true;
                             mView.updateHeartIconDisplay(true);
@@ -147,15 +135,11 @@ public abstract class PostPresenter implements PostContract.Presenter {
         // check current like status, if already liked, unlike post + remove from DB.
         // else, like post and add to DB
         boolean likeStatus = mView.getCurrentUserLikedPostStatus();
-        System.out.println("LIKE STATUS " + likeStatus);
 
         if (likeStatus) {
-            System.out.println("UNLIKING POST");
-
             // already liked, clicking heart icon again to unlike post
             unlikePost(postRef);
         } else {
-            System.out.println("LIKING POST");
             // not liked yet, clicking heart icon to like post
             likePost(postRef);
         }

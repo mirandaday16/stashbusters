@@ -71,12 +71,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         holder.headline.setText(post.getTitle());
         Picasso.get().load(post.getPhotoUrl()).into(holder.image);
 
-        holder.setPostType(post.getPostType());
-        holder.setPostId(post.getId());
+        String postType = post.getPostType();
+        String postId = post.getId();
+
+        holder.setPostType(postType);
+        holder.setPostId(postId);
         holder.setAuthorId(authorId);
 
-        // set count like
-        System.out.println("post.getLikeCount() " + post);
         String likeCountText = post.getLikeCount() + " Likes";
         holder.numLikes.setText(likeCountText);
     }

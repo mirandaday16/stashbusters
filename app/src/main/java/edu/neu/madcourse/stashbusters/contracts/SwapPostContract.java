@@ -1,5 +1,5 @@
 package edu.neu.madcourse.stashbusters.contracts;
-import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 
 public interface SwapPostContract extends PostContract{
     interface MvpView extends PostContract.MvpView {

@@ -130,6 +130,10 @@ public abstract class Post {
     public void setLikeCount(long likeCount) {
         this.likeCount = likeCount;
     }
+
+    public void incrementLikeCount() {
+        this.likeCount++;
+    }
     /**
      * Return type of post - StashSwapPost or StashPanelPost
      * @return

@@ -157,12 +157,14 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
         }
 
         long createdDate = (long) postSnapShot.child("createdDate").getValue();
+        long likeCount = (long) postSnapShot.child("likeCount").getValue();
 
         post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
         post.setPhotoUrl(postSnapShot.child("photoUrl").getValue().toString());
         post.setTitle(postSnapShot.child("title").getValue().toString());
         post.setId(postSnapShot.child("id").getValue().toString());
         post.setDescription(postSnapShot.child("description").getValue().toString());
+        post.setLikeCount(likeCount);
         post.setCreatedDate(createdDate);
 
         return post;
