@@ -36,7 +36,7 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYFEED);
 
-        
+        mPresenter.loadPosts();
 
 
         //initRecyclerView();

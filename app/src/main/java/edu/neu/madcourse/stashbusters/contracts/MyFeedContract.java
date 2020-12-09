@@ -7,6 +7,6 @@ public interface MyFeedContract extends PostContract {
     }
 
     interface Presenter{
-
+        void loadPosts();
     }
 }

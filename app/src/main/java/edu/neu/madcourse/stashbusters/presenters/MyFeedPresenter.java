@@ -13,11 +13,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.contracts.MyFeedContract;
 import edu.neu.madcourse.stashbusters.contracts.SnackPostContract;
+import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.SnackBustPost;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.model.User;
 
 /**
@@ -47,39 +52,66 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
     }
 
 
-    public void loadSnackPosts() {
-        postsRef = FirebaseDatabase.getInstance().getReference()
-                .child("snackPosts");
+    @Override
+    public void loadPosts() {
+        postsRef = FirebaseDatabase.getInstance().getReference();
 
         postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if (!postsSet) {
+                // List to store all of the posts.
+                List<Post> posts = new ArrayList();
 
-                    ArrayList posts = new ArrayList();
+                // Get list of current user's following.
+                DataSnapshot followingSnapshot = snapshot.child("follows").child(userId).child("following");
+                HashMap<String, Object> following = (HashMap) followingSnapshot.getValue();
 
-                    if (snapshot.getValue() == null) {
-                        //mView.setNoPosts();
-                    } else {
+                // For each user in the following list.
+                for (String key : following.keySet()) {
 
-                        // For each user under the "snackPosts" node, retrieve all the child posts...
-                        for (DataSnapshot dsp : snapshot.getChildren()) {
-                            // For each child post, retrieve and append to the posts ArrayList
-                            for (DataSnapshot child : dsp.getChildren()) {
-                                SnackBustPost post = child.getValue(SnackBustPost.class);
-                                posts.add(post);
-                            }
-                        }
+                    // Get all of their panel posts
+                    DataSnapshot panelPosts = snapshot.child("panelPosts").child(key);
+                    for (DataSnapshot child : panelPosts.getChildren()) {
+                        StashPanelPost post = (StashPanelPost) setPostData(child, "StashPanel");
+                        posts.add(post);
+                    }
 
-
-                        Collections.reverse(posts);
-
-
-                        //mView.setPostView(posts);
-                        //postsSet = true;
+                    // Get all of their swap posts
+                    DataSnapshot swapPosts = snapshot.child("swapPosts").child(key);
+                    for (DataSnapshot child : swapPosts.getChildren()) {
+                        StashSwapPost post = (StashSwapPost) setPostData(child, "StashSwap");
+                        posts.add(post);
                     }
                 }
+
+
+
+
+
+
+
+
+//                    if (snapshot.getValue() == null) {
+//                        //mView.setNoPosts();
+//                    } else {
+//
+//                        // For each user under the "snackPosts" node, retrieve all the child posts...
+//                        for (DataSnapshot dsp : snapshot.getChildren()) {
+//                            // For each child post, retrieve and append to the posts ArrayList
+//                            for (DataSnapshot child : dsp.getChildren()) {
+//                                SnackBustPost post = child.getValue(SnackBustPost.class);
+//                                posts.add(post);
+//                            }
+//                        }
+//
+//
+//                        Collections.reverse(posts);
+//
+//
+//                        //mView.setPostView(posts);
+//                        //postsSet = true;
+//                    }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -87,6 +119,26 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
             }
 
         });
+    }
+
+    protected Post setPostData(DataSnapshot postSnapShot, String postType){
+        Post post;
+        if (postType.equals("StashPanel")) {
+            post = new StashPanelPost();
+        } else {
+            post = new StashSwapPost();
+        }
+
+        long createdDate = (long) postSnapShot.child("createdDate").getValue();
+
+        post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
+        post.setPhotoUrl(postSnapShot.child("photoUrl").getValue().toString());
+        post.setTitle(postSnapShot.child("title").getValue().toString());
+        post.setId(postSnapShot.child("id").getValue().toString());
+        post.setDescription(postSnapShot.child("description").getValue().toString());
+        post.setCreatedDate(createdDate);
+
+        return post;
     }
 
 
