@@ -25,10 +25,7 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
     private NavigationBarView navigationBarView;
     ContentActivityFeedBinding binding;
 
-    private List<Post> posts;
     MyFeedPresenter mPresenter;
-    private RecyclerView postListRecyclerView;
-    private PostAdapter postAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
