@@ -73,11 +73,6 @@
                     android:layout_marginRight="10dp"
                     android:text="Likes" />
 
-                <ImageView
-                    android:id="@+id/heart"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/heart_icon_filled" />
             </LinearLayout>
 
         </LinearLayout>

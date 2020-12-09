@@ -33,7 +33,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
     protected PostContract.MvpView mView;
     protected String authorId, postId, currentUserId;
     protected FirebaseAuth mAuth;
-    protected DatabaseReference userLikesRef, postRef;
+    protected DatabaseReference userLikesRef, postRef, allPostsRef;
     protected DatabaseReference authorUserRef;
     protected boolean foundPostInDB = false;
 
@@ -51,7 +51,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         authorUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(authorId);
-
+        allPostsRef = FirebaseDatabase.getInstance().getReference().child("allPosts");
         userLikesRef = FirebaseDatabase.getInstance().getReference().child("userLikes");
     }
 
@@ -139,13 +139,13 @@ public abstract class PostPresenter implements PostContract.Presenter {
         if (likeStatus) {
             // already liked, clicking heart icon again to unlike post
             unlikePost(postRef);
+            // update on allPosts too
+            unlikePost(allPostsRef.child(postId));
         } else {
             // not liked yet, clicking heart icon to like post
             likePost(postRef);
+            likePost(allPostsRef.child(postId));
         }
-
-
-        // call view to update to filled heart
     }
 
     private void likePost(final DatabaseReference postRef) {

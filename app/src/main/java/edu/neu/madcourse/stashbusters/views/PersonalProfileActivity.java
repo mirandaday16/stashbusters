@@ -126,7 +126,7 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
         likedPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: get liked posts from Firebase and display in RecyclerView
+                mPresenter.getUserLikedPosts();
             }
         });
     }
@@ -144,4 +144,6 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
         followerCountView.setText(inputFollowerCount + " followers");
 
     }
+
+
 }
