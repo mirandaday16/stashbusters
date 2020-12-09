@@ -13,7 +13,7 @@ import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
 public class PublicProfilePresenter extends ProfilePresenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();
 
-    private PublicProfileContract.MvpView mView;
+//    private PublicProfileContract.MvpView mView;
     // targetUserId is the owner of this profile
     private String targetUserId, currentUserId;
 
@@ -22,6 +22,8 @@ public class PublicProfilePresenter extends ProfilePresenter {
 
     public PublicProfilePresenter(Context context, String targetUserId) {
         super(context, targetUserId);
+        this.targetUserId = targetUserId;
+//        this.mView = (PublicProfileContract.MvpView) context;
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();

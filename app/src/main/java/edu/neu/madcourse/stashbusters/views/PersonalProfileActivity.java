@@ -163,4 +163,9 @@ public class PersonalProfileActivity extends AppCompatActivity implements Profil
         noPostsMessage.setText(textToDisplay);
         noPostsMessage.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void updateFollowButton(String text) {
+        //do nothing
+    }
 }
