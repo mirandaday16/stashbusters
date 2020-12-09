@@ -38,7 +38,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
 
     private DatabaseReference mDatabase;
     private StorageReference storageRef;
-    private DatabaseReference userPostsRef;
+    private DatabaseReference userPostsRef, allPostRef;
     private FirebaseAuth mAuth;
 
     private String userId; // owner of the profile
@@ -51,6 +51,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = mAuth.getCurrentUser().getUid();
+        allPostRef = mDatabase.child("allPosts");
         userPostsRef = mDatabase.child("swapPosts").child(userId);
     }
 
@@ -138,6 +139,7 @@ public class NewSwapPresenter implements NewSwapContract.Presenter{
         newUserPostRef.setValue(newPost);
 
         String postId = newUserPostRef.getKey();
+        allPostRef.child(postId).setValue(newPost);
 
         startStashSwapActivity(postId);
     }
