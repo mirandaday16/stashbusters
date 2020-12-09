@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
@@ -79,50 +81,31 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
 
     @Override
     public void getUserPostsData() {
-        // Panel posts
-        DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
-        // Swap Posts
-        DatabaseReference swapPosts = postsRef.child("swapPosts").child(userId);
-        postList.clear();
-
-        panelPosts.addValueEventListener(new ValueEventListener() {
+        postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                postList.clear();
 
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        // each datasnapshot is a post
-                        List<Comment> postComments = getPostCommentsList(snapshot);
-                        StashPanelPost post = (StashPanelPost) setPostData(dataSnapshot, "StashPanel");
-                        post.setComments(postComments);
-
-                        postList.add(post);
-                    }
-                    postAdapter.notifyDataSetChanged();
+                // get user's panel posts -- this returns postID - post data
+                DataSnapshot panelPosts = snapshot.child("panelPosts").child(userId);
+                for (DataSnapshot childPost : panelPosts.getChildren()) {
+                    List<Comment> postComments = getPostCommentsList(childPost);
+                    StashPanelPost post = (StashPanelPost) setPostData(childPost, "StashPanel");
+                    post.setComments(postComments);
+                    postList.add(post);
                 }
-            }
 
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-                Log.e(TAG, error.toString());
-            }
-
-        });
-
-        swapPosts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        List<Comment> postComments = getPostCommentsList(snapshot);
-                        StashSwapPost post = (StashSwapPost) setPostData(dataSnapshot, "StashSwap");
-                        post.setComments(postComments);
-                        postList.add(post);
-                    }
-                    postAdapter.notifyDataSetChanged();
+                // get user's swap posts
+                DataSnapshot swapPosts = snapshot.child("swapPosts").child(userId);
+                for (DataSnapshot childPost : swapPosts.getChildren()) {
+                    List<Comment> postComments = getPostCommentsList(childPost);
+                    StashSwapPost post = (StashSwapPost) setPostData(childPost, "StashSwap");
+                    post.setComments(postComments);
+                    postList.add(post);
                 }
+
+                Collections.reverse(postList);
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override
