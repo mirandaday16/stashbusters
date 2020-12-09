@@ -65,27 +65,28 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
                 DataSnapshot followingSnapshot = snapshot.child("follows").child(userId).child("following");
                 HashMap<String, Object> following = (HashMap) followingSnapshot.getValue();
 
-                // For each user in the following list.
-                for (String key : following.keySet()) {
+                if (following != null) {
+                    // For each user in the following list.
+                    for (String key : following.keySet()) {
 
-                    // Get all of their panel posts.
-                    DataSnapshot panelPosts = snapshot.child("panelPosts").child(key);
-                    for (DataSnapshot child : panelPosts.getChildren()) {
-                        StashPanelPost post = (StashPanelPost) setPostData(child, "StashPanel");
-                        posts.add(post);
+                        // Get all of their panel posts.
+                        DataSnapshot panelPosts = snapshot.child("panelPosts").child(key);
+                        for (DataSnapshot child : panelPosts.getChildren()) {
+                            StashPanelPost post = (StashPanelPost) setPostData(child, "StashPanel");
+                            posts.add(post);
+                        }
+
+                        // Get all of their swap posts.
+                        DataSnapshot swapPosts = snapshot.child("swapPosts").child(key);
+                        for (DataSnapshot child : swapPosts.getChildren()) {
+                            StashSwapPost post = (StashSwapPost) setPostData(child, "StashSwap");
+                            posts.add(post);
+                        }
                     }
 
-                    // Get all of their swap posts.
-                    DataSnapshot swapPosts = snapshot.child("swapPosts").child(key);
-                    for (DataSnapshot child : swapPosts.getChildren()) {
-                        StashSwapPost post = (StashSwapPost) setPostData(child, "StashSwap");
-                        posts.add(post);
-                    }
+                    // Put the posts in descending order by date.
+                    Collections.reverse(posts);
                 }
-
-                // Put the posts in descending order by date.
-                Collections.reverse(posts);
-
                 mView.setPosts(posts);
 
             }

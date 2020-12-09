@@ -59,10 +59,32 @@
        android:layout_marginTop="60dp">
    </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/noPostsText"
+        android:layout_below="@+id/recycler_view_feed"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textAppearance="@style/PostHeadline"
+        android:textColor="@color/colorText" />
+
+    <ImageView
+        android:id="@+id/noPostsImage"
+        android:layout_below="@+id/noPostsText"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+
     <!-- Navbar -->
     <edu.neu.madcourse.stashbusters.views.NavigationBarView
         android:id="@+id/navigationBar"
         android:layout_height="56dp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"/>
+
+
 </RelativeLayout>

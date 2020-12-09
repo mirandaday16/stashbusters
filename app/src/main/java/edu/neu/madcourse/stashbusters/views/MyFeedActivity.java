@@ -1,6 +1,9 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +42,7 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYFEED);
 
+        // Get posts from Firebase
         mPresenter.loadPosts();
 
     }
@@ -53,14 +57,11 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else {
             // SHOW THAT THERE ARE NO POSTS
+            ImageView noPostsImage = (ImageView) findViewById(R.id.noPostsImage);
+            TextView noPostsText = (TextView) findViewById(R.id.noPostsText);
+            noPostsImage.setImageResource(R.drawable.palette_icon);
+            noPostsText.setText(R.string.no_posts_feed);
         }
-    }
-
-    private void initRecyclerView() {
-//        RecyclerView recyclerView = findViewById((R.id.recycler_view_feed));
-//        FeedRecyclerAdapter adapter = new FeedRecyclerAdapter(mImages,mUserNames,mHeadlines,mNumlikes,this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 }
