@@ -21,7 +21,14 @@
             android:label="@string/snack_busting" />
         <activity
             android:name=".views.PersonalProfileActivity"
-            android:label="Personal Profile" />
+            android:label="Personal Profile" >
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".views.EditProfileActivity"
             android:label="Edit Profile" />
@@ -58,10 +65,24 @@
             android:label="@string/new_swap_post" />
         <activity
             android:name=".views.PanelPostActivity"
-            android:label="Panel Post Display" />
+            android:label="Panel Post Display" >
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".views.SwapPostActivity"
-            android:label="Swap Post Display" />
+            android:label="Swap Post Display" >
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity android:name=".MainActivity">
 
             <!-- <intent-filter> -->

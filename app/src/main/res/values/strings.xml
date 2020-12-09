@@ -84,11 +84,12 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="liked_posts">Liked Posts</string>
     <string name="my_posts">My Posts</string>
+    <string name="no_posts">You don\'t currently have any %1$s posts. %2$s a post to see it here!</string>
     <string name="username_filler">username</string>
     <string name="default_profile_picture">default profile picture</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_email_address_and_password">Enter your email address and password</string>
     <string name="email_address">Email Address</string>
     <string name="no_posts_feed">Follow other users\n to see posts in your feed!</string>
-
+    <string name="like_count">%1$d Likes</string>
 </resources>
