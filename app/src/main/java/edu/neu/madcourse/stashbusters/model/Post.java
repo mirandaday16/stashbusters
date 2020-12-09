@@ -147,4 +147,5 @@ public abstract class Post implements Comparable<Post>{
     public String getPostType() {
         return this.getClass().getSimpleName();
     }
+
 }
