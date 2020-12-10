@@ -46,6 +46,8 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         private TextView choiceOne;
         private TextView choiceTwo;
         private TextView username;
+        private TextView choiceOneVotes;
+        private TextView choiceTwoVotes;
         private ImageView profilePic;
         private View authorView;
         private Handler imageHandler = new Handler();
@@ -57,6 +59,8 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
             questionText = (TextView) itemView.findViewById(R.id.question_text);
             choiceOne = (TextView) itemView.findViewById(R.id.choice_one);
             choiceTwo = (TextView) itemView.findViewById(R.id.choice_two);
+            choiceOneVotes = (TextView) itemView.findViewById(R.id.choice_one_votes);
+            choiceTwoVotes = (TextView) itemView.findViewById(R.id.choice_two_votes);
             username = (TextView) itemView.findViewById(R.id.username);
             authorView = (View) itemView.findViewById(R.id.user);
         }
@@ -81,6 +85,8 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         holder.choiceOne.setText(post.getChoiceList().get(0).getText());
         holder.choiceTwo.setText(post.getChoiceList().get(1).getText());
         holder.username.setText(author.getUsername());
+        holder.choiceOneVotes.setText(post.getChoiceList().get(0).getVoteCount().toString() + " votes");
+        holder.choiceTwoVotes.setText(post.getChoiceList().get(1).getVoteCount().toString() + " votes");
 
         // Load in the snack image in a separate thread
         new Thread(new Runnable() {
