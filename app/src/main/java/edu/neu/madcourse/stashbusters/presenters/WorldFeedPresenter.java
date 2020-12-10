@@ -175,7 +175,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
             post = new StashSwapPost();
         }
         long createdDate = (long) postSnapShot.child("createdDate").getValue();
-        long likeCount = (long) postSnapShot.child("likecount").getValue();
+        long likeCount = (long) postSnapShot.child("likeCount").getValue();
 
 
         post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
