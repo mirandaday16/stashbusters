@@ -77,10 +77,11 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
                         Log.d(TAG, post.toString() + " is this a problem also?");
                     }
                 }
+
                 DataSnapshot swapPosts = snapshot.child("swapPosts");
 
                 //Iterate through each user
-                for (DataSnapshot user : panelPosts.getChildren()){
+                for (DataSnapshot user : swapPosts.getChildren()){
                     Log.d(TAG,user.toString() + " THis is the current user");
 
                     //Iterate through each post and add to postslist
