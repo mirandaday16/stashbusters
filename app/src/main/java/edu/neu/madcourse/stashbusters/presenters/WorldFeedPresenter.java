@@ -48,6 +48,77 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
         userId = mAuth.getCurrentUser().getUid();
 
     }
+
+    //This will be called when the user wants to filter bby stash panel posts
+
+    public void loadPanelPosts() {
+
+        //List for all of the posts
+        final List<Post> posts = new ArrayList<>();
+
+        postsRef = FirebaseDatabase.getInstance().getReference();
+
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                //This takes us into the panel posts
+                DataSnapshot panelPosts = snapshot.child("panelPosts");
+
+                //Iterate through each user
+                for (DataSnapshot user : panelPosts.getChildren()){
+                    //Iterate through each post and add to postslist
+                    for (DataSnapshot userPost: user.getChildren()){
+                        StashPanelPost post  =  (StashPanelPost) setPostData(userPost, "StashPanel");
+                        posts.add(post);
+                    }
+                }
+                Collections.reverse(posts);
+                mView.setPosts(posts);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
+
+    //This will be called when the user wants to filter by swap posts
+    public void loadSwapPosts() {
+        //List for all of the posts
+        final List<Post> posts = new ArrayList<>();
+
+        postsRef = FirebaseDatabase.getInstance().getReference();
+
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                DataSnapshot swapPosts = snapshot.child("swapPosts");
+
+                //Iterate through each user
+                for (DataSnapshot user : swapPosts.getChildren()){
+                    //Iterate through each post and add to postslist
+                    for (DataSnapshot userPost: user.getChildren()){
+                        StashSwapPost post  = (StashSwapPost) setPostData(userPost, "StashSwap");
+                        posts.add(post);
+
+                    }
+                }
+
+                Collections.reverse(posts);
+                mView.setPosts(posts);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
     @Override
     public void loadPosts() {
         //List for all of the posts

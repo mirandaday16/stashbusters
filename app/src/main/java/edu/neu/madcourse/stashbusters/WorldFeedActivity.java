@@ -2,8 +2,13 @@ package edu.neu.madcourse.stashbusters;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +30,44 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
     private NavigationBarView navigationBarView;
     ContentActivityFeedBinding binding;
     WorldFeedPresenter mPresenter;
+    private Spinner spinner;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity_feed);
+
+
+        //Code to initialize the spinner (dropdown button) and create adapter
+        spinner = findViewById(R.id.filter_button);
+        spinner.setPrompt("Filter");
+        String[] items = new String[]{"No Filter", "Panel Posts", "Swap Posts"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String selectedItem = adapterView.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Panel Posts")){
+                    mPresenter.loadPanelPosts();
+                    System.out.println("panel posts selected");
+                }
+                else if(selectedItem.equals("Swap Posts")){
+                    System.out.println("Swap posts selected");
+                    mPresenter.loadSwapPosts();
+                }
+                else if(selectedItem.equals("No Filter")){
+                    System.out.println("All posts selected");
+                    mPresenter.loadPosts();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         mPresenter = new WorldFeedPresenter(this);

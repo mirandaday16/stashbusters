@@ -38,7 +38,7 @@
              android:textSize="30dp" />
 
 
-      <Button
+      <Spinner
           android:layout_width="110dp"
           android:layout_height="50dp"
           android:layout_alignEnd="@id/my_feed_title"
@@ -48,6 +48,8 @@
           android:id="@+id/filter_button"
           android:text="Filter"
           android:textSize="20dp"
+          android:spinnerMode="dropdown"
+
            />
 
    </androidx.appcompat.widget.Toolbar>
@@ -66,4 +68,6 @@
         android:layout_height="56dp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"/>
+
+
 </RelativeLayout>
