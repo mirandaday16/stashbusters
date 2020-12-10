@@ -14,8 +14,7 @@
        android:background="@color/colorPrimary"
        android:elevation="4dp"
        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-       app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-       app:menu="@menu/options_menu">
+       app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
          <ImageView
              android:id="@+id/my_feed_img"
@@ -38,17 +37,19 @@
              android:textSize="30dp" />
 
 
-      <Spinner
-          android:layout_width="110dp"
-          android:layout_height="50dp"
-          android:layout_alignEnd="@id/my_feed_title"
-          android:layout_marginTop="5dp"
-          android:background="@color/colorPrimary"
-          android:fontFamily="@font/quicksand_bold"
-          android:id="@+id/filter_button"
-          android:text="Filter"
-          android:textSize="20dp"
-          android:spinnerMode="dropdown"
+       <Spinner
+           android:id="@+id/filter_button"
+           android:layout_width="110dp"
+           android:layout_height="40dp"
+           android:layout_alignEnd="@id/my_feed_title"
+           android:layout_marginTop="5dp"
+           android:layout_marginBottom="5dp"
+           android:textAlignment="center"
+           android:background="@color/colorPrimaryLight"
+           android:fontFamily="@font/quicksand_bold"
+           android:spinnerMode="dropdown"
+           android:text="Filter"
+           android:textSize="20dp"
 
            />
 
