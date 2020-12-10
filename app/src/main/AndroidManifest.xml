@@ -93,6 +93,24 @@
             <!-- </intent-filter> -->
         </activity>
 
+        <service
+            android:name=".utils.FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!--Default notification icon-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/mouse_icon" />
+
+        <!--Default notification color-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="edu.neu.madcourse.stashbusters.fileprovider"

@@ -22,6 +22,7 @@ import edu.neu.madcourse.stashbusters.model.SnackBustPost;
 import edu.neu.madcourse.stashbusters.model.SnackBustChoice;
 import edu.neu.madcourse.stashbusters.model.User;
 import edu.neu.madcourse.stashbusters.presenters.SnackPostPresenter;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class SnackPostActivity extends AppCompatActivity implements SnackPostContract.MvpView {
     RecyclerView recyclerView;
@@ -100,6 +101,11 @@ public class SnackPostActivity extends AppCompatActivity implements SnackPostCon
                         else if (swipeDir == ItemTouchHelper.RIGHT) {
                             increaseVote(1);
                         }
+
+                        // Send notification to author about new vote.
+                        Utils.sendSnackVote(posts.get(currPost).getAuthorId(),
+                                posts.get(currPost).getId(),
+                                posts.get(currPost).getPhotoUrl());
 
                         // notify the recyclerview changes
                         currPost++;
