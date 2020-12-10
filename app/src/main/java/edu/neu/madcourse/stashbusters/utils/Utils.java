@@ -90,7 +90,7 @@ public class Utils {
             jData.put("postType", "snack");
             jData.put("userId", userId);
             jData.put("postId", postId);
-            jData.put("title", "Snack busted!");
+            jData.put("title", "You got a snack vote!");
             jData.put("image", imgURL);
 
             /*

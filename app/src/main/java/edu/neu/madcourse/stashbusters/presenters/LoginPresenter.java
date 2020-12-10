@@ -18,9 +18,11 @@ import edu.neu.madcourse.stashbusters.YourFeedActivity;
 
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
+import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 public class LoginPresenter implements LoginContract.Presenter {
     private static final String TAG = NewAccountActivity.class.getSimpleName();
@@ -79,6 +81,28 @@ public class LoginPresenter implements LoginContract.Presenter {
                         }
                     });
         }
+    }
+
+    @Override
+    public void checkIfFromNotification(Intent oldIntent){
+
+        if (oldIntent.getExtras() != null){
+            Intent intent;
+
+            switch (oldIntent.getStringExtra("postType")){
+                case "snack":
+                    intent = new Intent(mContext, SnackPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                default:
+                    intent = new Intent(mContext, LoginActivity.class);
+                    break;
+            }
+            mContext.startActivity(intent);
+            mView.callFinish();
+        }
+
     }
 
 }

@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.contracts;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,11 +17,13 @@ public interface LoginContract {
     interface MvpView {
         FirebaseAuth getmAuth();
         void showToastMessage(String msg);
+        void callFinish();
     }
 
     interface Presenter {
         void createNewAccount();
         void validateNewUser(String username, String password);
         void startWorldFeedActivity();
+        void checkIfFromNotification(Intent oldIntent);
     }
 }
