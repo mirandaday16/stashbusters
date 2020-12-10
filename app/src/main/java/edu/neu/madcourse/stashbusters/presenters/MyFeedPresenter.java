@@ -114,7 +114,6 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
         post.setTitle(postSnapShot.child("title").getValue().toString());
         post.setId(postSnapShot.child("id").getValue().toString());
         post.setDescription(postSnapShot.child("description").getValue().toString());
-        post.setDescription(postSnapShot.child("likeCount").getValue().toString());
         post.setLikeCount(likeCount);
         post.setCreatedDate(createdDate);
 
