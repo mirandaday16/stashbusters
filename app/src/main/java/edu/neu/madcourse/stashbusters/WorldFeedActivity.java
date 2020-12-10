@@ -3,6 +3,7 @@ package edu.neu.madcourse.stashbusters;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,12 +32,18 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity_feed);
 
+
         mPresenter = new WorldFeedPresenter(this);
 
         // Navigation bar setup:
         binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.WORLDFEED);
+
+        ImageView MyFeedImg = (ImageView) findViewById(R.id.my_feed_img);
+        MyFeedImg.setImageResource(R.drawable.world_icon);
+        TextView MyFeedText = (TextView) findViewById(R.id.my_feed_title);
+        MyFeedText.setText(R.string.world_feed);
 
         //Get posts
         mPresenter.loadPosts();
