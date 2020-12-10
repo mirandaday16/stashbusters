@@ -88,7 +88,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         heartIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mPresenter.onHeartIconClick(postRef);
+                mPresenter.onHeartIconClick(postRef, "likeSwap", authorId, postId);
             }
         });
     }

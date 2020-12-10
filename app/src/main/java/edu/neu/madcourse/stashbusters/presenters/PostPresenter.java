@@ -21,6 +21,7 @@ import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 
 /**
  * Abstract class that handles logic for post details.
@@ -131,7 +132,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
     }
 
     @Override
-    public void onHeartIconClick(DatabaseReference postRef) {
+    public void onHeartIconClick(DatabaseReference postRef, String notifType, String authorId, String postId) {
         // check current like status, if already liked, unlike post + remove from DB.
         // else, like post and add to DB
         boolean likeStatus = mView.getCurrentUserLikedPostStatus();
@@ -145,6 +146,9 @@ public abstract class PostPresenter implements PostContract.Presenter {
             // not liked yet, clicking heart icon to like post
             likePost(postRef);
             likePost(allPostsRef.child(postId));
+
+            // Send notification to post author
+            Utils.startNotification(notifType, currentUserId, authorId, postId, "");
         }
     }
 

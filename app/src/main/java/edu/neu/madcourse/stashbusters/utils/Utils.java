@@ -99,6 +99,35 @@ public class Utils {
                     jData.put("title", "You got a follower!");
                     jData.put("senderId", postId);
                     jData.put("senderUsername", sender);
+                    break;
+                case "likePanel":
+                    jNotification.put("title", "You're inspiring other Stashbusters!");
+                    jNotification.put("body", sender + " liked your panel post.");
+                    jData.put("title", "You got a like!");
+                    jData.put("userId", userId);
+                    jData.put("postId", postId);
+                    break;
+                case "likeSwap":
+                    jNotification.put("title", "You're inspiring other Stashbusters!");
+                    jNotification.put("body", sender + " liked your swap post.");
+                    jData.put("title", "You got a like!");
+                    jData.put("userId", userId);
+                    jData.put("postId", postId);
+                    break;
+                case "commentSwap":
+                    jNotification.put("title", "Other Stashbusters wanna swap!");
+                    jNotification.put("body", sender + " made an offer.");
+                    jData.put("title", "You got an offer!");
+                    jData.put("userId", userId);
+                    jData.put("postId", postId);
+                    break;
+                case "commentPanel":
+                    jNotification.put("body", sender + " gave you advice on your panel post.");
+                    jData.put("title", "You got advice!");
+                    jData.put("userId", userId);
+                    jData.put("postId", postId);
+                    jData.put("image", imgURL);
+                    break;
                 default:
                     break;
             }

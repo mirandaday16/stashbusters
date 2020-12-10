@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.model.StashPanelPost;
+import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.MyFeedActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
@@ -62,7 +64,6 @@ public class FCMService extends FirebaseMessagingService {
         String postId = remoteMessage.getData().get("postId");
         String userId = remoteMessage.getData().get("userId");
         String senderId = remoteMessage.getData().get("senderId");
-        String senderUsername = remoteMessage.getData().get("senderUsername");
 
         switch (postType) {
             case "snack":
@@ -73,6 +74,16 @@ public class FCMService extends FirebaseMessagingService {
             case "follow":
                 intent = new Intent(this, PublicProfileActivity.class);
                 intent.putExtra("userId", senderId);
+                break;
+            case "likePanel":
+                intent = new Intent(this, StashPanelPost.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("postId", postId);
+                break;
+            case "likeSwap":
+                intent = new Intent(this, StashSwapPost.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("postId", postId);
                 break;
             default:
                 intent = new Intent(this, MyFeedActivity.class);

@@ -98,7 +98,7 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         heartIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mPresenter.onHeartIconClick(postRef);
+                mPresenter.onHeartIconClick(postRef, "likePanel", authorId, postId);
             }
         });
     }

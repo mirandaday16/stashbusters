@@ -42,7 +42,7 @@ public interface PostContract {
 
         void loadPostDataToView();
 
-        void onHeartIconClick(DatabaseReference postRef);
+        void onHeartIconClick(DatabaseReference postRef, String notifType, String authorId, String postId);
 
 
         void loadCommentDataToView(Context context);
