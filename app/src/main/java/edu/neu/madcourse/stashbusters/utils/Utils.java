@@ -122,6 +122,7 @@ public class Utils {
                     jData.put("postId", postId);
                     break;
                 case "commentPanel":
+                    jNotification.put("title", "Stashbusting time!");
                     jNotification.put("body", sender + " gave you advice on your panel post.");
                     jData.put("title", "You got advice!");
                     jData.put("userId", userId);
