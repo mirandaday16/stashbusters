@@ -59,37 +59,39 @@ public class FCMService extends FirebaseMessagingService {
     private void showNotification(RemoteMessage remoteMessage) {
 
         String postType = remoteMessage.getData().get("postType");
-        Intent intent;
+        Intent intent = new Intent(this, MyFeedActivity.class);
 
         String postId = remoteMessage.getData().get("postId");
         String userId = remoteMessage.getData().get("userId");
         String senderId = remoteMessage.getData().get("senderId");
 
-        switch (postType) {
-            case "snack":
-                intent = new Intent(this, SnackPostActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("postId", postId);
-                break;
-            case "follow":
-                intent = new Intent(this, PublicProfileActivity.class);
-                intent.putExtra("userId", senderId);
-                break;
-            case "commentPanel":
-            case "likePanel":
-                intent = new Intent(this, StashPanelPost.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("postId", postId);
-                break;
-            case "commentSwap":
-            case "likeSwap":
-                intent = new Intent(this, StashSwapPost.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("postId", postId);
-                break;
-            default:
-                intent = new Intent(this, MyFeedActivity.class);
-                break;
+        if (postType != null) {
+
+            switch (postType) {
+                case "snack":
+                    intent = new Intent(this, SnackPostActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("postId", postId);
+                    break;
+                case "follow":
+                    intent = new Intent(this, PublicProfileActivity.class);
+                    intent.putExtra("userId", senderId);
+                    break;
+                case "commentPanel":
+                case "likePanel":
+                    intent = new Intent(this, StashPanelPost.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("postId", postId);
+                    break;
+                case "commentSwap":
+                case "likeSwap":
+                    intent = new Intent(this, StashSwapPost.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("postId", postId);
+                    break;
+                default:
+                    break;
+            }
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
