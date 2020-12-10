@@ -51,14 +51,14 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
                 String selectedItem = adapterView.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Panel Posts")){
                     mPresenter.loadPanelPosts();
-                    System.out.println("panel posts selected");
+
                 }
                 else if(selectedItem.equals("Swap Posts")){
-                    System.out.println("Swap posts selected");
+
                     mPresenter.loadSwapPosts();
                 }
                 else if(selectedItem.equals("No Filter")){
-                    System.out.println("All posts selected");
+
                     mPresenter.loadPosts();
                 }
             }
