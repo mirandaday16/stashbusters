@@ -107,58 +107,17 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
         }
 
         long createdDate = (long) postSnapShot.child("createdDate").getValue();
+        long likeCount = (long) postSnapShot.child("likeCount").getValue();
 
         post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
         post.setPhotoUrl(postSnapShot.child("photoUrl").getValue().toString());
         post.setTitle(postSnapShot.child("title").getValue().toString());
         post.setId(postSnapShot.child("id").getValue().toString());
         post.setDescription(postSnapShot.child("description").getValue().toString());
+        post.setDescription(postSnapShot.child("likeCount").getValue().toString());
+        post.setLikeCount(likeCount);
         post.setCreatedDate(createdDate);
 
         return post;
     }
-
-
-//    public void loadSingleSnackPost(String userId, String postId) {
-//        postsRef = FirebaseDatabase.getInstance().getReference()
-//                .child("snackPosts").child(userId).child(postId);
-//
-//        postsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (!postsSet) {
-//                    SnackBustPost post = snapshot.getValue(SnackBustPost.class);
-//
-//                    List<SnackBustPost> posts = new ArrayList();
-//                    posts.add(post);
-//
-//                    //mView.setPostView(posts);
-//                    //postsSet = true;
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//        });
-//    }
-
-
-//    public void loadAuthorData(String authorId) {
-//        authorRef = FirebaseDatabase.getInstance().getReference()
-//                .child("users").child(authorId);
-//
-//        authorRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User author = snapshot.getValue(User.class);
-//
-//                //mView.setNewCard(author);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-//    }
 }
