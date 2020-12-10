@@ -48,11 +48,11 @@
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccentLight"
         android:padding="10dp"
         android:text="@string/swipe_to_vote"
         android:textAlignment="center"
         android:textAppearance="@style/Body"
+        android:textColor="@color/colorPrimaryLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

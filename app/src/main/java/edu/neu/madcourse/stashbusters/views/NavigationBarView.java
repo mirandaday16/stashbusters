@@ -12,7 +12,11 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 
 import edu.neu.madcourse.stashbusters.R;
+<<<<<<< HEAD
 import edu.neu.madcourse.stashbusters.WorldFeedActivity;
+=======
+import edu.neu.madcourse.stashbusters.YourFeedActivity;
+>>>>>>> 8780cce39602b1b5d0bfc7877e8f0bcb2efd2bb2
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 
 // A navigation bar that navigates between the 5 major activities of the app
@@ -37,7 +41,8 @@ public class NavigationBarView extends FrameLayout {
         myFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Send user to MyFeed Activity
+                Intent intent = new Intent(context, MyFeedActivity.class);
+                context.startActivity(intent);
             }
         });
 

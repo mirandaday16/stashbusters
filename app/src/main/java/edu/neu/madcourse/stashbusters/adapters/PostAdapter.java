@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.contentcapture.DataRemovalRequest;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,25 +51,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     public void onBindViewHolder(@NonNull final PostAdapter.ImageViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder called");
         final Post post = mPosts.get(position);
+        String authorId = post.getAuthorId();
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(userId);
-
-        userRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(authorId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String usernameStr = snapshot.child("username").getValue().toString();
-                    // TODO: get like count
-                    holder.headline.setText(post.getTitle());
-                    holder.username.setText(usernameStr);
-                    Picasso.get().load(post.getPhotoUrl()).into(holder.image);
-
-                    holder.setPostType(post.getPostType());
-                    holder.setPostId(post.getId());
-                    holder.setAuthorId(post.getAuthorId());
-                }
+                String username = snapshot.child("username").getValue().toString();
+                holder.username.setText(username);
             }
 
             @Override
@@ -76,6 +67,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
             }
         });
+
+        holder.headline.setText(post.getTitle());
+        Picasso.get().load(post.getPhotoUrl()).into(holder.image);
+
+        String postType = post.getPostType();
+        String postId = post.getId();
+
+        holder.setPostType(postType);
+        holder.setPostId(postId);
+        holder.setAuthorId(authorId);
+
+        String likeCountText = post.getLikeCount() + " Likes";
+        holder.numLikes.setText(likeCountText);
     }
 
     @Override
