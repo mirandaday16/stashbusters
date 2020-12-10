@@ -11,16 +11,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
-import edu.neu.madcourse.stashbusters.YourFeedActivity;
+import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
+
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
@@ -50,7 +50,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void startWorldFeedActivity() {
         // TODO: When World Feed activity exists, change this function to go  to World Feed
-        Intent intent = new Intent(mContext, YourFeedActivity.class);
+        Intent intent = new Intent(mContext, WorldFeedActivity.class);
         mContext.startActivity(intent);
     }
 

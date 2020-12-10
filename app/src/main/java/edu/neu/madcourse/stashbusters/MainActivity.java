@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
 
             case R.id.feed_test:
-                intent = new Intent(this,YourFeedActivity.class);
+                intent = new Intent(this, WorldFeedActivity.class);
                 startActivity(intent);
                 break;
             case R.id.new_post_button:
