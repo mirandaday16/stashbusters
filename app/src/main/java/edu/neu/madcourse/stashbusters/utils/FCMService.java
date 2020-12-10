@@ -23,6 +23,7 @@ import java.net.URL;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.views.MyFeedActivity;
+import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 // Documentation: https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessagingService
@@ -60,11 +61,18 @@ public class FCMService extends FirebaseMessagingService {
 
         String postId = remoteMessage.getData().get("postId");
         String userId = remoteMessage.getData().get("userId");
+        String senderId = remoteMessage.getData().get("senderId");
+        String senderUsername = remoteMessage.getData().get("senderUsername");
+
         switch (postType) {
             case "snack":
                 intent = new Intent(this, SnackPostActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("postId", postId);
+                break;
+            case "follow":
+                intent = new Intent(this, PublicProfileActivity.class);
+                intent.putExtra("userId", senderId);
                 break;
             default:
                 intent = new Intent(this, MyFeedActivity.class);

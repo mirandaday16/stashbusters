@@ -22,6 +22,7 @@ import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 public class LoginPresenter implements LoginContract.Presenter {
@@ -94,6 +95,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                     intent = new Intent(mContext, SnackPostActivity.class);
                     intent.putExtra("userId", oldIntent.getStringExtra("userId"));
                     intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                case "follow":
+                    intent = new Intent(mContext, PublicProfileActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("senderId"));
                     break;
                 default:
                     intent = new Intent(mContext, LoginActivity.class);

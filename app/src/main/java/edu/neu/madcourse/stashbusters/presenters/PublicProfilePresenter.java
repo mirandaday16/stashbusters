@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 
 public class PublicProfilePresenter extends ProfilePresenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();
@@ -61,6 +62,9 @@ public class PublicProfilePresenter extends ProfilePresenter {
         followRef.child(targetUserId).child("followers").child(currentUserId).setValue(true);
 
         updateUserCount("follow");
+
+        // Send notification to followed user.
+        Utils.startNotification("follow", currentUserId, targetUserId, currentUserId, "");
     }
 
     private void unfollowUser() {

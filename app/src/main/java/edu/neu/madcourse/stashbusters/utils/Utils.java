@@ -89,7 +89,16 @@ public class Utils {
                     jNotification.put("title", "Snack busted!");
                     jNotification.put("body", "Someone voted on your snack bust post.");
                     jData.put("title", "You got a snack vote!");
+                    jData.put("userId", userId);
+                    jData.put("postId", postId);
+                    jData.put("image", imgURL);
                     break;
+                case "follow":
+                    jNotification.put("title", "Followed!");
+                    jNotification.put("body", sender + " started following you.");
+                    jData.put("title", "You got a follower!");
+                    jData.put("senderId", postId);
+                    jData.put("senderUsername", sender);
                 default:
                     break;
             }
@@ -99,9 +108,6 @@ public class Utils {
             jNotification.put("image", imgURL);
 
             jData.put("postType", postType);
-            jData.put("userId", userId);
-            jData.put("postId", postId);
-            jData.put("image", imgURL);
 
             /*
             // Build payload
