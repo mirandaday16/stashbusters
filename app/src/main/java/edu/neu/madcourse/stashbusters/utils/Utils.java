@@ -36,24 +36,27 @@ public class Utils {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static void sendSnackVote(final String recipientId, final String postId, final String photoURL){
+    public static void startNotification(final String postType, final String senderId, final String recipientId, final String postId, final String photoURL){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference().child("users").child(recipientId).child("deviceToken");
+        DatabaseReference ref = database.getReference();
 
         ValueEventListener tokenListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 try {
-                    final String clientToken = (String) dataSnapshot.getValue();
+                    // Get recipient's token.
+                    final String clientToken = (String) dataSnapshot.child("users").child(recipientId).child("deviceToken").getValue();
+
+                    // Get sender's username.
+                    final String sender = (String) dataSnapshot.child("users").child(senderId).child("username").getValue();
 
                     // Send the actual message once the token is retrieved.
                     if (clientToken != null) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                //onSendMessage(mDatabase, currentUsername, recipientUsername, selectedStickerName);
-                                sendNotification(clientToken, recipientId, postId, photoURL);
+                                sendNotification(clientToken, sender, postType, recipientId, postId, photoURL);
                             }
                         }).start();
                     }
@@ -73,7 +76,7 @@ public class Utils {
 
     // Creates and sends the notification to FCM given the token of the receiver.
     // DISCLAIMER: BASED HEAVILY ON PROFESSOR FEINBERG'S DEMO CODE ("Firebase Demo - FCMActivity.java")
-    private static void sendNotification(String clientToken, String userId, String postId, String imgURL) {
+    private static void sendNotification(String clientToken, String sender, String postType, String userId, String postId, String imgURL) {
         JSONObject jPayload = new JSONObject();
         JSONObject jNotification = new JSONObject();
         JSONObject jData = new JSONObject();
@@ -81,16 +84,23 @@ public class Utils {
             /*
             // Populate notification object
             */
-            jNotification.put("title", "Snack busted!");
-            jNotification.put("body", "Someone voted on your snack bust post.");
+            switch (postType){
+                case "snack":
+                    jNotification.put("title", "Snack busted!");
+                    jNotification.put("body", "Someone voted on your snack bust post.");
+                    jData.put("title", "You got a snack vote!");
+                    break;
+                default:
+                    break;
+            }
+
             jNotification.put("sound", "default");
             jNotification.put("badge", "1");
             jNotification.put("image", imgURL);
 
-            jData.put("postType", "snack");
+            jData.put("postType", postType);
             jData.put("userId", userId);
             jData.put("postId", postId);
-            jData.put("title", "You got a snack vote!");
             jData.put("image", imgURL);
 
             /*
