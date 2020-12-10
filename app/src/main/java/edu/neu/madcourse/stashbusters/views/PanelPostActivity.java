@@ -66,6 +66,7 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 Comment comment = new Comment(commentText);
                 comment.setAuthorId(currentUser.getUid());
+                mPresenter.startCommentNotification("commentPanel", authorId, postId);
                 // Check that the user has entered a comment in the EditText field
                 if (commentText != null) {
                     mPresenter.uploadComment(postRef, comment);

@@ -56,6 +56,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 Comment comment = new Comment(commentText);
                 comment.setAuthorId(currentUser.getUid());
+                mPresenter.startCommentNotification("commentSwap", authorId, postId);
                 // Check that the user has entered a comment in the EditText field
                 if (commentText != null) {
                     mPresenter.uploadComment(postRef, comment);

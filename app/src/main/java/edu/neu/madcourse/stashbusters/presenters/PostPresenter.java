@@ -243,4 +243,10 @@ public abstract class PostPresenter implements PostContract.Presenter {
         DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
         newCommentRef.setValue(comment);
     }
+
+    @Override
+    public void startCommentNotification(String notifType, String authorId, String postId) {
+        // Send notification to post author
+        Utils.startNotification(notifType, currentUserId, authorId, postId, "");
+    }
 }

@@ -75,11 +75,13 @@ public class FCMService extends FirebaseMessagingService {
                 intent = new Intent(this, PublicProfileActivity.class);
                 intent.putExtra("userId", senderId);
                 break;
+            case "commentPanel":
             case "likePanel":
                 intent = new Intent(this, StashPanelPost.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("postId", postId);
                 break;
+            case "commentSwap":
             case "likeSwap":
                 intent = new Intent(this, StashSwapPost.class);
                 intent.putExtra("userId", userId);

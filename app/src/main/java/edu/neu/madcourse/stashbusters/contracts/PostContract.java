@@ -48,5 +48,7 @@ public interface PostContract {
         void loadCommentDataToView(Context context);
 
         void uploadComment(DatabaseReference postRef, Comment comment);
+
+        void startCommentNotification(String notifType, String authorId, String postId);
     }
 }
