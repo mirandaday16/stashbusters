@@ -21,9 +21,11 @@ import edu.neu.madcourse.stashbusters.utils.Utils;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 public class LoginPresenter implements LoginContract.Presenter {
     private static final String TAG = NewAccountActivity.class.getSimpleName();
@@ -99,6 +101,18 @@ public class LoginPresenter implements LoginContract.Presenter {
                 case "follow":
                     intent = new Intent(mContext, PublicProfileActivity.class);
                     intent.putExtra("userId", oldIntent.getStringExtra("senderId"));
+                    break;
+                case "commentPanel":
+                case "likePanel":
+                    intent = new Intent(mContext, PanelPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                case "commentSwap":
+                case "likeSwap":
+                    intent = new Intent(mContext, SwapPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
                     break;
                 default:
                     intent = new Intent(mContext, LoginActivity.class);
