@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
-import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
@@ -150,24 +149,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         commentsSection.setAdapter(commentsAdapter);
     }
 
-
-    /**
-     * If this activity was opened from a notification,
-     * set back stack so back button goes to World Feed.
-     */
-    @Override
-    public void onBackPressed() {
-        Intent thisIntent = getIntent();
-
-        if (thisIntent.getExtras().containsKey("LAUNCHED_BY_NOTIFICATION")){
-            Intent intent = new Intent(this, WorldFeedActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            finish();
-        } else {
-            super.onBackPressed();
-        }
-
     public void initListeners() {
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +162,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
                 // Check that the user has entered a comment in the EditText field
                 if (commentText != null) {
                     mPresenter.uploadComment(postRef, comment);
+                    mPresenter.startCommentNotification("comment", authorId, postId);
                     // Reset comment field and update RecyclerView so user can see their comment
                     commentInput.setText("");
                     // TODO: Hide soft keyboard and update RecyclerView
@@ -211,7 +193,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
             @Override
             public void onClick(View v) {
                 System.out.println("mPresenter" + mPresenter);
-                mPresenter.onHeartIconClick(postRef);
+                mPresenter.onHeartIconClick(postRef, "like", authorId, postId);
             }
         });
     }

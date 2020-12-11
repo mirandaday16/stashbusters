@@ -148,7 +148,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
             likePost(allPostsRef.child(postId));
 
             // Send notification to post author
-            Utils.startNotification(notifType, currentUserId, authorId, postId, "");
+            startCommentNotification(notifType, authorId, postId);
         }
     }
 
@@ -245,8 +245,39 @@ public abstract class PostPresenter implements PostContract.Presenter {
     }
 
     @Override
-    public void startCommentNotification(String notifType, String authorId, String postId) {
-        // Send notification to post author
-        Utils.startNotification(notifType, currentUserId, authorId, postId, "");
+    public void startCommentNotification(final String notifType, final String authorId, final String postId) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getReference();
+
+        final ValueEventListener tokenListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    // Get postType.
+                    final String postType = (String) dataSnapshot.child("allPosts").child(postId).child("postType").getValue();
+
+                    // Use util to start notification
+                    if (notifType.equals("comment") && postType.equals("StashPanelPost")) {
+                        Utils.startNotification("commentPanel", currentUserId, authorId, postId, "");
+                    } else if (notifType.equals("comment") && postType.equals("StashSwapPost")) {
+                        Utils.startNotification("commentSwap", currentUserId, authorId, postId, "");
+                    } else if (notifType.equals("like") && postType.equals("StashPanelPost")) {
+                        Utils.startNotification("likePanel", currentUserId, authorId, postId, "");
+                    } else {
+                        Utils.startNotification("likeSwap", currentUserId, authorId, postId, "");
+                    }
+                }
+                catch (Exception ignored) {
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        ref.addListenerForSingleValueEvent(tokenListener);
     }
 }
