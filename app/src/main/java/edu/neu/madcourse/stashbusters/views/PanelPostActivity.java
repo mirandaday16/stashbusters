@@ -35,7 +35,6 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         userView = binding.user;
         userPic = binding.profilePic;
         usernameView = binding.username;
-        likedIcon = binding.liked;
         titleView = binding.title;
         postPhoto = binding.photo;
         details = binding.details;
@@ -45,7 +44,7 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         submitButton = binding.postButton;
         likeCountView = binding.numLikes;
         heartIcon = binding.heart;
-        deleteButton = binding.deleteButton;
+        more = binding.more;
 
         initListeners();
 

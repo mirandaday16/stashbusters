@@ -27,6 +27,8 @@ import edu.neu.madcourse.stashbusters.presenters.WorldFeedPresenter;
 import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 
 public class WorldFeedActivity extends AppCompatActivity implements WorldFeedContract.MvpView {
+    private static final String TAG = WorldFeedActivity.class.getSimpleName();
+
     private NavigationBarView navigationBarView;
     ContentActivityFeedBinding binding;
     WorldFeedPresenter mPresenter;
@@ -98,7 +100,7 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         }
         else {
             //No posts to show
-            System.out.println("  there are no posts right now");
+            Log.i(TAG, "No post to show on World Feed.");
         }
     }
 

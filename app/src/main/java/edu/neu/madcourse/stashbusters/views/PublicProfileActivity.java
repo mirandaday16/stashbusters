@@ -53,7 +53,6 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
 
         Intent intent = getIntent();
         targetUserId = intent.getStringExtra("userId");
-        System.out.println("targetUserId in PublicProfileActivity " + targetUserId);
 
         mPresenter = new PublicProfilePresenter(this, targetUserId);
         mPresenter.loadDataToView();

@@ -43,7 +43,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/liked"
+            android:id="@+id/more"
+            android:src="@drawable/ic_more"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintHeight_max="wrap"
@@ -79,17 +80,6 @@
             android:layout_marginTop="5dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
-
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccentDark"
-            android:textSize="14sp"
-            android:text="@string/delete_post"
-            android:layout_gravity="right"
-            android:layout_marginVertical="10dp"
-            android:padding="5dp"/>
 
         <TextView
             android:id="@+id/details"
