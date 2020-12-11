@@ -154,7 +154,11 @@ public abstract class PostPresenter implements PostContract.Presenter {
 
     @Override
     public void deletePost() {
+        allPostsRef.child(postId).removeValue();
         postRef.removeValue();
+
+        // remove from a user's likes
+        userLikesRef.child(currentUserId).child(postId).removeValue();
 
         Intent intent = new Intent(mContext, PersonalProfileActivity.class);
         mContext.startActivity(intent);
@@ -166,6 +170,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
         updates.put("description", editText.getText().toString());
 
         postRef.updateChildren(updates);
+        allPostsRef.child(postId).updateChildren(updates);
     }
 
     private void likePost(final DatabaseReference postRef) {

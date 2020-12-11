@@ -79,15 +79,17 @@ public class PersonalProfilePresenter extends ProfilePresenter {
                         DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
                         List<Comment> postComments = getPostCommentsList(postSnapshot);
 
-                        String postType = postSnapshot.child("postType").getValue().toString();
-                        if (postType.equals("StashPanelPost")) {
-                            StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
-                            post.setComments(postComments);
-                            likedPostList.add(post);
-                        } else {
-                            StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
-                            post.setComments(postComments);
-                            likedPostList.add(post);
+                        if (postSnapshot.exists()) {
+                            String postType = postSnapshot.child("postType").getValue().toString();
+                            if (postType.equals("StashPanelPost")) {
+                                StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
+                                post.setComments(postComments);
+                                likedPostList.add(post);
+                            } else {
+                                StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
+                                post.setComments(postComments);
+                                likedPostList.add(post);
+                            }
                         }
                     }
                 }
