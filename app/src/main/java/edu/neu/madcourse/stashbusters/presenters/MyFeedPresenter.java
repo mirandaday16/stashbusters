@@ -117,48 +117,4 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
 
         return post;
     }
-
-
-//    public void loadSingleSnackPost(String userId, String postId) {
-//        postsRef = FirebaseDatabase.getInstance().getReference()
-//                .child("snackPosts").child(userId).child(postId);
-//
-//        postsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (!postsSet) {
-//                    SnackBustPost post = snapshot.getValue(SnackBustPost.class);
-//
-//                    List<SnackBustPost> posts = new ArrayList();
-//                    posts.add(post);
-//
-//                    //mView.setPostView(posts);
-//                    //postsSet = true;
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//        });
-//    }
-
-
-//    public void loadAuthorData(String authorId) {
-//        authorRef = FirebaseDatabase.getInstance().getReference()
-//                .child("users").child(authorId);
-//
-//        authorRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User author = snapshot.getValue(User.class);
-//
-//                //mView.setNewCard(author);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-//    }
 }
