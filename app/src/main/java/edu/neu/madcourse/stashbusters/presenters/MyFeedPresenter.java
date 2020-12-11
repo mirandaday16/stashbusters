@@ -54,7 +54,7 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
     public void loadPosts() {
         postsRef = FirebaseDatabase.getInstance().getReference();
 
-        postsRef.addValueEventListener(new ValueEventListener() {
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
