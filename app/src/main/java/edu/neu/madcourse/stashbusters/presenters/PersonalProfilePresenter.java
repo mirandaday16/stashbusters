@@ -120,6 +120,8 @@ public class PersonalProfilePresenter extends ProfilePresenter {
     // Starts Login Activity
     private void startLoginActivity() {
         Intent intent = new Intent(this.mContext, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }
 }
