@@ -106,6 +106,7 @@ public class Utils {
                     jData.put("title", "You got a like!");
                     jData.put("userId", userId);
                     jData.put("postId", postId);
+                    jData.put("image", imgURL);
                     break;
                 case "likeSwap":
                     jNotification.put("title", "You're inspiring other Stashbusters!");
@@ -113,6 +114,7 @@ public class Utils {
                     jData.put("title", "You got a like!");
                     jData.put("userId", userId);
                     jData.put("postId", postId);
+                    jData.put("image", imgURL);
                     break;
                 case "commentSwap":
                     jNotification.put("title", "Other Stashbusters wanna swap!");
@@ -120,6 +122,7 @@ public class Utils {
                     jData.put("title", "You got an offer!");
                     jData.put("userId", userId);
                     jData.put("postId", postId);
+                    jData.put("image", imgURL);
                     break;
                 case "commentPanel":
                     jNotification.put("title", "Stashbusting time!");

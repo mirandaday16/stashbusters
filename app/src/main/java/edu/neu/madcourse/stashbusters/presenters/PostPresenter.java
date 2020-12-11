@@ -255,18 +255,19 @@ public abstract class PostPresenter implements PostContract.Presenter {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 try {
-                    // Get postType.
+                    // Get postType and imageURL
                     final String postType = (String) dataSnapshot.child("allPosts").child(postId).child("postType").getValue();
+                    final String imgURL = (String) dataSnapshot.child("allPosts").child(postId).child("photoUrl").getValue();
 
                     // Use util to start notification
                     if (notifType.equals("comment") && postType.equals("StashPanelPost")) {
-                        Utils.startNotification("commentPanel", currentUserId, authorId, postId, "");
+                        Utils.startNotification("commentPanel", currentUserId, authorId, postId, imgURL);
                     } else if (notifType.equals("comment") && postType.equals("StashSwapPost")) {
-                        Utils.startNotification("commentSwap", currentUserId, authorId, postId, "");
+                        Utils.startNotification("commentSwap", currentUserId, authorId, postId, imgURL);
                     } else if (notifType.equals("like") && postType.equals("StashPanelPost")) {
-                        Utils.startNotification("likePanel", currentUserId, authorId, postId, "");
+                        Utils.startNotification("likePanel", currentUserId, authorId, postId, imgURL);
                     } else {
-                        Utils.startNotification("likeSwap", currentUserId, authorId, postId, "");
+                        Utils.startNotification("likeSwap", currentUserId, authorId, postId, imgURL);
                     }
                 }
                 catch (Exception ignored) {

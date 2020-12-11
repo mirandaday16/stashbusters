@@ -22,8 +22,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 import edu.neu.madcourse.stashbusters.views.MyFeedActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
@@ -79,13 +79,13 @@ public class FCMService extends FirebaseMessagingService {
                     break;
                 case "commentPanel":
                 case "likePanel":
-                    intent = new Intent(this, StashPanelPost.class);
+                    intent = new Intent(this, PanelPostActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("postId", postId);
                     break;
                 case "commentSwap":
                 case "likeSwap":
-                    intent = new Intent(this, StashSwapPost.class);
+                    intent = new Intent(this, SwapPostActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("postId", postId);
                     break;
