@@ -35,7 +35,7 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
     // Set up ViewBinding for the layout
     private PublicProfileActivityBinding binding;
     private ImageView profilePic;
-    private TextView usernameView, followerCountView, bio;
+    private TextView usernameView, followerCountView, bio, profileTitle;
     private Button followButton;
     private RecyclerView postListRecyclerView;
     private NavigationBarView navigationBarView;
@@ -80,6 +80,7 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
         followerCountView = binding.followerCount;
         bio = binding.bio;
         followButton = binding.followButton;
+        profileTitle = binding.profileTitle;
 
         // Navigation bar setup:
         navigationBarView = binding.navigationBar;
@@ -113,6 +114,7 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
         usernameView.setText(inputUsername);
         bio.setText(inputBio);
         followerCountView.setText(getString(R.string.follower_count, inputFollowerCount));
+        profileTitle.setText(new StringBuilder().append(inputUsername).append(getString(R.string.profile_owner)).toString());
     }
 
     /**
