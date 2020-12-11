@@ -86,7 +86,7 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
                     }
 
                     // Put the posts in descending order by date.
-                    Collections.reverse(posts);
+                    Collections.sort(posts, Collections.reverseOrder());
                 }
                 mView.setPosts(posts);
 
