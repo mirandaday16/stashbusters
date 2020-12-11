@@ -41,6 +41,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         submitButton = binding.postButton;
         likeCountView = binding.numLikes;
         heartIcon = binding.heart;
+        deleteButton = binding.deleteButton;
 
         commentsSection = binding.commentRecyclerView;
 
