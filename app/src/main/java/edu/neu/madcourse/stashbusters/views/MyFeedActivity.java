@@ -34,16 +34,19 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity_feed);
 
+        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
+
         // Remove filter button from My Feed
-        Spinner filterButton = (Spinner) findViewById((R.id.filter_button));
+        Spinner filterButton = binding.filterButton;
         filterButton.setVisibility(View.GONE);
 
         mPresenter = new MyFeedPresenter(this);
 
         // Set up navigation bar
-        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.MYFEED);
+
+        setContentView(binding.getRoot());
 
         // Get posts from Firebase
         mPresenter.loadPosts();

@@ -1,15 +1,24 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +26,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
@@ -26,6 +38,8 @@ import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.utils.Utils;
+
 import android.content.Context;
 
 /**
@@ -38,7 +52,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
-    protected String authorId, postId;
+    protected String authorId, postId, currentUserId;
     protected DatabaseReference authorUserRef;
     protected DatabaseReference postRef;
 
@@ -49,7 +63,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected ConstraintLayout userView;
     protected ImageView userPic;
     protected TextView usernameView;
-    protected ImageView likedIcon;
     protected TextView titleView;
     protected ImageView postPhoto;
     protected TextView details;
@@ -60,6 +73,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected LinearLayout swapSection;
     protected Button swapButton;
     protected Button submitButton;
+    protected ImageView more;
     protected RecyclerView commentsSection;
 
     protected boolean currentUserLikedPost = false;
@@ -78,6 +92,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         postId = intent.getStringExtra("postId");
 
         mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
 
         setRefs();
         setPresenter();
@@ -88,13 +103,16 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         initViews();
         initRecyclerView();
-
+        setMoreButton();
         initListeners();
         onSwapButtonClick();
-
-
         setContentView(rootView);
+    }
 
+    private void setMoreButton() {
+        if (!authorId.equals(currentUserId)) {
+            more.setVisibility(View.GONE);
+        }
     }
 
     public abstract void setRefs();
@@ -102,7 +120,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     public abstract void setPresenter();
 
     public abstract void initViews();
-
 
     @Override
     public boolean getCurrentUserLikedPostStatus() {
@@ -192,8 +209,134 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         heartIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                System.out.println("mPresenter" + mPresenter);
                 mPresenter.onHeartIconClick(postRef, "like", authorId, postId);
+            }
+        });
+
+        more.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(PostActivity.this, v);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch ((item.getItemId())) {
+                            case R.id.edit_post:
+                                displayEditAlert();
+                                return true;
+                            case R.id.delete_post:
+                                displayDeleteAlert();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+                popupMenu.inflate(R.menu.post_menu);
+                if (!authorId.equals(currentUserId)) {
+                    popupMenu.getMenu().findItem(R.id.edit_post).setVisible(false);
+                    popupMenu.getMenu().findItem(R.id.delete_post).setVisible(false);
+                }
+                popupMenu.show();
+            }
+        });
+
+
+    }
+
+    private void displayDeleteAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Do you want to delete this post?");
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.deletePost();
+                Utils.showToast(PostActivity.this, "Post has been deleted");
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                        .setTextColor(getResources().getColor(R.color.colorTextLight));
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setTextColor(getResources().getColor(R.color.colorAccentDark));
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void displayEditAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Edit description");
+
+        final EditText inputDesc = new EditText(PostActivity.this);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        inputDesc.setLayoutParams(lp);
+
+        builder.setView(inputDesc);
+
+        // filled the box with current description
+        getText(inputDesc);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.editPost(inputDesc);
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                        .setTextColor(getResources().getColor(R.color.colorTextLight));
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setTextColor(getResources().getColor(R.color.colorAccentDark));
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void getText(final EditText editDescText) {
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // check post type
+                String desc = snapshot.child("description").getValue().toString();
+
+                editDescText.setText(desc);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

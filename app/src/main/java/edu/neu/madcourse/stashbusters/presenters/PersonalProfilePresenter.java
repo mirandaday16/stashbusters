@@ -88,15 +88,17 @@ public class PersonalProfilePresenter extends ProfilePresenter {
                         DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
                         List<Comment> postComments = getPostCommentsList(postSnapshot);
 
-                        String postType = postSnapshot.child("postType").getValue().toString();
-                        if (postType.equals("StashPanelPost")) {
-                            StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
-                            post.setComments(postComments);
-                            likedPostList.add(post);
-                        } else {
-                            StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
-                            post.setComments(postComments);
-                            likedPostList.add(post);
+                        if (postSnapshot.exists()) {
+                            String postType = postSnapshot.child("postType").getValue().toString();
+                            if (postType.equals("StashPanelPost")) {
+                                StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
+                                post.setComments(postComments);
+                                likedPostList.add(post);
+                            } else {
+                                StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
+                                post.setComments(postComments);
+                                likedPostList.add(post);
+                            }
                         }
                     }
                 }
@@ -122,16 +124,15 @@ public class PersonalProfilePresenter extends ProfilePresenter {
 
     // Starts Edit Profile Activity
     private void startEditProfileActivity() {
-//        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
-//        mContext.startActivity(intent);
-        Intent intent = new Intent(this.mContext, SwapPostActivity.class);
-        intent.putExtra("userId", "NiF8tL4tibY561pk1N6HuS2yZnR2").putExtra("postId", "-MNznFNS8BrMZY-YWMTq");
+        Intent intent = new Intent(this.mContext, EditProfileActivity.class);
         mContext.startActivity(intent);
     }
 
     // Starts Login Activity
     private void startLoginActivity() {
         Intent intent = new Intent(this.mContext, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }
 }

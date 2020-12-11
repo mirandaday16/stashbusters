@@ -27,6 +27,8 @@ import edu.neu.madcourse.stashbusters.presenters.WorldFeedPresenter;
 import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 
 public class WorldFeedActivity extends AppCompatActivity implements WorldFeedContract.MvpView {
+    private static final String TAG = WorldFeedActivity.class.getSimpleName();
+
     private NavigationBarView navigationBarView;
     ContentActivityFeedBinding binding;
     WorldFeedPresenter mPresenter;
@@ -39,8 +41,11 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         setContentView(R.layout.content_activity_feed);
 
 
+        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
+        spinner = binding.filterButton;
+
         //Code to initialize the spinner (dropdown button) and create adapter
-        spinner = findViewById(R.id.filter_button);
+        //spinner = findViewById(R.id.filter_button);
         spinner.setPrompt("Filter");
         String[] items = new String[]{"No Filter", "Panel Posts", "Swap Posts"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -73,9 +78,10 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         mPresenter = new WorldFeedPresenter(this);
 
         // Navigation bar setup:
-        binding = ContentActivityFeedBinding.inflate(getLayoutInflater());
         navigationBarView = binding.navigationBar;
         navigationBarView.setSelected(NavigationBarButtons.WORLDFEED);
+
+        setContentView(binding.getRoot());
 
         ImageView MyFeedImg = (ImageView) findViewById(R.id.my_feed_img);
         MyFeedImg.setImageResource(R.drawable.world_icon);
@@ -98,7 +104,7 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         }
         else {
             //No posts to show
-            System.out.println("  there are no posts right now");
+            Log.i(TAG, "No post to show on World Feed.");
         }
     }
 
