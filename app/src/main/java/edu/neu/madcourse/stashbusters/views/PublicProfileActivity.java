@@ -170,12 +170,15 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
     @Override
     public void onBackPressed() {
         Intent thisIntent = getIntent();
-
-        if (thisIntent.getExtras().containsKey("LAUNCHED_BY_NOTIFICATION")){
-            Intent intent = new Intent(this, WorldFeedActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            finish();
+        if (thisIntent.getExtras()!= null) {
+            if (thisIntent.getExtras().containsKey("LAUNCHED_BY_NOTIFICATION")){
+                Intent intent = new Intent(this, WorldFeedActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            } else {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
