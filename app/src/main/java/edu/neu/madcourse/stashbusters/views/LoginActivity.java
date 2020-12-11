@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
         // Initializing auth object for Firebase login
         mAuth = FirebaseAuth.getInstance();
         mPresenter = new LoginPresenter(this);
+
+        // Check if this activity was opened from a notification.
+        // If so, open the appropriate activity.
+        mPresenter.checkIfFromNotification(getIntent());
 
         // Setting up binding instance and view instances
         binding = LoginLandingScreenBinding.inflate(getLayoutInflater());
@@ -112,6 +117,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Mv
                 .setNegativeButton("Cancel", null)
                 .create();
         credentialsBox.show();
+    }
+
+    @Override
+    public void callFinish(){
+        finish();
     }
 
 }

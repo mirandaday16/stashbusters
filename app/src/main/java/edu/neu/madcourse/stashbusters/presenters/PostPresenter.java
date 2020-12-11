@@ -24,6 +24,7 @@ import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 /**
@@ -135,7 +136,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
     }
 
     @Override
-    public void onHeartIconClick(DatabaseReference postRef) {
+    public void onHeartIconClick(DatabaseReference postRef, String notifType, String authorId, String postId) {
         // check current like status, if already liked, unlike post + remove from DB.
         // else, like post and add to DB
         boolean likeStatus = mView.getCurrentUserLikedPostStatus();
@@ -149,6 +150,9 @@ public abstract class PostPresenter implements PostContract.Presenter {
             // not liked yet, clicking heart icon to like post
             likePost(postRef);
             likePost(allPostsRef.child(postId));
+
+            // Send notification to post author
+            startCommentNotification(notifType, authorId, postId);
         }
     }
 
@@ -263,5 +267,43 @@ public abstract class PostPresenter implements PostContract.Presenter {
         DatabaseReference commentNodeRef = postRef.child("comments");
         DatabaseReference newCommentRef = commentNodeRef.push(); // push used to generate unique id
         newCommentRef.setValue(comment);
+    }
+
+    @Override
+    public void startCommentNotification(final String notifType, final String authorId, final String postId) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getReference();
+
+        final ValueEventListener tokenListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    // Get postType and imageURL
+                    final String postType = (String) dataSnapshot.child("allPosts").child(postId).child("postType").getValue();
+                    final String imgURL = (String) dataSnapshot.child("allPosts").child(postId).child("photoUrl").getValue();
+
+                    // Use util to start notification
+                    if (notifType.equals("comment") && postType.equals("StashPanelPost")) {
+                        Utils.startNotification("commentPanel", currentUserId, authorId, postId, imgURL);
+                    } else if (notifType.equals("comment") && postType.equals("StashSwapPost")) {
+                        Utils.startNotification("commentSwap", currentUserId, authorId, postId, imgURL);
+                    } else if (notifType.equals("like") && postType.equals("StashPanelPost")) {
+                        Utils.startNotification("likePanel", currentUserId, authorId, postId, imgURL);
+                    } else {
+                        Utils.startNotification("likeSwap", currentUserId, authorId, postId, imgURL);
+                    }
+                }
+                catch (Exception ignored) {
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        ref.addListenerForSingleValueEvent(tokenListener);
     }
 }

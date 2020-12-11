@@ -58,7 +58,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
 
         postsRef = FirebaseDatabase.getInstance().getReference();
 
-        postsRef.addValueEventListener(new ValueEventListener() {
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -126,7 +126,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
 
         postsRef = FirebaseDatabase.getInstance().getReference();
 
-        postsRef.addValueEventListener(new ValueEventListener() {
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

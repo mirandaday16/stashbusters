@@ -54,7 +54,7 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
     public void loadPosts() {
         postsRef = FirebaseDatabase.getInstance().getReference();
 
-        postsRef.addValueEventListener(new ValueEventListener() {
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -107,12 +107,14 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
         }
 
         long createdDate = (long) postSnapShot.child("createdDate").getValue();
+        long likeCount = (long) postSnapShot.child("likeCount").getValue();
 
         post.setAuthorId(postSnapShot.child("authorId").getValue().toString());
         post.setPhotoUrl(postSnapShot.child("photoUrl").getValue().toString());
         post.setTitle(postSnapShot.child("title").getValue().toString());
         post.setId(postSnapShot.child("id").getValue().toString());
         post.setDescription(postSnapShot.child("description").getValue().toString());
+        post.setLikeCount(likeCount);
         post.setCreatedDate(createdDate);
 
         return post;

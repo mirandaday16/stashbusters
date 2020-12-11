@@ -11,14 +11,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
+import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
+
+import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
+import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
+import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 public class LoginPresenter implements LoginContract.Presenter {
     private static final String TAG = NewAccountActivity.class.getSimpleName();
@@ -60,6 +73,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                             if (task.isSuccessful()) {
                                 // Sign in success, send user to World Feed
                                 Log.d(TAG, "signInWithEmail:success");
+                                userId = mAuth.getCurrentUser().getUid();
+                                updateToken();
                                 startWorldFeedActivity();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -77,6 +92,74 @@ public class LoginPresenter implements LoginContract.Presenter {
                         }
                     });
         }
+    }
+
+    /**
+     * Upon successfully logging in, get the device's current token
+     * and then update the user's token in Firebase.
+     * The token is updated in case the user has uninstalled/re-installed the app
+     * or if the current token in Firebase has expired.
+     */
+    private void updateToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Push the token to the user's data in Firebase.
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("users").child(userId).child("deviceToken")
+                                .setValue(token);
+
+                        Log.d("Token:", token);
+                    }
+                });
+    }
+
+    @Override
+    public void checkIfFromNotification(Intent oldIntent){
+
+        if (oldIntent.getExtras() != null){
+            Intent intent;
+
+            switch (oldIntent.getStringExtra("postType")){
+                case "snack":
+                    intent = new Intent(mContext, SnackPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                case "follow":
+                    intent = new Intent(mContext, PublicProfileActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("senderId"));
+                    break;
+                case "commentPanel":
+                case "likePanel":
+                    intent = new Intent(mContext, PanelPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                case "commentSwap":
+                case "likeSwap":
+                    intent = new Intent(mContext, SwapPostActivity.class);
+                    intent.putExtra("userId", oldIntent.getStringExtra("userId"));
+                    intent.putExtra("postId", oldIntent.getStringExtra("postId"));
+                    break;
+                default:
+                    intent = new Intent(mContext, LoginActivity.class);
+                    break;
+            }
+            intent.putExtra("LAUNCHED_BY_NOTIFICATION", true);
+            mContext.startActivity(intent);
+            mView.callFinish();
+        }
+
     }
 
 }

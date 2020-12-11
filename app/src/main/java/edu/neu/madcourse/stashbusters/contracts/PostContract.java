@@ -32,7 +32,7 @@ public interface PostContract {
 
         void loadPostDataToView();
 
-        void onHeartIconClick(DatabaseReference postRef);
+        void onHeartIconClick(DatabaseReference postRef, String notifType, String authorId, String postId);
 
         void deletePost();
 
@@ -41,5 +41,7 @@ public interface PostContract {
         void loadCommentDataToView(Context context);
 
         void uploadComment(DatabaseReference postRef, Comment comment);
+
+        void startCommentNotification(String notifType, String authorId, String postId);
     }
 }

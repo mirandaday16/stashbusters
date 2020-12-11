@@ -55,8 +55,6 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         mPresenter.loadCommentDataToView(this);
     }
 
-
-
     @Override
     public void onSwapButtonClick() {
         // No swap button for this activity

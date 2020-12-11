@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.ProfileContract;
@@ -160,5 +161,26 @@ public class PublicProfileActivity extends AppCompatActivity implements ProfileC
     @Override
     public void showNoPostText(String inputMsg) {
         // do nothing in public profile
+    }
+
+    /**
+     * If this activity was opened from a notification,
+     * set back stack so back button goes to World Feed.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent thisIntent = getIntent();
+        if (thisIntent.getExtras()!= null) {
+            if (thisIntent.getExtras().containsKey("LAUNCHED_BY_NOTIFICATION")){
+                Intent intent = new Intent(this, WorldFeedActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 }
