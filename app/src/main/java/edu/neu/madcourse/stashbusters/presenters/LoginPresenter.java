@@ -155,6 +155,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     intent = new Intent(mContext, LoginActivity.class);
                     break;
             }
+            intent.putExtra("LAUNCHED_BY_NOTIFICATION", true);
             mContext.startActivity(intent);
             mView.callFinish();
         }
