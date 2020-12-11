@@ -90,6 +90,12 @@
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_email_address_and_password">Enter your email address and password</string>
     <string name="email_address">Email Address</string>
+
+    <string name="mark_swap_as_complete">MARK SWAP AS COMPLETE</string>
+    <string name="mark_swap_as_available">MARK SWAP AS AVAILABLE</string>
+
+
     <string name="no_posts_feed">Follow other users\n to see posts in your feed!</string>
     <string name="like_count">%1$d Likes</string>
+
 </resources>

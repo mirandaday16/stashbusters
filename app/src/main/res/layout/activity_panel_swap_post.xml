@@ -159,7 +159,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:textAppearance="@style/Body" />
+            android:textAppearance="@style/Body"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/swap_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccentDark"
+            style="@style/ButtonText"
+            android:text="@string/mark_swap_as_complete"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="10dp"
+            android:padding="10dp"/>
 
 
     </LinearLayout>
