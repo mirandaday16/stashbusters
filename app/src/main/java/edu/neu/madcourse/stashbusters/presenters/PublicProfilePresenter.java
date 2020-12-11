@@ -12,127 +12,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.PublicProfileContract;
-import edu.neu.madcourse.stashbusters.model.Post;
-import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 
-public class PublicProfilePresenter implements PublicProfileContract.Presenter {
+public class PublicProfilePresenter extends ProfilePresenter {
     private static final String TAG = PublicProfilePresenter.class.getSimpleName();
 
-    private PublicProfileContract.MvpView mView;
-    private Context mContext;
     // targetUserId is the owner of this profile
     private String targetUserId, currentUserId;
-    private FirebaseAuth mAuth;
-    private DatabaseReference targetUserProfileRef;
-    private DatabaseReference followRef;
 
-    private List<Post> postList;
-    private PostAdapter postAdapter;
-    private DatabaseReference postsRef;
+    private FirebaseAuth mAuth;
+    private DatabaseReference followRef, userRef;
 
     public PublicProfilePresenter(Context context, String targetUserId) {
-        this.mContext = context;
-        this.mView = (PublicProfileContract.MvpView) context;
+        super(context, targetUserId);
         this.targetUserId = targetUserId;
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(mContext, postList);
-        postsRef = FirebaseDatabase.getInstance().getReference();
-
-        targetUserProfileRef = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(targetUserId);
         followRef = FirebaseDatabase.getInstance().getReference().child("follows");
+        userRef = FirebaseDatabase.getInstance().getReference().child("users");
     }
 
-
-    @Override
-    public void loadDataToView() {
-        //load data of target user (might not be current user)
-        targetUserProfileRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // default photo is mouse icon
-                    String photoUrl = snapshot.child("photoUrl").getValue().toString();
-                    String username = snapshot.child("username").getValue().toString();
-                    String bio = snapshot.child("bio").getValue().toString();
-                    String followerCount = snapshot.child("followerCount").getValue().toString();
-                    mView.setViewData(photoUrl, username, bio, followerCount);
-
-                    Log.i(TAG, "loadDataToView:success");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-    }
-
-    @Override
-    public void getUserPostsData() {
-        // Panel posts
-        DatabaseReference panelPosts = postsRef.child("panelPosts").child(targetUserId);
-        // Swap Posts
-        DatabaseReference swapPosts = postsRef.child("swapPosts").child(targetUserId);
-
-        panelPosts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    postList.clear();
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
-                        postList.add(post);
-                    }
-                    postAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-                Log.e(TAG, error.toString());
-            }
-
-        });
-
-        swapPosts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashSwapPost post = dataSnapshot.getValue(StashSwapPost.class);
-                        postList.add(post);
-                    }
-                    postAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-                Log.e(TAG, error.toString());
-            }
-
-        });
-
-        Log.i(TAG, "getUserPostsData:success");
-        mView.setPostListAdapter(postAdapter);
-    }
-
-    @Override
     public void onFollowButtonClick(String buttonText) {
         // if button text is following -- unfollow
         // else, text is follow -- follow
@@ -157,12 +59,34 @@ public class PublicProfilePresenter implements PublicProfileContract.Presenter {
         followRef.child(currentUserId).child("following").child(targetUserId).setValue(true);
         // add current user to list of target user's follower
         followRef.child(targetUserId).child("followers").child(currentUserId).setValue(true);
+
+        updateUserCount("follow");
     }
 
     private void unfollowUser() {
         followRef.child(currentUserId).child("following").child(targetUserId).removeValue();
         followRef.child(targetUserId).child("followers").child(currentUserId).removeValue();
+
+        updateUserCount("unfollow");
     }
 
+    private void updateUserCount(final String followStatus) {
+        final DatabaseReference targetUserRef = userRef.child(targetUserId);
+        targetUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long currentFollowCount = (long) snapshot.child("followerCount").getValue();
+                if (followStatus.equals("unfollow")){
+                    targetUserRef.child("followerCount").setValue(currentFollowCount - 1);
+                } else {
+                    targetUserRef.child("followerCount").setValue(currentFollowCount + 1);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

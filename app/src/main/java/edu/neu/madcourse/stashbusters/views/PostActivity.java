@@ -1,6 +1,5 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,17 +20,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import edu.neu.madcourse.stashbusters.CommentRVAdapter;
+import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
+import edu.neu.madcourse.stashbusters.R;
+import android.content.Context;
 
+/**
+ * Abstract class that represents the post detail activity.
+ * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
+ */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
+    public static final String LIKED_POSTS = "liked posts";
+    public static final String MY_POSTS = "my posts";
+
     protected PostPresenter mPresenter;
     protected FirebaseAuth mAuth;
     protected String authorId, postId;
@@ -51,15 +55,17 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected TextView details;
     protected EditText commentInput;
     protected TextView timeStamp;
+    protected TextView likeCountView;
+    protected ImageView heartIcon;
     protected LinearLayout swapSection;
     protected Button swapButton;
     protected Button submitButton;
     protected RecyclerView commentsSection;
 
+    protected boolean currentUserLikedPost = false;
+
     // Attributes needed for displaying comments in recycler view.
-    RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    CommentRVAdapter adapter;
 
     // For updating ImageView in a separate thread.
     private Handler imageHandler = new Handler();
@@ -74,9 +80,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         mAuth = FirebaseAuth.getInstance();
 
         setRefs();
-
         setPresenter();
-
 
         // Setting up binding instance and view instances
         binding = ActivityPanelSwapPostBinding.inflate(getLayoutInflater());
@@ -84,9 +88,9 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         initViews();
         initRecyclerView();
-        onUsernameClick(this);
-        onSwapButtonClick();
+
         initListeners();
+        onSwapButtonClick();
 
 
         setContentView(rootView);
@@ -99,7 +103,11 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initViews();
 
-    public abstract void onUsernameClick(Context context);
+
+    @Override
+    public boolean getCurrentUserLikedPostStatus() {
+        return this.currentUserLikedPost;
+    }
 
     public abstract void onSwapButtonClick();
 
@@ -110,10 +118,39 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         commentsSection.setLayoutManager(layoutManager);
+    }
 
+    @Override
+    public void setCurrentUserLikedPostStatus(boolean likeStatus) {
+        this.currentUserLikedPost = likeStatus;
+    }
+
+    @Override
+    public void setAuthorViewData(String username, String profilePicUrl) {
+        usernameView.setText(username);
+        Picasso.get().load(profilePicUrl).into(userPic);
+    }
+
+    public void setNewLikeCount(long newLikeCount) {
+        String likeCountText = String.format(getResources().getString(R.string.like_count), newLikeCount);
+        likeCountView.setText(likeCountText);
+    }
+
+    public void updateHeartIconDisplay(boolean status) {
+        if (status) {
+            heartIcon.setImageResource(R.drawable.heart_icon_filled);
+        } else {
+            heartIcon.setImageResource(R.drawable.heart_icon_empty);
+        }
+    }
+
+    @Override
+    public void setCommentAdapter(CommentRVAdapter commentsAdapter) {
+        commentsSection.setAdapter(commentsAdapter);
     }
 
     public void initListeners() {
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,38 +161,39 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
                 comment.setAuthorId(currentUser.getUid());
                 // Check that the user has entered a comment in the EditText field
                 if (commentText != null) {
-                    mPresenter.uploadComment(comment);
+                    mPresenter.uploadComment(postRef, comment);
                     // Reset comment field and update RecyclerView so user can see their comment
                     commentInput.setText("");
                     // TODO: Hide soft keyboard and update RecyclerView
                 }
             }
         });
-    }
 
+        userView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check to see if the author user is the same as the current user
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String currentUserId = currentUser.getUid();
+                if (authorId.equals(currentUserId)) {
+                    // If current user, take user to their personal profile
+                    Intent intent = new Intent(getApplicationContext(), PersonalProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Send user to author user's public profile
+                    Intent intent = new Intent(getApplicationContext(), PublicProfileActivity.class);
+                    intent.putExtra("userId", authorId);
+                    startActivity(intent);
+                }
+            }
+        });
 
-    @Override
-    public void setAuthorViewData(String username, String profilePicUrl) {
-        usernameView.setText(username);
-        Picasso.get().load(profilePicUrl).into(userPic);
-    }
-
-    @Override
-    public void setPostViewData(String title, String postPicUrl, String description,
-                                long createdDate) {
-        titleView.setText(title);
-        Picasso.get().load(postPicUrl).into(postPhoto);
-        details.setText(description);
-
-        // Format time stamp
-        Date date = new Date(createdDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.US);
-        String dateText = dateFormat.format(date);
-        timeStamp.setText(dateText);
-    }
-
-    @Override
-    public void setCommentAdapter(CommentRVAdapter commentsAdapter) {
-        commentsSection.setAdapter(commentsAdapter);
+        heartIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("mPresenter" + mPresenter);
+                mPresenter.onHeartIconClick(postRef);
+            }
+        });
     }
 }

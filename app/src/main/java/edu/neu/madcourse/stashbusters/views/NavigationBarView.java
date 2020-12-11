@@ -37,7 +37,7 @@ public class NavigationBarView extends FrameLayout {
         myFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, YourFeedActivity.class);
+                Intent intent = new Intent(context, MyFeedActivity.class);
                 context.startActivity(intent);
             }
         });

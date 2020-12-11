@@ -1,7 +1,7 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,8 +17,12 @@ import java.util.Map;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
 
+/**
+ * Handles UI for swap posts.
+ */
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
 
     @Override
@@ -35,6 +39,9 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         swapButton = binding.swapButton;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
+        likeCountView = binding.numLikes;
+        heartIcon = binding.heart;
+
         commentsSection = binding.commentRecyclerView;
 
         // Check whether post belongs to current user; if so, swap button should be visible
@@ -49,29 +56,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         commentInput.setHint(R.string.swap_hint);
 
         mPresenter.loadCommentDataToView(this);
-
-    }
-
-    @Override
-    public void onUsernameClick(final Context context) {
-        userView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Check to see if the author user is the same as the current user
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String currentUserId = currentUser.getUid();
-                if (authorId.equals(currentUserId)) {
-                    // If current user, take user to their personal profile
-                    Intent intent = new Intent(context, PersonalProfileActivity.class);
-                    context.startActivity(intent);
-                } else {
-                    // Send user to author user's public profile
-                    Intent intent = new Intent(context, PublicProfileActivity.class);
-                    intent.putExtra("userId", authorId);
-                    context.startActivity(intent);
-                }
-            }
-        });
+        initListeners();
     }
 
     @Override
@@ -111,7 +96,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 .child(authorId);
         postRef = FirebaseDatabase.getInstance().getReference().child("swapPosts")
                 .child(authorId).child(postId);
-
+//        super.initListeners(postRef);
     }
 
     @Override
@@ -123,7 +108,8 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
     @Override
     public void setPostViewData(String title, String postPicUrl, String description,
-                                long createdDate, String material, Boolean isAvailable) {
+                                long createdDate, String material, Boolean isAvailable,
+                                long likeCount) {
         titleView.setText(title);
         Picasso.get().load(postPicUrl).into(postPhoto);
         details.setText(description);
@@ -144,5 +130,10 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         String dateText = dateFormat.format(date);
         timeStamp.setText(dateText);
 
+        setNewLikeCount(likeCount);
+
+        // set heart state
+        mPresenter.checkLikeStatus();
     }
+
 }

@@ -15,82 +15,40 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
-import edu.neu.madcourse.stashbusters.R;
-import edu.neu.madcourse.stashbusters.contracts.PersonalProfileContract;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
+import edu.neu.madcourse.stashbusters.views.PostActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.
  */
-public class PersonalProfilePresenter implements PersonalProfileContract.Presenter {
+public class PersonalProfilePresenter extends ProfilePresenter {
     private static final String TAG = PersonalProfilePresenter.class.getSimpleName();
 
-    private PersonalProfileContract.MvpView mView;
-    private Context mContext;
-    private String userId; // owner of the profile
-
-    private List<Post> postList;
-    private PostAdapter postAdapter;
-
-    private FirebaseAuth mAuth;
-    private DatabaseReference userProfileRef;
-    private DatabaseReference postsRef;
+    private List<Post> likedPostList;
+    private PostAdapter likedPostAdapter;
 
     public PersonalProfilePresenter(Context context, String userId) {
-        this.mView = (PersonalProfileContract.MvpView) context;
-        this.mContext = context;
-        this.userId = userId;
+        super(context, userId);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(mContext, postList);
-
-        userProfileRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-        postsRef = FirebaseDatabase.getInstance().getReference();
+        likedPostList = new ArrayList<>();
+        likedPostAdapter = new PostAdapter(mContext, likedPostList);
     }
 
-
-    @Override
-    public void loadDataToView() {
-        userProfileRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // default photo is mouse icon
-                    String photoUrl = snapshot.child("photoUrl").getValue().toString();
-                    String username = snapshot.child("username").getValue().toString();
-                    String bio = snapshot.child("bio").getValue().toString();
-                    String followerCount = snapshot.child("followerCount").getValue().toString();
-                    mView.setViewData(photoUrl, username, bio, followerCount);
-
-                    Log.i(TAG, "loadDataToView:success");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-    }
-
-    @Override
-    public void onEditProfileButtonClick(String userId) {
-        Intent intent = new Intent(mContext, EditProfileActivity.class);
-        mContext.startActivity(intent);
-    }
-
-    @Override
     public boolean onToolbarClick(MenuItem item) {
         if (item.getItemId() == R.id.edit_profile_menu_item) {
             startEditProfileActivity();
@@ -101,26 +59,45 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
         return false;
     }
 
-    @Override
-    public void getUserPostsData() {
-        // Panel posts
-        DatabaseReference panelPosts = postsRef.child("panelPosts").child(userId);
-        // Swap Posts
-        DatabaseReference swapPosts = postsRef.child("swapPosts").child(userId);
-
-        panelPosts.addValueEventListener(new ValueEventListener() {
+    /**
+     * Gets all current user's liked posts and update recycler view adapter.
+     */
+    public void getUserLikedPosts() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    postList.clear();
-                    System.out.println("Count " + snapshot.getChildrenCount());
+                likedPostList.clear();
 
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashPanelPost post = dataSnapshot.getValue(StashPanelPost.class);
-                        postList.add(post);
+                // get userLikes
+                DataSnapshot likePostsSnapshot = snapshot.child("userLikes").child(userId);
+
+                Map<String, Object> likeMapping = (HashMap) likePostsSnapshot.getValue();
+                if (likeMapping != null) {
+                    for (String key : likeMapping.keySet()) {
+
+                        DataSnapshot postSnapshot = snapshot.child("allPosts").child(key);
+                        List<Comment> postComments = getPostCommentsList(postSnapshot);
+
+                        String postType = postSnapshot.child("postType").getValue().toString();
+                        if (postType.equals("StashPanelPost")) {
+                            StashPanelPost post = (StashPanelPost) setPostData(postSnapshot, "StashPanel");
+                            post.setComments(postComments);
+                            likedPostList.add(post);
+                        } else {
+                            StashSwapPost post = (StashSwapPost) setPostData(postSnapshot, "StashSwap");
+                            post.setComments(postComments);
+                            likedPostList.add(post);
+                        }
                     }
-                    postAdapter.notifyDataSetChanged();
                 }
+
+                Collections.reverse(likedPostList);
+                if (likedPostList.isEmpty()) {
+                    // no liked posts, display message
+                    mView.showNoPostText(PostActivity.LIKED_POSTS);
+                }
+                likedPostAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -130,28 +107,8 @@ public class PersonalProfilePresenter implements PersonalProfileContract.Present
 
         });
 
-        swapPosts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StashSwapPost post = dataSnapshot.getValue(StashSwapPost.class);
-                        postList.add(post);
-                    }
-                    postAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-                Log.e(TAG, error.toString());
-            }
-
-        });
-
-        Log.i(TAG, "getUserPostsData:success");
-        mView.setPostListAdapter(postAdapter);
+        Log.i(TAG, "getUserLikedPostsData:success");
+        mView.setPostListAdapter(likedPostAdapter);
     }
 
     // Starts Edit Profile Activity

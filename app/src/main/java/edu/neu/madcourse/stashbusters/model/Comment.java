@@ -11,8 +11,8 @@ public class Comment {
     private long createdDate;
     private String authorId;
 
-    public Comment() {
-
+    public Comment () {
+        // for Datasnapshot
     }
 
     public Comment(String text) {
