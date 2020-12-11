@@ -9,12 +9,13 @@ import android.net.Uri;
  */
 public interface NewSnackContract {
     interface MvpView {
-        void takePhoto();
+        /**
+         * Function to call finish()
+         */
         void finishActivity();
     }
 
     interface Presenter {
         void onPostButtonClick(String question, String choice_one, String choice_two, Uri uri);
-        void onImageButtonClick();
     }
 }
