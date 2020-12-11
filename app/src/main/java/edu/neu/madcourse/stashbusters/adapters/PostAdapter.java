@@ -1,12 +1,15 @@
 package edu.neu.madcourse.stashbusters.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.contentcapture.DataRemovalRequest;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import java.util.List;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.utils.Utils;
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
 import edu.neu.madcourse.stashbusters.views.PostActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
@@ -96,6 +100,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         return mPosts.size();
     }
 
+    /**
+     * Image View holder
+     */
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView username, numLikes, headline;
         public ImageView image, heart, postTypeImage;

@@ -64,6 +64,9 @@
     <string name="submit">Submit!</string>
     <string name="swapped">SWAPPED! This swap is no longer available.</string>
 
+    <string name="delete_post">Delete</string>
+    <string name="edit_post">Edit Post</string>
+
     <string name="let_s_go">Save</string>
     <string name="describe_yourself_hint">Describe yourself and what you do in 150 characters or less</string>
     <string name="edit_your_bio">Edit your bio</string>
@@ -98,6 +101,6 @@
     <string name="no_posts_feed">Follow other users\n to see posts in your feed!</string>
     <string name="like_count">%1$d Likes</string>
 
-    <string name="delete_post">Delete</string>
+
 
 </resources>

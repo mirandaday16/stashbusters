@@ -30,7 +30,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         userView = binding.user;
         userPic = binding.profilePic;
         usernameView = binding.username;
-        likedIcon = binding.liked;
         titleView = binding.title;
         postPhoto = binding.photo;
         details = binding.details;
@@ -41,7 +40,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         submitButton = binding.postButton;
         likeCountView = binding.numLikes;
         heartIcon = binding.heart;
-        deleteButton = binding.deleteButton;
+        more = binding.more;
 
         commentsSection = binding.commentRecyclerView;
 

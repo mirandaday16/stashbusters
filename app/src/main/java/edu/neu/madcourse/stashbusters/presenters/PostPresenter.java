@@ -3,6 +3,7 @@ package edu.neu.madcourse.stashbusters.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
@@ -152,10 +154,23 @@ public abstract class PostPresenter implements PostContract.Presenter {
 
     @Override
     public void deletePost() {
+        allPostsRef.child(postId).removeValue();
         postRef.removeValue();
+
+        // remove from a user's likes
+        userLikesRef.child(currentUserId).child(postId).removeValue();
 
         Intent intent = new Intent(mContext, PersonalProfileActivity.class);
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public void editPost(EditText editText) {
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put("description", editText.getText().toString());
+
+        postRef.updateChildren(updates);
+        allPostsRef.child(postId).updateChildren(updates);
     }
 
     private void likePost(final DatabaseReference postRef) {
