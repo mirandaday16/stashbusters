@@ -44,6 +44,8 @@ public interface PostContract {
 
         void onHeartIconClick(DatabaseReference postRef);
 
+        void deletePost();
+
         void loadCommentDataToView(Context context);
 
         void uploadComment(DatabaseReference postRef, Comment comment);

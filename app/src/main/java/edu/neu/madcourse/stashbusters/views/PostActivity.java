@@ -1,5 +1,8 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +29,8 @@ import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.R;
+import edu.neu.madcourse.stashbusters.utils.Utils;
+
 import android.content.Context;
 
 /**
@@ -60,6 +65,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected LinearLayout swapSection;
     protected Button swapButton;
     protected Button submitButton;
+    protected Button deleteButton;
     protected RecyclerView commentsSection;
 
     protected boolean currentUserLikedPost = false;
@@ -91,8 +97,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         initListeners();
         onSwapButtonClick();
-
-
+        setDeleteButton();
         setContentView(rootView);
 
     }
@@ -103,6 +108,12 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
     public abstract void initViews();
 
+    private void setDeleteButton(){
+        String currentUserId = mAuth.getCurrentUser().getUid();
+        if (!authorId.equals(currentUserId)) {
+            deleteButton.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean getCurrentUserLikedPostStatus() {
@@ -191,8 +202,33 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
         heartIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                System.out.println("mPresenter" + mPresenter);
                 mPresenter.onHeartIconClick(postRef);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+                builder.setTitle("Do you want to delete this post?");
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deletePost();
+                        Utils.showToast(PostActivity.this, "Post has been deleted");
+                    }
+                });
+
+                Dialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

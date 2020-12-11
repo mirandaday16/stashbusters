@@ -45,6 +45,7 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         submitButton = binding.postButton;
         likeCountView = binding.numLikes;
         heartIcon = binding.heart;
+        deleteButton = binding.deleteButton;
 
         initListeners();
 

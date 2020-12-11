@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
+import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 
 /**
  * Abstract class that handles logic for post details.
@@ -146,6 +148,14 @@ public abstract class PostPresenter implements PostContract.Presenter {
             likePost(postRef);
             likePost(allPostsRef.child(postId));
         }
+    }
+
+    @Override
+    public void deletePost() {
+        postRef.removeValue();
+
+        Intent intent = new Intent(mContext, PersonalProfileActivity.class);
+        mContext.startActivity(intent);
     }
 
     private void likePost(final DatabaseReference postRef) {

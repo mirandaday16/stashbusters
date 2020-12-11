@@ -80,6 +80,17 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
 
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccentDark"
+            android:textSize="14sp"
+            android:text="@string/delete_post"
+            android:layout_gravity="right"
+            android:layout_marginVertical="10dp"
+            android:padding="5dp"/>
+
         <TextView
             android:id="@+id/details"
             android:layout_width="wrap_content"
