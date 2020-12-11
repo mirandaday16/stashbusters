@@ -1,18 +1,15 @@
 package edu.neu.madcourse.stashbusters.views;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -32,22 +29,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import edu.neu.madcourse.stashbusters.WorldFeedActivity;
 import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
 import edu.neu.madcourse.stashbusters.model.Comment;
+import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.utils.Utils;
-
-import android.content.Context;
 
 /**
  * Abstract class that represents the post detail activity.
  * Extended by {@link SwapPostActivity} and {@link PanelPostActivity}
  */
 public abstract class PostActivity extends AppCompatActivity implements PostContract.MvpView {
+    private static final String TAG = PostActivity.class.getSimpleName();
     public static final String LIKED_POSTS = "liked posts";
     public static final String MY_POSTS = "my posts";
 
@@ -337,7 +333,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
     }

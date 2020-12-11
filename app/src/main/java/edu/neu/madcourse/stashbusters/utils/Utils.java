@@ -1,8 +1,6 @@
 package edu.neu.madcourse.stashbusters.utils;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -26,6 +24,7 @@ import java.util.Scanner;
  * Utils
  */
 public class Utils {
+    private static final String TAG = Utils.class.getSimpleName();
 
     // FCM server key
     private static final String SERVER_KEY ="key=AAAAZhAZJQA:APA91bFtBTB_cyXhfzoP2GGiHXAFTQkBpnd_" +
@@ -67,7 +66,8 @@ public class Utils {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         };
 

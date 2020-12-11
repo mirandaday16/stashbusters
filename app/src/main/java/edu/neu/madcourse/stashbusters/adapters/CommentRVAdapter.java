@@ -122,14 +122,14 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.Comm
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Log.e(TAG, error.toString());
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
 

@@ -80,6 +80,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         });
 
@@ -115,6 +116,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         });
 
@@ -161,6 +163,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         });
 

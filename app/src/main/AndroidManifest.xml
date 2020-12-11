@@ -15,10 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.SnackIntroActivity" />
-        <activity
-            android:name=".views.SnackPostActivity"
-            android:label="@string/snack_busting" />
+
+        <!-- Sign up / Login -->
+        <activity android:name=".views.NewAccountActivity" />
+        <activity android:name=".views.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--   Profiles     -->
         <activity
             android:name=".views.PersonalProfileActivity"
             android:label="Personal Profile" >
@@ -29,19 +37,12 @@
         <activity
             android:name=".views.PublicProfileActivity"
             android:label="Public Profile" />
-        <activity android:name=".views.NewAccountActivity" />
-        <activity android:name=".views.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".WorldFeedActivity"/>
-
+        <!-- Feeds -->
+        <activity android:name=".views.WorldFeedActivity"/>
         <activity android:name=".views.MyFeedActivity"/>
 
+        <!-- New Posts -->
         <activity
             android:name=".views.NewSnackActivity"
             android:label="@string/new_snack_post" />
@@ -54,15 +55,21 @@
         <activity
             android:name=".views.NewSwapActivity"
             android:label="@string/new_swap_post" />
+
+        <!-- Post details -->
         <activity
             android:name=".views.PanelPostActivity"
             android:label="Panel Post Display" />
+        <activity android:name=".views.SnackIntroActivity" />
+        <activity
+            android:name=".views.SnackPostActivity"
+            android:label="@string/snack_busting" />
         <activity
             android:name=".views.SwapPostActivity"
             android:label="Swap Post Display" />
         <activity android:name=".views.PostActivity" />
-        <activity android:name=".MainActivity" />
 
+        <!-- FCM Service -->
         <service
             android:name=".utils.FCMService"
             android:exported="false">

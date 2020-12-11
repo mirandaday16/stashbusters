@@ -97,7 +97,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
 
         });
@@ -123,7 +123,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
 
         });
@@ -143,7 +143,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
 
         });

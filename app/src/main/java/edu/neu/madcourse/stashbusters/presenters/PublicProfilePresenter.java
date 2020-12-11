@@ -89,7 +89,7 @@ public class PublicProfilePresenter extends ProfilePresenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
     }

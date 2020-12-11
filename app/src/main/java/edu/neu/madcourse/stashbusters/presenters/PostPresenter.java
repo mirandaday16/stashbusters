@@ -130,7 +130,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
     }
@@ -196,7 +196,6 @@ public abstract class PostPresenter implements PostContract.Presenter {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, error.toString());
-
             }
         });
     }
@@ -218,7 +217,7 @@ public abstract class PostPresenter implements PostContract.Presenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
         });
     }
@@ -300,7 +299,8 @@ public abstract class PostPresenter implements PostContract.Presenter {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         };
 

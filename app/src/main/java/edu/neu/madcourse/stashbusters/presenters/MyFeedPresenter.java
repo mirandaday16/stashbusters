@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.presenters;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -92,7 +93,7 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, error.toString());
             }
 
         });
