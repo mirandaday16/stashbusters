@@ -54,6 +54,15 @@ public class PersonalProfilePresenter extends ProfilePresenter {
             startEditProfileActivity();
         } else if (item.getItemId() == R.id.log_out_menu_item) {
             FirebaseAuth.getInstance().signOut();
+
+            // Nullify user's device token upon signing out.
+            try {
+                FirebaseDatabase.getInstance().getReference()
+                        .child("users").child(userId).child("deviceToken")
+                        .setValue("");
+            } catch (Exception ignored) {
+            }
+
             startLoginActivity();
         }
         return false;

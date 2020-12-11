@@ -11,6 +11,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import edu.neu.madcourse.stashbusters.WorldFeedActivity;
@@ -67,6 +73,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                             if (task.isSuccessful()) {
                                 // Sign in success, send user to World Feed
                                 Log.d(TAG, "signInWithEmail:success");
+                                userId = mAuth.getCurrentUser().getUid();
+                                updateToken();
                                 startWorldFeedActivity();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -84,6 +92,35 @@ public class LoginPresenter implements LoginContract.Presenter {
                         }
                     });
         }
+    }
+
+    /**
+     * Upon successfully logging in, get the device's current token
+     * and then update the user's token in Firebase.
+     * The token is updated in case the user has uninstalled/re-installed the app
+     * or if the current token in Firebase has expired.
+     */
+    private void updateToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Push the token to the user's data in Firebase.
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("users").child(userId).child("deviceToken")
+                                .setValue(token);
+
+                        Log.d("Token:", token);
+                    }
+                });
     }
 
     @Override
