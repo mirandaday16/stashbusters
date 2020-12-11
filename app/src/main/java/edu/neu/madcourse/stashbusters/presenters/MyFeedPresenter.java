@@ -51,6 +51,11 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
     }
 
 
+    /**
+     * Called by the MvpView to gather posts from Firebase. It gathers all panel/swap posts
+     * from users the user is currently following. Then, it sends the gathered posts to
+     * MvpView by calling setPosts(posts).
+     */
     @Override
     public void loadPosts() {
         postsRef = FirebaseDatabase.getInstance().getReference();
@@ -99,6 +104,14 @@ public class MyFeedPresenter implements MyFeedContract.Presenter{
         });
     }
 
+    /**
+     * Helper function to parse the data received from Firebase into a StashPanelPost or
+     * StashSwapPost object.
+     *
+     * @param postSnapShot snapshot of one panel or swap post to be stored as a Post object
+     * @param postType the type of Post object to be created ("StashPanel" or "StashSwap")
+     * @return
+     */
     protected Post setPostData(DataSnapshot postSnapShot, String postType){
         Post post;
         if (postType.equals("StashPanel")) {

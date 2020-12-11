@@ -51,6 +51,11 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
 
     }
 
+    /**
+     * Called by the Presenter (from within setPosts) to initialize the RecyclerView with all
+     * of the posts. If the posts list is null or empty, then it displays a message advising the
+     * user to follow other users.
+     */
     @Override
     public void setPosts(List<Post> posts) {
         if (posts != null && posts.size() > 0) {
