@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,7 +35,7 @@ public class MyFeedActivity extends AppCompatActivity implements MyFeedContract.
         setContentView(R.layout.content_activity_feed);
 
         // Remove filter button from My Feed
-        Button filterButton = (Button) findViewById((R.id.filter_button));
+        Spinner filterButton = (Spinner) findViewById((R.id.filter_button));
         filterButton.setVisibility(View.GONE);
 
         mPresenter = new MyFeedPresenter(this);
