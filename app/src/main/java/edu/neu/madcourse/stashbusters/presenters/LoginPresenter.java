@@ -117,6 +117,14 @@ public class LoginPresenter implements LoginContract.Presenter {
                 });
     }
 
+    /**
+     * Determines whether this activity was launched from tapping a notification (BACKGROUND
+     * NOTIFICATION TAPS ONLY-- for foreground notification intent information, please see
+     * FCMService). If activity was launched from a notification, this function will create an
+     * intent for the appropriate activity, pass in the appropriate extras, and start that activity.
+     *
+     * @param oldIntent the intent of the currently opened LoginActivity
+     */
     @Override
     public void checkIfFromNotification(Intent oldIntent){
 
