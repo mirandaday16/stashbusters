@@ -1,6 +1,7 @@
 package edu.neu.madcourse.stashbusters.views;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,7 +11,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.contracts.SwapPostContract;
@@ -21,7 +24,6 @@ import edu.neu.madcourse.stashbusters.presenters.SwapPostPresenter;
  * Handles UI for swap posts.
  */
 public class SwapPostActivity extends PostActivity implements SwapPostContract.MvpView {
-    protected SwapPostPresenter mPresenter;
 
     @Override
     public void initViews() {
@@ -34,6 +36,7 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         details = binding.details;
         timeStamp = binding.timeStamp;
         swapSection = binding.swapFor;
+        swapButton = binding.swapButton;
         commentInput = binding.commentInput;
         submitButton = binding.postButton;
         likeCountView = binding.numLikes;
@@ -41,54 +44,48 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
 
         commentsSection = binding.commentRecyclerView;
 
+        // Check whether post belongs to current user; if so, swap button should be visible
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String currentUserId = currentUser.getUid();
+        if (authorId.equals(currentUserId)) {
+            swapButton.setVisibility(View.VISIBLE);
+        } else {
+            swapButton.setVisibility(View.GONE);
+        }
+
         commentInput.setHint(R.string.swap_hint);
 
         mPresenter.loadCommentDataToView(this);
         initListeners();
     }
 
-    public void initListeners() {
-        submitButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onSwapButtonClick() {
+        swapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a new Comment object
-                String commentText = commentInput.getText().toString();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                Comment comment = new Comment(commentText);
-                comment.setAuthorId(currentUser.getUid());
-                // Check that the user has entered a comment in the EditText field
-                if (commentText != null) {
-                    mPresenter.uploadComment(postRef, comment);
-                    // Reset comment field and update RecyclerView so user can see their comment
-                    commentInput.setText("");
-                    // TODO: Hide soft keyboard and update RecyclerView
+                // Check to see if the button is visible
+                if (swapButton.getVisibility() == View.VISIBLE) {
+                    // Swap completion button is visible and can be used to mark swaps as complete
+                    // Now, check to see if swap is already marked as complete:
+                    if (swapButton.getText().equals(getResources().getString(R.string.mark_swap_as_complete))) {
+                        // Swap is not yet completed; click marks it as complete
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("availability", false);
+                        postRef.updateChildren(updates);
+                        // Change button appearance
+                        swapButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+                        swapButton.setText(getResources().getString(R.string.mark_swap_as_available));
+                    } else {
+                        // Otherwise, swap is already marked as complete; click marks as incomplete
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("availability", true);
+                        postRef.updateChildren(updates);
+                        // Change button appearance
+                        swapButton.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
+                        swapButton.setText(getResources().getString(R.string.mark_swap_as_complete));
+                    }
                 }
-            }
-        });
-
-        userView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Check to see if the author user is the same as the current user
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String currentUserId = currentUser.getUid();
-                if (authorId.equals(currentUserId)) {
-                    // If current user, take user to their personal profile
-                    Intent intent = new Intent(SwapPostActivity.this, PersonalProfileActivity.class);
-                    startActivity(intent);
-                } else {
-                    // Send user to author user's public profile
-                    Intent intent = new Intent(SwapPostActivity.this, PublicProfileActivity.class);
-                    intent.putExtra("userId", authorId);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        heartIcon.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mPresenter.onHeartIconClick(postRef);
             }
         });
     }
@@ -99,7 +96,6 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
                 .child(authorId);
         postRef = FirebaseDatabase.getInstance().getReference().child("swapPosts")
                 .child(authorId).child(postId);
-
 //        super.initListeners(postRef);
     }
 
@@ -123,7 +119,9 @@ public class SwapPostActivity extends PostActivity implements SwapPostContract.M
         if (isAvailable) {
             swapMaterial.setText(material);
         } else {
+            // Mark swap as complete - change text and color of swap section
             swapMaterial.setText(this.getString(R.string.swapped));
+            swapSection.setBackgroundColor(getResources().getColor(R.color.colorSurfaceDark));
         }
 
         // Format time stamp

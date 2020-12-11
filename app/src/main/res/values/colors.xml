@@ -14,6 +14,7 @@
 
     <color name="colorSurface">#F4F5F5</color>
     <color name="colorSurfaceDark">#DFE2E2</color>
+    <color name="colorGray">#B4BBBB</color>
 
     <color name="colorText">#131415</color>
     <color name="colorTextLight">#4E5256</color>

@@ -16,14 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import edu.neu.madcourse.stashbusters.adapters.CommentRVAdapter;
 import edu.neu.madcourse.stashbusters.contracts.PostContract;
 import edu.neu.madcourse.stashbusters.databinding.ActivityPanelSwapPostBinding;
+import edu.neu.madcourse.stashbusters.model.Comment;
 import edu.neu.madcourse.stashbusters.presenters.PostPresenter;
 import edu.neu.madcourse.stashbusters.R;
+import android.content.Context;
 
 /**
  * Abstract class that represents the post detail activity.
@@ -55,6 +58,7 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     protected TextView likeCountView;
     protected ImageView heartIcon;
     protected LinearLayout swapSection;
+    protected Button swapButton;
     protected Button submitButton;
     protected RecyclerView commentsSection;
 
@@ -84,6 +88,11 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         initViews();
         initRecyclerView();
+
+        initListeners();
+        onSwapButtonClick();
+
+
         setContentView(rootView);
 
     }
@@ -99,6 +108,8 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     public boolean getCurrentUserLikedPostStatus() {
         return this.currentUserLikedPost;
     }
+
+    public abstract void onSwapButtonClick();
 
     public void initRecyclerView() {
         commentsSection = binding.commentRecyclerView;
@@ -136,5 +147,53 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
     @Override
     public void setCommentAdapter(CommentRVAdapter commentsAdapter) {
         commentsSection.setAdapter(commentsAdapter);
+    }
+
+    public void initListeners() {
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a new Comment object
+                String commentText = commentInput.getText().toString();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                Comment comment = new Comment(commentText);
+                comment.setAuthorId(currentUser.getUid());
+                // Check that the user has entered a comment in the EditText field
+                if (commentText != null) {
+                    mPresenter.uploadComment(postRef, comment);
+                    // Reset comment field and update RecyclerView so user can see their comment
+                    commentInput.setText("");
+                    // TODO: Hide soft keyboard and update RecyclerView
+                }
+            }
+        });
+
+        userView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check to see if the author user is the same as the current user
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String currentUserId = currentUser.getUid();
+                if (authorId.equals(currentUserId)) {
+                    // If current user, take user to their personal profile
+                    Intent intent = new Intent(getApplicationContext(), PersonalProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Send user to author user's public profile
+                    Intent intent = new Intent(getApplicationContext(), PublicProfileActivity.class);
+                    intent.putExtra("userId", authorId);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        heartIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("mPresenter" + mPresenter);
+                mPresenter.onHeartIconClick(postRef);
+            }
+        });
     }
 }

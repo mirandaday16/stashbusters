@@ -21,7 +21,6 @@ import edu.neu.madcourse.stashbusters.presenters.PanelPostPresenter;
  * Handles UI for panel posts.
  */
 public class PanelPostActivity extends PostActivity implements PanelPostContract.MvpView {
-    private PanelPostPresenter mPresenter;
 
     @Override
     public void setRefs() {
@@ -56,51 +55,11 @@ public class PanelPostActivity extends PostActivity implements PanelPostContract
         mPresenter.loadCommentDataToView(this);
     }
 
-    public void initListeners() {
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create a new Comment object
-                String commentText = commentInput.getText().toString();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                Comment comment = new Comment(commentText);
-                comment.setAuthorId(currentUser.getUid());
-                // Check that the user has entered a comment in the EditText field
-                if (commentText != null) {
-                    mPresenter.uploadComment(postRef, comment);
-                    // Reset comment field and update RecyclerView so user can see their comment
-                    commentInput.setText("");
-                    // TODO: Hide soft keyboard and update RecyclerView
-                }
-            }
-        });
 
-        userView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Check to see if the author user is the same as the current user
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String currentUserId = currentUser.getUid();
-                if (authorId.equals(currentUserId)) {
-                    // If current user, take user to their personal profile
-                    Intent intent = new Intent(PanelPostActivity.this, PersonalProfileActivity.class);
-                    startActivity(intent);
-                } else {
-                    // Send user to author user's public profile
-                    Intent intent = new Intent(PanelPostActivity.this, PublicProfileActivity.class);
-                    intent.putExtra("userId", authorId);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        heartIcon.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mPresenter.onHeartIconClick(postRef);
-            }
-        });
+    @Override
+    public void onSwapButtonClick() {
+        // No swap button for this activity
     }
 
     @Override
