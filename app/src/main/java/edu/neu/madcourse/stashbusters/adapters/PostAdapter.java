@@ -79,6 +79,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         holder.setPostId(postId);
         holder.setAuthorId(authorId);
 
+        // layout for icon
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+        layoutParams.setMargins(25, 30, 25, 0);
+
         if ("StashSwapPost".equals(holder.postType)) {
             holder.postCardBg.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
             holder.postTypeImage.setImageResource(R.drawable.swap_icon);
@@ -86,6 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             holder.postCardBg.setBackgroundColor(mContext.getResources().getColor(R.color.colorSecondaryLight));
             holder.postTypeImage.setImageResource(R.drawable.lightbulb_icon);
         }
+        holder.postTypeImage.setLayoutParams(layoutParams);
 
         String likeCountText = post.getLikeCount() + " Likes";
         holder.numLikes.setText(likeCountText);
