@@ -81,6 +81,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
         if ("StashSwapPost".equals(holder.postType)) {
             holder.postCardBg.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+            holder.postTypeImage.setImageResource(R.drawable.swap_icon);
+        } else {
+            holder.postCardBg.setBackgroundColor(mContext.getResources().getColor(R.color.colorSecondaryLight));
+            holder.postTypeImage.setImageResource(R.drawable.lightbulb_icon);
         }
 
         String likeCountText = post.getLikeCount() + " Likes";
@@ -94,7 +98,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView username, numLikes, headline;
-        public ImageView image, heart;
+        public ImageView image, heart, postTypeImage;
         public LinearLayout postCardBg;
         private String postType;
         private String postId;
@@ -109,6 +113,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             numLikes = itemView.findViewById(R.id.numLikes);
             headline = itemView.findViewById(R.id.headline);
             postCardBg = itemView.findViewById(R.id.post_card_bg);
+            postTypeImage = itemView.findViewById(R.id.post_type_image);
 
             itemView.setOnClickListener(this);
         }

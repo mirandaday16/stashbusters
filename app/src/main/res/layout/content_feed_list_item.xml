@@ -15,17 +15,32 @@
         android:background="@color/colorSecondaryLight"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/headline"
-            style="@style/PostHeadline"
+        <LinearLayout android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Headline of Post"
-            app:layout_constraintBottom_toTopOf="@+id/image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.246"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/post_type_image"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/headline"
+                style="@style/PostHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="5dp"
+                android:text="Headline of Post"
+                app:layout_constraintBottom_toTopOf="@+id/image"
+                app:layout_constraintHorizontal_bias="0.246" />
+
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/image"
