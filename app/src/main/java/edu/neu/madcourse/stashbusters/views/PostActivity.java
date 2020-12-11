@@ -1,5 +1,6 @@
 package edu.neu.madcourse.stashbusters.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -227,7 +228,18 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
                     }
                 });
 
-                Dialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
+
+                dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                                .setTextColor(getResources().getColor(R.color.colorTextLight));
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                .setTextColor(getResources().getColor(R.color.colorAccentDark));
+                    }
+                });
+
                 dialog.show();
             }
         });
