@@ -13,12 +13,16 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public interface NewPanelContract {
     interface MvpView {
-        void takePhoto();
+        /**
+         * Function to call finish()
+         */
         void finishActivity();
     }
 
     interface Presenter {
+        /**
+         * Function that attempts to upload the post to Firebase when the postButton is clicked.
+         */
         void onPostButtonClick(String title, String description, int material, Uri uri);
-        void onImageButtonClick();
     }
 }

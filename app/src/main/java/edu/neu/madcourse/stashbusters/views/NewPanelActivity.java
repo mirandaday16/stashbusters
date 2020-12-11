@@ -97,7 +97,7 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                mPresenter.onImageButtonClick();
+                takePhoto();
                 break;
             case R.id.postButton:
                 mPresenter.onPostButtonClick(title.getText().toString(),
@@ -114,7 +114,6 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
      * Function to open the camera app and set up the URI in which to save the photo.
      * Camera code based on: https://developer.android.com/training/camera/photobasics
      */
-    @Override
     public void takePhoto() {
 
         // Check for permissions.
@@ -230,6 +229,9 @@ public class NewPanelActivity extends AppCompatActivity implements NewPanelContr
         }
     }
 
+    /**
+     * Function to call finish()
+     */
     @Override
     public void finishActivity(){
         finish();
