@@ -103,11 +103,16 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
 
         initViews();
         initRecyclerView();
-
+        setMoreButton();
         initListeners();
         onSwapButtonClick();
         setContentView(rootView);
+    }
 
+    private void setMoreButton() {
+        if (!authorId.equals(currentUserId)) {
+            more.setVisibility(View.GONE);
+        }
     }
 
     public abstract void setRefs();
