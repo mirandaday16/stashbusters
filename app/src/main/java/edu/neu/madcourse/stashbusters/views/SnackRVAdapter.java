@@ -100,7 +100,7 @@ public class SnackRVAdapter extends RecyclerView.Adapter<SnackRVAdapter.SnackVie
         new Thread(new Runnable() {
             @Override
             public void run() {
-                setImageView(holder, post.getPhotoUrl(), holder.profilePic);
+                setImageView(holder, author.getPhotoUrl(), holder.profilePic);
             }
         }).start();
 
