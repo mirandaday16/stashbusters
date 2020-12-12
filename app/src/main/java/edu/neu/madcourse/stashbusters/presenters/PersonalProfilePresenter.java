@@ -28,10 +28,7 @@ import edu.neu.madcourse.stashbusters.model.StashPanelPost;
 import edu.neu.madcourse.stashbusters.model.StashSwapPost;
 import edu.neu.madcourse.stashbusters.views.EditProfileActivity;
 import edu.neu.madcourse.stashbusters.views.LoginActivity;
-import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PostActivity;
-import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
 
 /**
  * Responsible for handling actions from the View and updating the UI as required.

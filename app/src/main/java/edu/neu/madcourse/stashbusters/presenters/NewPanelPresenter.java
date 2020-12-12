@@ -70,14 +70,6 @@ public class NewPanelPresenter implements NewPanelContract.Presenter{
     }
 
     /**
-     * Function that tells the View what to do when the imageButton is clicked.
-     */
-    @Override
-    public void onImageButtonClick() {
-        mView.takePhoto();
-    }
-
-    /**
      * Function to upload post photo Firebase storage and get the url.
      */
     private void uploadPhotoToStorage(final String title, final String description, final int material, Uri photoUri) {

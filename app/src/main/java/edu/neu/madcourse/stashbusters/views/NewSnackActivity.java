@@ -63,7 +63,7 @@ public class NewSnackActivity extends AppCompatActivity implements NewSnackContr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                mPresenter.onImageButtonClick();
+                takePhoto();
                 break;
             case R.id.postButton:
                 mPresenter.onPostButtonClick(title.getText().toString(),
@@ -79,7 +79,6 @@ public class NewSnackActivity extends AppCompatActivity implements NewSnackContr
      * Function to open the camera app and set up the URI in which to save the photo.
      * Camera code based on: https://developer.android.com/training/camera/photobasics
      */
-    @Override
     public void takePhoto() {
 
         // Check for permissions.

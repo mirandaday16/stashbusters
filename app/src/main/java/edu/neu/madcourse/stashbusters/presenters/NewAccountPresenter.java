@@ -51,7 +51,9 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
     private StorageReference storageRef;
     private DatabaseReference usersRef;
     private SharedPreferences prefs;
-    private String profilePicUrl = ""; // TODO: might want to set default url here
+    private String profilePicUrl = "https://firebasestorage.googleapis.com/v0/b/" +
+            "stashbuster-mczf.appspot.com/o/Mouse_Icon.png?alt=media&" +
+            "token=45f43257-057c-4876-a24f-d89e8f09acba";
 
     public NewAccountPresenter(Context context) {
         this.mContext = context;
@@ -109,16 +111,8 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            String tmpPhotoUrl = profilePicUrl;
-                            // Sign in success, create user object and node in Firebase DB
-                            if (tmpPhotoUrl.equals("")) {
-                                // user doesn't select a photo -- set default
-                                tmpPhotoUrl = "https://firebasestorage.googleapis.com/v0/b/" +
-                                        "stashbuster-mczf.appspot.com/o/Mouse_Icon.png?alt=media&" +
-                                        "token=45f43257-057c-4876-a24f-d89e8f09acba";
-                            }
                             User user = new User(emailAddress, username, bio
-                            , tmpPhotoUrl, deviceToken);
+                            , profilePicUrl, deviceToken);
 
                             onAuthSuccess(task.getResult().getUser(), user);
                         } else {
@@ -216,8 +210,7 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                             mView.setProfilePhoto(userPhotoUrl);
                             mView.setProfilePicUrl(userPhotoUrl);
                         } else {
-                            // TODO: Handle failures
-                            // ...
+                            Log.e(TAG, "Error uploading photo to Firebase storage");
                         }
                     }
                 });
@@ -227,7 +220,6 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
 
     // Starts World Feed Activity
     private void startWorldFeedActivity(String userId) {
-        // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(mContext, PersonalProfileActivity.class);
         intent.putExtra("userId", userId);
         mContext.startActivity(intent);

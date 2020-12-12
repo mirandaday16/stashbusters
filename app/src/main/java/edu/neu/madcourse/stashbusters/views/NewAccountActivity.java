@@ -118,21 +118,11 @@ public class NewAccountActivity extends AppCompatActivity implements NewAccountC
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        //TODO: What's this?
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        Bitmap photoBitmap = selectedImage;
-                    }
-
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri photoUri = data.getData();
-                        mPresenter.uploadUserProfilePhotoToStorage(photoUri);
-                    }
-                    break;
+            if (requestCode == 1) {
+                if (resultCode == RESULT_OK && data != null) {
+                    Uri photoUri = data.getData();
+                    mPresenter.uploadUserProfilePhotoToStorage(photoUri);
+                }
             }
         }
     }

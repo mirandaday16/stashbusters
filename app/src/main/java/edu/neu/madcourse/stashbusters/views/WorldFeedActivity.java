@@ -1,4 +1,4 @@
-package edu.neu.madcourse.stashbusters;
+package edu.neu.madcourse.stashbusters.views;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,23 +8,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.madcourse.stashbusters.R;
 import edu.neu.madcourse.stashbusters.adapters.PostAdapter;
 import edu.neu.madcourse.stashbusters.contracts.WorldFeedContract;
 import edu.neu.madcourse.stashbusters.databinding.ContentActivityFeedBinding;
 import edu.neu.madcourse.stashbusters.enums.NavigationBarButtons;
 import edu.neu.madcourse.stashbusters.model.Post;
 import edu.neu.madcourse.stashbusters.presenters.WorldFeedPresenter;
-import edu.neu.madcourse.stashbusters.views.NavigationBarView;
 
 public class WorldFeedActivity extends AppCompatActivity implements WorldFeedContract.MvpView {
     private static final String TAG = WorldFeedActivity.class.getSimpleName();
@@ -45,7 +43,6 @@ public class WorldFeedActivity extends AppCompatActivity implements WorldFeedCon
         spinner = binding.filterButton;
 
         //Code to initialize the spinner (dropdown button) and create adapter
-        //spinner = findViewById(R.id.filter_button);
         spinner.setPrompt("Filter");
         String[] items = new String[]{"No Filter", "Panel Posts", "Swap Posts"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);

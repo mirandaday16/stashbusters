@@ -9,12 +9,13 @@ import android.net.Uri;
  */
 public interface NewSwapContract {
     interface MvpView {
-        void takePhoto();
         void finishActivity();
     }
 
     interface Presenter {
+        /**
+         * Function that attempts to upload the post to Firebase when the postButton is clicked.
+         */
         void onPostButtonClick(String title, String description, int material, Uri uri, String desiredMaterial);
-        void onImageButtonClick();
     }
 }

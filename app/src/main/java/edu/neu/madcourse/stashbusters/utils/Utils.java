@@ -1,8 +1,6 @@
 package edu.neu.madcourse.stashbusters.utils;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -26,6 +24,7 @@ import java.util.Scanner;
  * Utils
  */
 public class Utils {
+    private static final String TAG = Utils.class.getSimpleName();
 
     // FCM server key
     private static final String SERVER_KEY ="key=AAAAZhAZJQA:APA91bFtBTB_cyXhfzoP2GGiHXAFTQkBpnd_" +
@@ -36,6 +35,22 @@ public class Utils {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * This function is called from public profiles (upon follow button), swap/panel posts (upon
+     * comment/like), and snack posts (upon voting). It gets the device token of the recipient and
+     * the username of the sender and passes on data to sendNotification.
+     *
+     * @param postType the type of notification about to be sent (e.g., likePanel, likeSwap,
+     *                 commentPanel, commentSwap, snackVote, follow)
+     * @param senderId the userId of the user who prompted the notification (e.g., the user that hit
+     *                 the comment, like, or follow buttons)
+     * @param recipientId the userID of the target of the notification (e.g., the author of the post
+     *                    that was liked, commented on, followed, etc.)
+     * @param postId the postID is id of the snack/panel/swap vote that was interacted with. However,
+     *               in the case of postType == follow, the postId is the id of the user that tapped
+     *               the follow button.
+     * @param photoURL the url of the post or user to be shown in the notification
+     */
     public static void startNotification(final String postType, final String senderId, final String recipientId, final String postId, final String photoURL){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
@@ -67,14 +82,20 @@ public class Utils {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError error) {
+                Log.e(TAG, error.toString());
             }
         };
 
         ref.addListenerForSingleValueEvent(tokenListener);
     }
 
-    // Creates and sends the notification to FCM given the token of the receiver.
+    /**
+     * This function is called from the above startNotification function above. It creates and sends
+     * the notification to FCM given the token of the recipient. Other given params are later used
+     * to determine the target class of the intent as well as the extras to fill that intent. This
+     * takes users to the appropriate activity when the notification is tapped.
+     */
     // DISCLAIMER: BASED HEAVILY ON PROFESSOR FEINBERG'S DEMO CODE ("Firebase Demo - FCMActivity.java")
     private static void sendNotification(String clientToken, String sender, String postType, String userId, String postId, String imgURL) {
         JSONObject jPayload = new JSONObject();
@@ -183,7 +204,9 @@ public class Utils {
         }
     }
 
-    // Helper function to parse and convert stream to string.
+    /**
+     * Helper function to parse and convert stream to string.
+     */
     private static String convertStreamToString(InputStream is) {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next().replace(",", ",\n") : "";

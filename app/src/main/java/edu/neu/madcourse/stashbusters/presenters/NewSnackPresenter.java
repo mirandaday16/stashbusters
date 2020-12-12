@@ -73,14 +73,6 @@ public class NewSnackPresenter implements NewSnackContract.Presenter{
     }
 
     /**
-     * Function that tells the View what to do when the imageButton is clicked.
-     */
-    @Override
-    public void onImageButtonClick() {
-        mView.takePhoto();
-    }
-
-    /**
      * Function to upload post photo Firebase storage and get the url.
      */
     private void uploadPhotoToStorage(final String question, final String choice_one, final String choice_two, Uri photoUri) {

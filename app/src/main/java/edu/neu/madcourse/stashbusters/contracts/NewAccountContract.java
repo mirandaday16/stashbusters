@@ -28,7 +28,6 @@ public interface NewAccountContract {
 
         /**
          * Uploads the given photo uri to Firebase storage.
-         * TODO: Currently, for the purpose of the project, bucket is open for all access.
          * This should be updated to be more secure.
          * @param photoUri
          */

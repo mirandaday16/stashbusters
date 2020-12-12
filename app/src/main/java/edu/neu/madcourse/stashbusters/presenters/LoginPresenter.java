@@ -11,15 +11,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
-import edu.neu.madcourse.stashbusters.WorldFeedActivity;
+import edu.neu.madcourse.stashbusters.views.WorldFeedActivity;
 
 import edu.neu.madcourse.stashbusters.utils.Utils;
 
@@ -28,7 +24,6 @@ import edu.neu.madcourse.stashbusters.views.NewAccountActivity;
 import edu.neu.madcourse.stashbusters.contracts.LoginContract;
 
 import edu.neu.madcourse.stashbusters.views.PanelPostActivity;
-import edu.neu.madcourse.stashbusters.views.PersonalProfileActivity;
 import edu.neu.madcourse.stashbusters.views.PublicProfileActivity;
 import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 import edu.neu.madcourse.stashbusters.views.SwapPostActivity;
@@ -55,7 +50,6 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void startWorldFeedActivity() {
-        // TODO: When World Feed activity exists, change this function to go  to World Feed
         Intent intent = new Intent(mContext, WorldFeedActivity.class);
         mContext.startActivity(intent);
     }
@@ -123,6 +117,14 @@ public class LoginPresenter implements LoginContract.Presenter {
                 });
     }
 
+    /**
+     * Determines whether this activity was launched from tapping a notification (BACKGROUND
+     * NOTIFICATION TAPS ONLY-- for foreground notification intent information, please see
+     * FCMService). If activity was launched from a notification, this function will create an
+     * intent for the appropriate activity, pass in the appropriate extras, and start that activity.
+     *
+     * @param oldIntent the intent of the currently opened LoginActivity
+     */
     @Override
     public void checkIfFromNotification(Intent oldIntent){
 

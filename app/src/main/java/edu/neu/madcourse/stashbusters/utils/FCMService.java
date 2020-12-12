@@ -30,6 +30,14 @@ import edu.neu.madcourse.stashbusters.views.SnackPostActivity;
 
 // Documentation: https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessagingService
 // DISCLAIMER: BELOW IS BASED HEAVILY ON PROFESSOR FEINBERG'S DEMO CODE ("Firebase Demo - DemoMessagingService.java")
+
+/**
+ * Notes on notifications:
+ *  1. Messages are sent using the startNotification/sendNotification functions in Utils.
+ *  2. Notifications received while app is in the foreground use the below showNotification function.
+ *  3. When notifications received in the background are clicked, the user is routed to
+ *      LoginActivity with intent extras indicating which activity to open.
+ */
 public class FCMService extends FirebaseMessagingService {
 
     private String Channel_Id  = "CHANNEL_ID";
