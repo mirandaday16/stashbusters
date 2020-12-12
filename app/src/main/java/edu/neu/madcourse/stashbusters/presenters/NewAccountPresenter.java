@@ -51,9 +51,7 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
     private StorageReference storageRef;
     private DatabaseReference usersRef;
     private SharedPreferences prefs;
-    private String profilePicUrl = "https://firebasestorage.googleapis.com/v0/b/" +
-            "stashbuster-mczf.appspot.com/o/Mouse_Icon.png?alt=media&" +
-            "token=45f43257-057c-4876-a24f-d89e8f09acba";
+    private String profilePicUrl = "";
 
     public NewAccountPresenter(Context context) {
         this.mContext = context;
@@ -111,8 +109,16 @@ public class NewAccountPresenter implements NewAccountContract.Presenter {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String tmpPhotoUrl = profilePicUrl;
+                            // Sign in success, create user object and node in Firebase DB
+                            if (tmpPhotoUrl.equals("")) {
+                                // user doesn't select a photo -- set default
+                                tmpPhotoUrl = "https://firebasestorage.googleapis.com/v0/b/" +
+                                        "stashbuster-mczf.appspot.com/o/Mouse_Icon.png?alt=media&" +
+                                        "token=45f43257-057c-4876-a24f-d89e8f09acba";
+                            }
                             User user = new User(emailAddress, username, bio
-                            , profilePicUrl, deviceToken);
+                            , tmpPhotoUrl, deviceToken);
 
                             onAuthSuccess(task.getResult().getUser(), user);
                         } else {
