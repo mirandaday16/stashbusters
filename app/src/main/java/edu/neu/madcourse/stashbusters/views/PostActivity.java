@@ -179,7 +179,6 @@ public abstract class PostActivity extends AppCompatActivity implements PostCont
                     mPresenter.startCommentNotification("comment", authorId, postId);
                     // Reset comment field and update RecyclerView so user can see their comment
                     commentInput.setText("");
-                    // TODO: Hide soft keyboard and update RecyclerView
                 }
             }
         });
