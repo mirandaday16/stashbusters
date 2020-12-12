@@ -12,6 +12,7 @@
     <string name="world_feed">World Feed</string>
     <string name="my_feed">My Feed</string>
     <string name="my_profile">My Profile</string>
+    <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_password">Change Password</string>
     <string name="log_out">Log Out</string>
@@ -100,7 +101,7 @@
 
     <string name="no_posts_feed">Follow other users\n to see posts in your feed!</string>
     <string name="like_count">%1$d Likes</string>
-
+    <string name="profile_owner">\'s Profile</string>
 
 
 </resources>

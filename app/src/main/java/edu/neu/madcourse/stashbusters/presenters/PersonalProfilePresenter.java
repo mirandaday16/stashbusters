@@ -100,7 +100,7 @@ public class PersonalProfilePresenter extends ProfilePresenter {
                     }
                 }
 
-                Collections.reverse(likedPostList);
+                Collections.sort(likedPostList, Collections.reverseOrder());
                 if (likedPostList.isEmpty()) {
                     // no liked posts, display message
                     mView.showNoPostText(PostActivity.LIKED_POSTS);

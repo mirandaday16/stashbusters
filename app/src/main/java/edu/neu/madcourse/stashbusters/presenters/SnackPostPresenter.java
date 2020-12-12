@@ -87,7 +87,7 @@ public class SnackPostPresenter implements SnackPostContract.Presenter{
                         }
 
 
-                        Collections.reverse(posts);
+                        Collections.sort(posts, Collections.reverseOrder());
 
 
                         mView.setPostView(posts);

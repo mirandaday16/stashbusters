@@ -73,7 +73,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
                         posts.add(post);
                     }
                 }
-                Collections.reverse(posts);
+                Collections.sort(posts, Collections.reverseOrder());
                 mView.setPosts(posts);
 
             }
@@ -109,7 +109,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
                     }
                 }
 
-                Collections.reverse(posts);
+                Collections.sort(posts, Collections.reverseOrder());
                 mView.setPosts(posts);
 
             }
@@ -156,7 +156,7 @@ public class WorldFeedPresenter implements WorldFeedContract.Presenter {
                     }
                 }
 
-                Collections.reverse(posts);
+                Collections.sort(posts, Collections.reverseOrder());
                 mView.setPosts(posts);
 
             }

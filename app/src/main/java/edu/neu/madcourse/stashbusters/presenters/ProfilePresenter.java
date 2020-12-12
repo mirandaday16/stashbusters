@@ -109,7 +109,8 @@ public abstract class ProfilePresenter implements ProfileContract.Presenter{
                     // no liked posts, display message
                     mView.showNoPostText(PostActivity.MY_POSTS);
                 }
-                Collections.reverse(postList);
+                Collections.sort(postList, Collections.reverseOrder());
+
                 postAdapter.notifyDataSetChanged();
             }
 
