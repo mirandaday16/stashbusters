@@ -2,7 +2,7 @@
 
 ![Mockup Image](Supplemental_Files/StashBusters_Mockup.png)
 
-Watch the demo video [here!](https://www.youtube.com/watch?v=nnccEtmRaM4&feature=youtu.be)
+**Watch the demo video [here!](https://www.youtube.com/watch?v=nnccEtmRaM4&feature=youtu.be)**
 
 StashBusters is a social, collaborative, and eco-conscious app where users share photos of their craft supply stashes – fabric, yarn, beads, paper, etc. – and swap supplies and ideas for using them, boosting creativity and keeping craft materials out of landfills.
 
