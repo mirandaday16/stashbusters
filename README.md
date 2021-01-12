@@ -1,6 +1,6 @@
 # StashBusters: An Android Application for Crafters
 
-![Mockup Image](StashBusters_Mockup.png)
+![Mockup Image](Supplemental_Files/StashBusters_Mockup.png)
 
 Watch the demo video [here!](https://www.youtube.com/watch?v=nnccEtmRaM4&feature=youtu.be)
 
